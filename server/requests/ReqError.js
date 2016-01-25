@@ -1,5 +1,5 @@
 var fileUtils  = require('../utils/FileUtils');
-var fileErrors = require('../constants/FileConstants').errors;
+var fileErrors = require('../../common/constants/FileConstants').errors;
 
 var handler = {
 	handle : function(request, response, error) {

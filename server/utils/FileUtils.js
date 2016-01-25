@@ -1,12 +1,34 @@
 var fs     = require("fs");
 var path   = require('path');
 var client = require('../constants/ClientConstants')
-var fileTypes = require('../constants/FileConstants').types;
+var fileTypes = require('../../common/constants/FileConstants').types;
 
 var fileutils = {
 
     getExtension : function(fp) {
         return path.extname(fp)
+    },
+
+    getFileListing : function(dir) {
+        var results = [];
+        fs.readdirSync(dir).forEach(function(file) {
+            file = {
+                path : dir + '/' + file,
+                type : fileTypes.UNKNOWN
+            };
+
+            var stat = fs.statSync(file.path);
+
+            if (stat.isFile()) {
+                file.type = fileTypes.FILE;
+            } else if (stat.isDirectory()) {
+                file.type = fileTypes.DIRECTORY;
+            }
+
+            results.push(file);
+        });
+
+        return results;
     },
 
     getRecursiveFileListing : function(dir) {

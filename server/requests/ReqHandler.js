@@ -2,8 +2,8 @@ var reqDirectory = require('./ReqDirectory');
 var reqFile      = require('./ReqFile');
 var reqError     = require('./ReqError');
 var fileUtils    = require('../utils/FileUtils');
-var fileTypes    = require('../constants/FileConstants').types;
-var fileErrors   = require('../constants/FileConstants').errors;
+var fileTypes    = require('../../common/constants/FileConstants').types;
+var fileErrors   = require('../../common/constants/FileConstants').errors;
 
 var handler = {
 	handle : function(request, response) {
