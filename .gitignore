@@ -1,0 +1,8 @@
+# mac files
+.DS_Store
+
+# javascript files
+bundle.js
+
+# full directories
+./examples/
