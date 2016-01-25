@@ -5,4 +5,4 @@
 bundle.js
 
 # full directories
-./examples/
+__examples/
