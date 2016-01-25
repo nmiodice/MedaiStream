@@ -5,4 +5,5 @@
 bundle.js
 
 # full directories
+client/node_modules/
 __examples/
