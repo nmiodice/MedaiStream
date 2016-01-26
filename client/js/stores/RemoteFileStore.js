@@ -36,6 +36,10 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
         return _fileData;
     },
 
+    getFileStackSize : function() {
+        return _fileStack.length;
+    },
+
     _handleMediaUriUpAction : function(action) {
         if (_fileStack.length > 0) {
             _fileData = _fileStack.pop();
@@ -45,11 +49,11 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
 
     _handleMediaUriChangeAction : function(action) {
         _fileStack.push(_fileData);
-
-        _fileData = {};
+        
+        _fileData        = {};
         _fileData.status = ConnectionConstants.CONNECTING;
-        _fileData.uri   = action.uri;
-        _fileData.files = []
+        _fileData.uri    = action.uri;
+        _fileData.files  = []
         RemoteFileStore.emitChange();
     },
 

@@ -16,6 +16,7 @@ var handler = {
 			filePath = fileUtils.relativeToClientDirectory(request.url);
 		}
 
+		filePath = decodeURIComponent(filePath);
 		fileUtils.getType(filePath, function(type) {
 
 			switch (type) {

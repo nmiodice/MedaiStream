@@ -16,7 +16,9 @@ var FileListItem = React.createClass({
 				break;
 
 			case FileTypes.FILE:
-				alert("Cannot handle file clicks yet!");
+				var URI = UriUtils.fileToURI(file);
+				window.location = URI;
+				// alert("Cannot handle file clicks yet!");
 				break;
 
 			default:

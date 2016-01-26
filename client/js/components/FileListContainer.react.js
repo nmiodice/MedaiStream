@@ -2,12 +2,17 @@
 var React        = require('react');
 var TextBox      = require('./TextBox.react');
 var FileListItem = require('./FileListItem.react');
+var FileUtils    = require('../utils/FileUtils')
+var UriUtils     = require('../utils/UriUtils')
 
 var RemoteFileStore = require('../stores/RemoteFileStore');
 var MediaDataActionCreator = require('../actions/MediaDataActionCreator');
 
 function getStateFromStores() {
-    return RemoteFileStore.getFileData()
+    return  {
+        file     : RemoteFileStore.getFileData(),
+        stackPos : RemoteFileStore.getFileStackSize()
+    }
 }
 
 var FileListContainer = React.createClass({
@@ -34,15 +39,19 @@ var FileListContainer = React.createClass({
     },
 
     render: function() {
-        var uri = this.state.uri;
+        var fileData = this.state.file;
+        var uri      = fileData.uri;
+        var name     = UriUtils.stripHTTP(uri);
+        // var name     = FileUtils.makeDirectoryName(FileUtils.getLastPathSection(uri));
+        var stackPos = this.state.stackPos;
 
         return (
             <div className="file-list-container">
 
-                <TextBox text={uri} className = "uri-listing"/>
-                <button onClick={this._onGoBackClick}/>
+                <TextBox text={name} className = "uri-listing"/>
+                {stackPos > 0 ? <button onClick={this._onGoBackClick}>Go back</button> : null}
                 <ul className="file-list" ref="file-list">
-                    {this.state.files.map(function(f) {
+                    {fileData.files.map(function(f) {
                         return <FileListItem file={f} key={f.path}/>;
                     })}
                 </ul>
