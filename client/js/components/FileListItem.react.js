@@ -12,7 +12,7 @@ var FileListItem = React.createClass({
 		switch (file.type) {
 			case FileTypes.DIRECTORY:
 				var URI = UriUtils.fileToURI(file);
-				MediaDataActionCreator.changeMediaURI(URI);
+				MediaDataActionCreator.changeMediaURI(file, URI);
 				break;
 
 			case FileTypes.FILE:
@@ -31,7 +31,7 @@ var FileListItem = React.createClass({
   		var text = FileUtils.fileToDisplayString(file);
     
     	return (
-      		<li onClick={this._onClick}>{text}</li>
+      		<li className="file-list-item" onClick={this._onClick}>{text}</li>
     	);
   	}
 

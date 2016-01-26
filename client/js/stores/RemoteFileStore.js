@@ -9,7 +9,7 @@ var CHANGE_EVENT = 'change';
 
 var _fileData = {
     status : ConnectionConstants.OFFLINE,
-    uri    : ServerConstants.MEDIA_HOME_URI,
+    path   : ServerConstants.MEDIA_HOME_BASE,
     files  : []
 };
 
@@ -52,7 +52,7 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
         
         _fileData        = {};
         _fileData.status = ConnectionConstants.CONNECTING;
-        _fileData.uri    = action.uri;
+        _fileData.path   = action.path;
         _fileData.files  = []
         RemoteFileStore.emitChange();
     },

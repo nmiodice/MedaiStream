@@ -4,8 +4,13 @@ var ServerConstants = require('../constants/ServerConstants')
 
 var UriUtils = {
 	fileToURI : function(file) {
-		var currentURI = RemoteFileStore.getFileData().uri;
-		newURI = currentURI + FileUtils.getLastPathSection(file.path);
+		console.log("converting file to URI");
+		console.log(file);
+		
+		newURI = file.path;
+		newURI = ServerConstants.BASE + '?' + ServerConstants.MEDIA_QPARAM + '=' + newURI;
+        newURI = encodeURI(newURI);
+
 		return newURI;
 	},
 

@@ -3,6 +3,8 @@ var ActionTypes     = require('../constants/ActionTypes');
 var AppDispatcher   = require('../dispatcher/AppDispatcher');
 var RemoteFileStore = require('../stores/RemoteFileStore');
 var FileUtils       = require('../utils/FileUtils');
+var UriUtils        = require('../utils/UriUtils');
+var ServerConstants = require('../constants/ServerConstants');
 
 var MediaDataActionCreator = {
 
@@ -12,14 +14,12 @@ var MediaDataActionCreator = {
         });
     },
 
-    changeMediaURI : function(media_uri) {
-        console.log("changing to URI: " + media_uri);
-
-        media_uri = FileUtils.makeDirectoryName(media_uri);
+    changeMediaURI : function(file, media_uri) {
+        console.log("changing to: " + file.path);
 
         AppDispatcher.dispatch({
-            type : ActionTypes.MEDIA_URI_CHANGE,
-            uri  : media_uri
+            type  : ActionTypes.MEDIA_URI_CHANGE,
+            path  : file.path
         });
 
         MediaDataActionCreator.loadFilesFromServer();
@@ -28,10 +28,11 @@ var MediaDataActionCreator = {
     loadFilesFromServer : function() {
         console.log("requesting files from server");
 
-        var uri = RemoteFileStore.getFileData().uri;
+        var file = RemoteFileStore.getFileData();
+        var uri = UriUtils.fileToURI(file);
       
         $.getJSON(uri, function(result) {
-            console.log("HTTP GET returned: " + JSON.stringify(result.files[0]));
+
             if (result && result.files) {
                 AppDispatcher.dispatch({
                     type  : ActionTypes.MEDIA_FILES_CHANGE,

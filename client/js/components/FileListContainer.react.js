@@ -40,17 +40,18 @@ var FileListContainer = React.createClass({
 
     render: function() {
         var fileData = this.state.file;
-        var uri      = fileData.uri;
-        var name     = UriUtils.stripHTTP(uri);
-        // var name     = FileUtils.makeDirectoryName(FileUtils.getLastPathSection(uri));
+        var path     = fileData.path;
+        var name     = UriUtils.stripHTTP(path);
         var stackPos = this.state.stackPos;
 
         return (
             <div className="file-list-container">
 
-                <TextBox text={name} className = "uri-listing"/>
-                {stackPos > 0 ? <button onClick={this._onGoBackClick}>Go back</button> : null}
-                <ul className="file-list" ref="file-list">
+                <TextBox text={name} className="list-heading"/>
+                
+                {stackPos > 0 ? <button onClick={this._onGoBackClick}>Back</button> : null}
+        
+                <ul className="file-list">
                     {fileData.files.map(function(f) {
                         return <FileListItem file={f} key={f.path}/>;
                     })}
