@@ -6,6 +6,7 @@ var handler = {
 		var contentType = FileUtils.getMimeType(filePath);
 		FileUtils.read(filePath, function(error, content) {
             if (error) {
+                console.log(error);
                 reqError.handle(request, response, error);
             } else {
                 response.writeHead(200, { 'Content-Type': contentType });

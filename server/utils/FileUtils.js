@@ -1,6 +1,6 @@
 var fs     = require("fs");
 var path   = require('path');
-var client = require('../constants/ClientConstants')
+var fileLocations = require('../constants/FileLocationConstants')
 var fileTypes = require('../../common/constants/FileConstants').types;
 
 var fileutils = {
@@ -11,9 +11,12 @@ var fileutils = {
 
     getFileListing : function(dir) {
         var results = [];
+        if (dir.slice(-1) != '/')
+            dir += '/';
+
         fs.readdirSync(dir).forEach(function(file) {
             file = {
-                path : dir + '/' + file,
+                path : dir + file,
                 type : fileTypes.UNKNOWN
             };
 
@@ -28,21 +31,8 @@ var fileutils = {
             results.push(file);
         });
 
-        return results;
-    },
-
-    getRecursiveFileListing : function(dir) {
-        var results = [];
-
-        fs.readdirSync(dir).forEach(function(file) {
-
-            file = dir+'/'+file;
-            var stat = fs.statSync(file);
-
-            if (stat && stat.isDirectory()) {
-                results = results.concat(fileutils.getRecursiveFileListing(file))
-            } else results.push(file);
-
+        results.forEach(function(r) {
+            r.path = r.path.replace(fileLocations.APP_LOCATION, '');
         });
 
         return results;
@@ -96,6 +86,10 @@ var fileutils = {
             case '.wav':
                 contentType = 'audio/wav';
                 break;
+
+            case '.mp3':
+                contentType = 'audio/mp3';
+                break;
         }
 
         return contentType;
@@ -104,10 +98,6 @@ var fileutils = {
     read : function(fp, callback) {
         fs.readFile(fp, callback);
     },
-
-    relativeToClientDirectory : function (path) {
-        return client.APP_LOCATION + path;
-    }
 }
 
 module.exports = fileutils

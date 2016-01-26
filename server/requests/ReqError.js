@@ -1,10 +1,13 @@
 var fileUtils  = require('../utils/FileUtils');
 var fileErrors = require('../../common/constants/FileConstants').errors;
+var fileLocations = require('../constants/FileLocationConstants');
 
 var handler = {
 	handle : function(request, response, error) {
 		if(error.code == fileErrors.NOT_FOUND) {
-            fileUtils.read('./404.html', function(error, content) {
+            var html = fileLocations.ASSETS_LOCATION + "/404.html";
+            
+            fileUtils.read(html, function(error, content) {
                 response.writeHead(404, { 
                     'Content-Type': "text/html"
                 });
