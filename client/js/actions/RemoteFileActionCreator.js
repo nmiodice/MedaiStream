@@ -6,7 +6,7 @@ var FileUtils       = require('../utils/FileUtils');
 var UriUtils        = require('../utils/UriUtils');
 var ServerConstants = require('../constants/ServerConstants');
 
-var MediaDataActionCreator = {
+var RemoteFileActionCreator = {
 
     goBackOneURI : function() {
         AppDispatcher.dispatch({
@@ -22,7 +22,7 @@ var MediaDataActionCreator = {
             path  : file.path
         });
 
-        MediaDataActionCreator.loadFilesFromServer();
+        RemoteFileActionCreator.loadFilesFromServer();
     },
 
     loadFilesFromServer : function() {
@@ -50,4 +50,4 @@ var MediaDataActionCreator = {
     },
 };
 
-module.exports = MediaDataActionCreator;
+module.exports = RemoteFileActionCreator;

@@ -1,18 +1,16 @@
 
 var React        = require('react');
-var FileListItem = require('./FileListItem.react');
 var UriUtils     = require('../utils/UriUtils')
-
 var RemoteFileStore = require('../stores/RemoteFileStore');
-var RemoteFileActionCreator = require('../actions/RemoteFileActionCreator');
+
 
 function getStateFromStores() {
     return  {
-        file     : RemoteFileStore.getFileData(),
+        file : RemoteFileStore.getFileData(),
     }
 }
 
-var FileListContainer = React.createClass({
+var NavigationBar = React.createClass({
     
     getInitialState: function() {
         return getStateFromStores();
@@ -20,7 +18,6 @@ var FileListContainer = React.createClass({
 
     componentDidMount: function() {
         RemoteFileStore.addChangeListener(this._onChange);
-        RemoteFileActionCreator.loadFilesFromServer();
     },
 
     componentWillUnmount: function() {
@@ -37,19 +34,17 @@ var FileListContainer = React.createClass({
         var name     = UriUtils.stripHTTP(path);
 
         return (
-            <div className="container">
-        
-                <ul className="list-group">
-                    {fileData.files.map(function(f) {
-                        return <FileListItem file={f} key={f.path}/>;
-                    })}
-                </ul>
-
-            </div>
+            <nav className="navbar navbar-inverse navbar-fixed-top">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="#">Media • Server</a>
+                    </div>
+                </div>
+            </nav>
         );
     }
 
 });
 
-module.exports = FileListContainer;
+module.exports = NavigationBar;
 

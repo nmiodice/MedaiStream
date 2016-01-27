@@ -10,7 +10,7 @@ var path          = require('path');
 
 var handler = {
 	handle : function(request, response) {
-		var decoded = url.parse(request.url, true);
+		var decoded = url.parse(decodeURIComponent(request.url), true);
 		var queryData = decoded.query;
 		var filePath  = decoded.pathname;
 
@@ -38,9 +38,9 @@ var handler = {
 			});
 		}
 
+		// filePath = decodeURIComponent(filePath);
 		console.log(filePath)
 
-		// filePath = decodeURIComponent(filePath);
 		fileUtils.getType(filePath, function(type) {
 
 			switch (type) {

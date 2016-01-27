@@ -1,6 +1,5 @@
 
 var React        = require('react');
-var FileListItem = require('./FileListItem.react');
 var UriUtils     = require('../utils/UriUtils')
 
 var RemoteFileStore = require('../stores/RemoteFileStore');
@@ -9,10 +8,11 @@ var RemoteFileActionCreator = require('../actions/RemoteFileActionCreator');
 function getStateFromStores() {
     return  {
         file     : RemoteFileStore.getFileData(),
+        stackPos : RemoteFileStore.getFileStackSize()
     }
 }
 
-var FileListContainer = React.createClass({
+var NavigationController = React.createClass({
     
     getInitialState: function() {
         return getStateFromStores();
@@ -20,7 +20,6 @@ var FileListContainer = React.createClass({
 
     componentDidMount: function() {
         RemoteFileStore.addChangeListener(this._onChange);
-        RemoteFileActionCreator.loadFilesFromServer();
     },
 
     componentWillUnmount: function() {
@@ -31,25 +30,38 @@ var FileListContainer = React.createClass({
         this.setState(getStateFromStores());
     },
 
+    _onGoBackClick : function() {
+        RemoteFileActionCreator.goBackOneURI();
+    },
+
     render: function() {
         var fileData = this.state.file;
         var path     = fileData.path;
         var name     = UriUtils.stripHTTP(path);
+        var stackPos = this.state.stackPos;
+        var disabledButton = stackPos == 0;
+
+        if (name == '' || name == '/') {
+            name = "Files Home";
+        }
 
         return (
-            <div className="container">
-        
-                <ul className="list-group">
-                    {fileData.files.map(function(f) {
-                        return <FileListItem file={f} key={f.path}/>;
-                    })}
-                </ul>
-
+            <div className="container default-margin">
+                <span>
+                    <a
+                        role="button" 
+                        className="btn btn-default btn-sm"
+                        disabled={disabledButton}
+                        onClick={this._onGoBackClick}>
+                        Back
+                    </a>
+                </span>
+                <span className="default-margin">{name}</span>
             </div>
         );
     }
 
 });
 
-module.exports = FileListContainer;
+module.exports = NavigationController;
 

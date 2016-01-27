@@ -9,9 +9,7 @@ var UriUtils = {
 		
 		newURI = file.path;
 		newURI = ServerConstants.BASE + '?' + ServerConstants.MEDIA_QPARAM + '=' + newURI;
-        newURI = encodeURI(newURI);
-
-		return newURI;
+		return encodeURIComponent(newURI);
 	},
 
 	stripHTTP : function(uri) {
