@@ -42,7 +42,7 @@ var NavigationController = React.createClass({
         var disabledButton = stackPos == 0;
 
         if (name == '' || name == '/') {
-            name = "Files Home";
+            name = "Media root directory...";
         }
 
         return (

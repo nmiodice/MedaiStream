@@ -58,8 +58,13 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
     },
 
     _handleMediaFilesChangeAction : function(action) {
-        _fileData.files  = action.files;
         _fileData.status = ConnectionConstants.ONLINE;
+        _fileData.files  = action.files;
+
+        _fileData.files.forEach(function(x) {
+            x.parent = action.parent;
+        });
+
         RemoteFileStore.emitChange();
     },
 

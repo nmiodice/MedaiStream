@@ -4,8 +4,21 @@ var FileUtils                = require('../utils/FileUtils');
 var React                    = require('react');
 var FileTypes                = require('../../../common/constants/FileConstants').types;
 var UriUtils                 = require('../utils/UriUtils');
+var ActiveMediaStore         = require('../stores/ActiveMediaStore');
 
 var FileListItem = React.createClass({
+
+    componentDidMount: function() {
+        ActiveMediaStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function() {
+        ActiveMediaStore.removeChangeListener(this._onChange);
+    },
+
+    _onChange : function() {
+        this.forceUpdate();	// TODO:?????
+    },
 
 	_onClick : function() {
 		var file = this.props.file;
@@ -19,7 +32,7 @@ var FileListItem = React.createClass({
 			case FileTypes.FILE:
 				// var URI = UriUtils.fileToURI(file);
 				// window.location = URI;
-				ActiveMediaActionCreator.setActiveMedia(file);
+				ActiveMediaActionCreator.setActivePlaylist(file);
 				break;
 
 			default:
@@ -31,6 +44,12 @@ var FileListItem = React.createClass({
   		var file = this.props.file;
   		var text = FileUtils.fileToDisplayString(file);
     	var iconClass;
+    	var activeFile = ActiveMediaStore.getActiveMedia();
+
+    	var className = "list-group-item";
+    	if (file == activeFile) {
+    		className += " active"
+    	}
 
     	switch (file.type) {
 			case FileTypes.DIRECTORY:
@@ -47,7 +66,7 @@ var FileListItem = React.createClass({
 			}
 
     	return (
-      		<li className="list-group-item" onClick={this._onClick}>
+      		<li className={className} onClick={this._onClick}>
       			<span className={iconClass}/>
       			<a className="default-margin">{text}</a>
       		</li>

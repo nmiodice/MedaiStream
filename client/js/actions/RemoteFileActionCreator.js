@@ -5,6 +5,7 @@ var RemoteFileStore = require('../stores/RemoteFileStore');
 var FileUtils       = require('../utils/FileUtils');
 var UriUtils        = require('../utils/UriUtils');
 var ServerConstants = require('../constants/ServerConstants');
+var LinkedListUtils = require('../utils/LinkedListUtils')
 
 var RemoteFileActionCreator = {
 
@@ -28,15 +29,16 @@ var RemoteFileActionCreator = {
     loadFilesFromServer : function() {
         console.log("requesting files from server");
 
-        var file = RemoteFileStore.getFileData();
-        var uri = UriUtils.fileToURI(file);
+        var parent = RemoteFileStore.getFileData();
+        var uri = UriUtils.fileToURI(parent);
       
         $.getJSON(uri, function(result) {
 
             if (result && result.files) {
                 AppDispatcher.dispatch({
-                    type  : ActionTypes.MEDIA_FILES_CHANGE,
-                    files : result.files
+                    type   : ActionTypes.MEDIA_FILES_CHANGE,
+                    parent : parent,
+                    files  : result.files
                 });
 
             } else {

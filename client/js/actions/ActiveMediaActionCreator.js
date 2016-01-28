@@ -4,13 +4,30 @@ var ActiveMediaStore = require('../stores/ActiveMediaStore');
 
 var ActiveMediaActionCreator = {
 
-    setActiveMedia : function(file) {
+    setActivePlaylist : function(file) {
         AppDispatcher.dispatch({
-            type : ActionTypes.MEDIA_BECOMING_ACTIVE,
+            type : ActionTypes.MEDIA_NEW_PLAYLIST,
             file : file 
         });
-    }
+    },
 
+    togglePlayState : function() {
+        AppDispatcher.dispatch({
+            type : ActionTypes.MEDIA_PLAY_STATE_TOGGLE,
+        });	
+    },
+
+    nextTrack : function() {
+        AppDispatcher.dispatch({
+            type : ActionTypes.MEDIA_NEXT_TRACK
+        });
+    },
+
+    previousTrack : function() {
+        AppDispatcher.dispatch({
+            type : ActionTypes.MEDIA_PREV_TRACK
+        });
+    }
 };
 
 module.exports = ActiveMediaActionCreator;

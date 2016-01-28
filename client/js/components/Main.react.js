@@ -3,7 +3,7 @@ var React             = require('react');
 var FileListContainer = require('./FileListContainer.react')
 var AppBar            = require('./AppBar.react')
 var NavigationController = require('./NavigationController.react');
-var MediaPlayer = require('./MediaPlayer.react');
+var MediaController = require('./MediaController.react');
 
 var Main = React.createClass({
 
@@ -13,7 +13,7 @@ var Main = React.createClass({
 				<AppBar/>
 				<NavigationController/>
 				<FileListContainer/>
-				<MediaPlayer/>
+				<MediaController/>
 			</div>
 		);
 	}
