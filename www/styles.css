@@ -1,16 +1,21 @@
+.active-media-item {
+    background-color: #C4C4BB;
+    -webkit-filter: invert(1);
+    filter: invert(1);
+}
+
 body {
-	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+	padding-top: 60px; /* for navbar */
 	background-color: #F8FFFF;
+}
+
+.default-margin {
+	margin : 16px;
 }
 
 .img-inverse {
     -webkit-filter: invert(1);
     filter: invert(1);
-}
-
-
-.default-margin {
-	margin : 16px;
 }
 
 .media-controller {
@@ -20,4 +25,10 @@ body {
 .navbar-default {
     background-color: #3B3B44;
     border-color: #DE887E;
+}
+
+.small {
+	transform: scale(0.65, 0.65);
+	-ms-transform: scale(0.65, 0.65);
+	-webkit-transform: scale(0.65, 0.65);
 }

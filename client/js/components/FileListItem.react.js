@@ -17,7 +17,9 @@ var FileListItem = React.createClass({
     },
 
     _onChange : function() {
-        this.forceUpdate();	// TODO:?????
+    	// when file becomes active, file object doesn't change,
+    	// but the rendering for this component might
+        this.forceUpdate();
     },
 
 	_onClick : function() {
@@ -30,8 +32,6 @@ var FileListItem = React.createClass({
 				break;
 
 			case FileTypes.FILE:
-				// var URI = UriUtils.fileToURI(file);
-				// window.location = URI;
 				ActiveMediaActionCreator.setActivePlaylist(file);
 				break;
 
@@ -47,8 +47,8 @@ var FileListItem = React.createClass({
     	var activeFile = ActiveMediaStore.getActiveMedia();
 
     	var className = "list-group-item";
-    	if (file == activeFile) {
-    		className += " active"
+    	if (activeFile != null && file.path == activeFile.path) {
+    		className += " active-media-item"
     	}
 
     	switch (file.type) {

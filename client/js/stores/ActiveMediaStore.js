@@ -54,10 +54,9 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         }
 
         _sound = new Howl({
-            urls  : [UriUtils.fileToURI(_activeMediaNode.data)],
-            onend : function() {
-                ActiveMediaStore._handleNextTrack();
-            }
+            urls   : [UriUtils.fileToURI(_activeMediaNode.data)],
+            buffer : true,
+            onend  : ActiveMediaStore._handleNextTrack
         }).play();
         _isPlaying = true;        
     },
@@ -86,6 +85,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _activeMediaNode = _activeMediaNode.next;
             ActiveMediaStore._playFromCurrentTrack();
         }
+        ActiveMediaStore.emitChange();
     },
 
     _handlePrevTrack : function() {
@@ -93,6 +93,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _activeMediaNode = _activeMediaNode.prev;
             ActiveMediaStore._playFromCurrentTrack();
         }
+        ActiveMediaStore.emitChange();
     }
 
 });
