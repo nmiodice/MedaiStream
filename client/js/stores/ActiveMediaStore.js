@@ -146,4 +146,5 @@ ActiveMediaStore.dispatchToken = AppDispatcher.register(function(action) {
     }
 });
 
+ActiveMediaStore.setMaxListeners(0);
 module.exports = ActiveMediaStore;
