@@ -46,7 +46,7 @@ var FileListItem = React.createClass({
     	var iconClass;
     	var activeFile = ActiveMediaStore.getActiveMedia();
 
-    	var className = "list-group-item";
+    	var className = "list-group-item ";
     	if (activeFile != null && file.path == activeFile.path) {
     		className += " active-media-item"
     	}

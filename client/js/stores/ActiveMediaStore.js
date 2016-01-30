@@ -16,6 +16,8 @@ var _isPlaying = false;
 
 var _sound = null;
 
+var _volume = 0.5;
+
 var ActiveMediaStore = assign({}, EventEmitter.prototype, {
     
     emitChange : function() {
@@ -41,6 +43,10 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         return _isPlaying;
     },
 
+    getVolume : function() {
+        return _volume;
+    },
+
     _setPlayListFromFile : function(active) {
         var playlist = LinkedListUtils.fromList(active.parent.files)
 
@@ -53,11 +59,15 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _sound.unload();
         }
 
+        var uri = UriUtils.fileToURI(_activeMediaNode.data);
+        console.log(uri);
         _sound = new Howl({
-            urls   : [UriUtils.fileToURI(_activeMediaNode.data)],
-            buffer : true,
-            onend  : ActiveMediaStore._handleNextTrack
-        }).play();
+            src     : [uri],
+            volume  : _volume,
+            html5   : true,
+            onend   : ActiveMediaStore._handleNextTrack,
+        });
+        _sound.play();
         _isPlaying = true;        
     },
 
@@ -94,6 +104,15 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             ActiveMediaStore._playFromCurrentTrack();
         }
         ActiveMediaStore.emitChange();
+    },
+
+    _handleVolumeChange : function(action) {
+        _volume = action.volume;
+        
+        if (_sound) {
+            _sound.volume(_volume);
+        }
+        ActiveMediaStore.emitChange();
     }
 
 });
@@ -116,6 +135,10 @@ ActiveMediaStore.dispatchToken = AppDispatcher.register(function(action) {
 
         case ActionTypes.MEDIA_PREV_TRACK:
             ActiveMediaStore._handlePrevTrack();
+            break;
+
+        case ActionTypes.MEDIA_VOLUME_CHANGE:
+            ActiveMediaStore._handleVolumeChange(action);
             break;
 
         default:

@@ -8,8 +8,17 @@ var UriUtils = {
 		console.log(file);
 		
 		newURI = file.path;
-		newURI = ServerConstants.BASE + '?' + ServerConstants.MEDIA_QPARAM + '=' + newURI;
+		newURI = ServerConstants.MEDIA_HOME_BASE + '?' + ServerConstants.MEDIA_QPARAM + '=' + newURI;
 		return encodeURIComponent(newURI);
+
+		// return encodeURI(
+		// 	ServerConstants.BASE + 
+		// 	ServerConstants.MEDIA_HOME_BASE + 
+		// 	'?' + 
+		// 	ServerConstants.MEDIA_QPARAM + 
+		// 	'=' + 
+		// 	encodeURIComponent(file.path)
+		// );
 	},
 
 	stripHTTP : function(uri) {

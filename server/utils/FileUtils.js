@@ -15,6 +15,11 @@ var fileutils = {
             dir += '/';
 
         fs.readdirSync(dir).forEach(function(file) {
+            // don't return hidden folders or files
+            if (file.startsWith(".")) {
+                return;
+            }
+
             file = {
                 path : dir + file,
                 type : fileTypes.UNKNOWN

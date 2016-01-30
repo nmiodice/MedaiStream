@@ -10,4 +10,5 @@ module.exports = keyMirror({
     MEDIA_PLAY_STATE_TOGGLE  : null,
     MEDIA_NEXT_TRACK         : null,
     MEDIA_PREV_TRACK		 : null,
+    MEDIA_VOLUME_CHANGE      : null,
 });

@@ -27,6 +27,13 @@ var ActiveMediaActionCreator = {
         AppDispatcher.dispatch({
             type : ActionTypes.MEDIA_PREV_TRACK
         });
+    },
+
+    setVolume : function(volume) {
+        AppDispatcher.dispatch({
+            type   : ActionTypes.MEDIA_VOLUME_CHANGE,
+            volume : volume
+        });
     }
 };
 

@@ -1,34 +1,71 @@
 .active-media-item {
-    background-color: #C4C4BB;
-    -webkit-filter: invert(1);
-    filter: invert(1);
+    /*background-color: #BBBCB6;*/
+  /*background-image: url("img/tile-navigation.png");*/
+
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.1), 
+      rgba(0, 0, 0, 0.1)
+    ), url("img/tile-navigation.png");
+
+/*    -webkit-filter: invert(1);
+    filter: invert(1);*/
 }
 
 body {
 	padding-top: 60px; /* for navbar */
-	background-color: #F8FFFF;
+	background-image: url("img/tile-body.png");
+	/*background-color: #F8FFFF;*/
+}
+
+.navbar-inner {
+  background-image: url("img/tile-navigation.png");
+}
+
+.body-bottom-adjust {
+	margin-bottom: 60px;
 }
 
 .default-margin {
 	margin : 16px;
 }
 
-.img-inverse {
+.img-media {
+/*
     -webkit-filter: invert(1);
     filter: invert(1);
+*/
 }
 
 .media-controller {
-	background-color : #3B3B44;
+	/*background-color : #3B3B44;*/
+	background-image: url("img/tile-navigation.png");
+
 }
 
 .navbar-default {
-    background-color: #3B3B44;
+    /*background-color: #3B3B44;*/
     border-color: #DE887E;
 }
 
-.small {
+.shrink-35 {
+	transform: scale(0.35, 0.35);
+	-ms-transform: scale(0.35, 0.35);
+	-webkit-transform: scale(0.35, 0.35);
+}
+
+.shrink-50 {
+	transform: scale(0.5, 0.5);
+	-ms-transform: scale(0.5, 0.5);
+	-webkit-transform: scale(0.5, 0.5);
+}
+
+.shrink-65 {
 	transform: scale(0.65, 0.65);
 	-ms-transform: scale(0.65, 0.65);
 	-webkit-transform: scale(0.65, 0.65);
+}
+
+.volume {
+	display: inline-block;
+	vertical-align : middle;
 }

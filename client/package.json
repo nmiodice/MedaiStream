@@ -19,7 +19,7 @@
     "watchify"        : "^2.1.1",
     "jquery"          : "2.2.0",
     "bootstrap"       : "3.3.6",
-    "howler"          : "1.1.29"
+    "howler"          : "2.0.0-beta7"
   },
   "scripts"         : {
     "start"           : "watchify -o ../www/bundle.js -v -d js/app.js",
