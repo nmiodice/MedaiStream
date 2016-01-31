@@ -9,13 +9,13 @@ var LinkedListUtils = require('../utils/LinkedListUtils')
 
 var RemoteFileActionCreator = {
 
-    goBackOneURI : function() {
+    moveUpDirectory : function() {
         AppDispatcher.dispatch({
             type : ActionTypes.MEDIA_URI_UP
         });
     },
 
-    changeMediaURI : function(file, media_uri) {
+    setFile : function(file) {
         console.log("changing to: " + file.path);
 
         AppDispatcher.dispatch({
@@ -23,10 +23,10 @@ var RemoteFileActionCreator = {
             path  : file.path
         });
 
-        RemoteFileActionCreator.loadFilesFromServer();
+        RemoteFileActionCreator.fetchFiles();
     },
 
-    loadFilesFromServer : function() {
+    fetchFiles : function() {
         console.log("requesting files from server");
 
         var parent = RemoteFileStore.getFileData();

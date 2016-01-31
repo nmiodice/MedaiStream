@@ -23,7 +23,7 @@
   },
   "scripts"         : {
     "start"           : "watchify -o ../www/bundle.js -v -d js/app.js",
-    "build"           : "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > js/bundle.min.js",
+    "build"           : "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > ../www/bundle.min.js",
     "test"            : "jest"
   },
   "author"          : "Nicholas M. Iodice",

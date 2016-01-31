@@ -5,7 +5,8 @@ var VolumeBar = require('./VolumeBar.react')
 
 function getStateFromStores() {
     return  {
-        playing : ActiveMediaStore.getIsPlaying()
+        playing     : ActiveMediaStore.getIsPlaying(),
+        activeMedia : ActiveMediaStore.getActiveMedia()
     }
 }
 
@@ -39,15 +40,14 @@ var MediaController = React.createClass({
         ActiveMediaActionCreator.togglePlayState();
     },
 
-    _onVolumeClick : function()  {
-        alert('implement!');
-    },
-
     render: function() {
         var file = this.props.file;
         var playPauseIcon = 'img/play.png';
         var nextIcon      = 'img/next.png';
         var prevIcon      = 'img/previous.png';
+
+        if (this.state.activeMedia == null)
+            return null;
 
         if (this.state.playing)
             playPauseIcon = 'img/pause.png';

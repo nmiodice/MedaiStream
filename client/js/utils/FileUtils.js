@@ -1,6 +1,7 @@
 var FileConstants = require('../../../common/constants/FileConstants')
 
 var FileUtils = {
+
 	fileToDisplayString : function(file) {
 
 		switch (file.type) {
@@ -22,7 +23,7 @@ var FileUtils = {
 	makeDirectoryName : function(path) {
 		if (path.slice(-1) == "/")
 			return path;
-		return path + "/";
+		return path ;
 	}
 }
 

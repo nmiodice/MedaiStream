@@ -29,11 +29,24 @@ body {
 	margin : 16px;
 }
 
+.default-margin-verticle {
+	margin-top : 16px;
+	margin-bottom : 16px;
+}
+
 .img-media {
 /*
     -webkit-filter: invert(1);
     filter: invert(1);
 */
+}
+
+.light-text {
+	color: #F4F4F4;
+}
+
+.list-group-item:hover {
+    background: url("img/tile-navigation.png");
 }
 
 .media-controller {

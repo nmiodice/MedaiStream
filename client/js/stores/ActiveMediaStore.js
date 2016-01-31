@@ -2,7 +2,7 @@ var EventEmitter        = require('events').EventEmitter;
 var AppDispatcher       = require('../dispatcher/AppDispatcher');
 var ActionTypes         = require('../constants/ActionTypes');
 var assign              = require('object-assign');
-var howler       = require('howler')
+var Howler       = require('howler')
 var UriUtils     = require('../utils/UriUtils')
 var LinkedListUtils     = require('../utils/LinkedListUtils')
 var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
@@ -51,6 +51,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         var playlist = LinkedListUtils.fromList(active.parent.files)
 
         _activeMediaNode = LinkedListUtils.find(playlist, active);
+        console.log(_activeMediaNode);
     },
 
     _playFromCurrentTrack : function() {
@@ -60,21 +61,25 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         }
 
         var uri = UriUtils.fileToURI(_activeMediaNode.data);
-        console.log(uri);
         _sound = new Howl({
             src     : [uri],
             volume  : _volume,
-            html5   : true,
+            html5   : true,  // faster, but some songs don't trigger 'onend' properly
             onend   : ActiveMediaStore._handleNextTrack,
+            onload  : function() {
+                _sound.play();
+                _isPlaying = true;
+                console.log('sound active')
+                console.log(_sound);
+                ActiveMediaStore.emitChange();
+            }
         });
-        _sound.play();
-        _isPlaying = true;        
+
     },
 
     _handleMediaBecomingActive : function(action) {
         ActiveMediaStore._setPlayListFromFile(action.file);
         ActiveMediaStore._playFromCurrentTrack();
-        ActiveMediaStore.emitChange();
     },
 
     _handleMediaPlayStateTogge : function(action) {

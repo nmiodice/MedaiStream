@@ -27,8 +27,7 @@ var FileListItem = React.createClass({
 		
 		switch (file.type) {
 			case FileTypes.DIRECTORY:
-				var URI = UriUtils.fileToURI(file);
-				RemoteFileActionCreator.changeMediaURI(file, URI);
+				RemoteFileActionCreator.setFile(file);
 				break;
 
 			case FileTypes.FILE:
@@ -53,7 +52,7 @@ var FileListItem = React.createClass({
 
     	switch (file.type) {
 			case FileTypes.DIRECTORY:
-				iconClass = "glyphicon glyphicon-folder-open"
+				iconClass = "glyphicon glyphicon-folder-close"
 				break;
 
 			case FileTypes.FILE:

@@ -101,7 +101,12 @@ var fileutils = {
     },
 
     read : function(fp, callback) {
-        fs.readFile(fp, callback);
+        var stats = fs.statSync(fp)
+        var size = stats["size"]
+
+        fs.readFile(fp, function(error, content) {
+            callback(error, content, size);
+        });
     },
 }
 

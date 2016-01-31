@@ -31,7 +31,7 @@ var NavigationController = React.createClass({
     },
 
     _onGoBackClick : function() {
-        RemoteFileActionCreator.goBackOneURI();
+        RemoteFileActionCreator.moveUpDirectory();
     },
 
     render: function() {
@@ -40,23 +40,23 @@ var NavigationController = React.createClass({
         var name     = UriUtils.stripHTTP(path);
         var stackPos = this.state.stackPos;
         var disabledButton = stackPos == 0;
-
+        
         if (name == '' || name == '/') {
-            name = "Media root directory...";
+            name = "";
         }
 
         return (
-            <div className="container default-margin">
+            <div className="container default-margin-verticle">
                 <span>
                     <a
                         role="button" 
                         className="btn btn-default btn-sm"
                         disabled={disabledButton}
                         onClick={this._onGoBackClick}>
-                        Back
+                        &#8592;
                     </a>
                 </span>
-                <span className="default-margin">{name}</span>
+                <span className="default-margin light-text">{name}</span>
             </div>
         );
     }

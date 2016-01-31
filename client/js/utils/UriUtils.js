@@ -4,21 +4,12 @@ var ServerConstants = require('../constants/ServerConstants')
 
 var UriUtils = {
 	fileToURI : function(file) {
-		console.log("converting file to URI");
+		console.log("converting file to uri: ");
 		console.log(file);
 		
-		newURI = file.path;
-		newURI = ServerConstants.MEDIA_HOME_BASE + '?' + ServerConstants.MEDIA_QPARAM + '=' + newURI;
-		return encodeURIComponent(newURI);
-
-		// return encodeURI(
-		// 	ServerConstants.BASE + 
-		// 	ServerConstants.MEDIA_HOME_BASE + 
-		// 	'?' + 
-		// 	ServerConstants.MEDIA_QPARAM + 
-		// 	'=' + 
-		// 	encodeURIComponent(file.path)
-		// );
+		uri = file.path;
+		uri = ServerConstants.MEDIA_HOME_BASE + '?' + ServerConstants.MEDIA_QPARAM + '=' + uri;
+		return encodeURIComponent(uri);
 	},
 
 	stripHTTP : function(uri) {

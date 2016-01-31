@@ -2,7 +2,9 @@ var fileUtils = require('../utils/FileUtils')
 
 var handler = {
 	handle : function(request, response, filePath) {
-		var content =  {
+
+		var content;		
+		content =  {
 			files : fileUtils.getFileListing(filePath)
 		};
 		var type = fileUtils.getMimeType("application/json");

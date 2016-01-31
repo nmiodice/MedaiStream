@@ -1,0 +1,5 @@
+1. double click track to play
+4. media controls when off screen
+6. folder icon: bland
+7. text color: change for folders/files
+keyboard controls
