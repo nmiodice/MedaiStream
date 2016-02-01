@@ -15,8 +15,16 @@ function getStateFromStores() {
     }
 }
 
+var searchKeys = []
+
+for (i = ' '.charCodeAt(0); i < '}'.charCodeAt(0) + 1; i++)
+    searchKeys.push(String.fromCharCode(i));
+
 var FileListContainer = React.createClass({
-    
+    searchTerm : '',
+
+    lastSearchTime : -1,
+
     getInitialState: function() {
         return getStateFromStores();
     },
@@ -28,6 +36,7 @@ var FileListContainer = React.createClass({
         Mousetrap.bind('down', this._onNextFile);
         Mousetrap.bind('up', this._onPrevFile);
         Mousetrap.bind('enter', this._onLoadFile);
+        Mousetrap.bind(searchKeys, this._onFilter);
     },
 
     componentWillUnmount: function() {
@@ -36,6 +45,7 @@ var FileListContainer = React.createClass({
         Mousetrap.unbind('down');
         Mousetrap.unbind('up');
         Mousetrap.unbind('enter');
+        Mousetrap.unbind(searchKeys);
     },
 
     _onNextFile : function() {
@@ -51,6 +61,34 @@ var FileListContainer = React.createClass({
         if (selectedFile == null)
             return;
         FileUtils.handleFile(selectedFile);
+    },
+
+    _onFilter : function(event) {
+        event.preventDefault();
+        var now = new Date().getTime();
+        var diff = now - this.lastSearchTime;
+
+        this.lastSearchTime = now;
+        if (diff > 1000) {
+            this.searchTerm = '';
+        }
+
+        this.searchTerm += String.fromCharCode(event.keyCode).toLowerCase();
+        console.log(this.searchTerm);
+
+        var files = this.state.file.files;
+        for (i = 0; i < files.length; i++) {
+            var f = files[i];
+            var fdisp = FileUtils.fileToDisplayString(f);
+
+            fdisp = fdisp.toLowerCase();
+
+            if (fdisp.startsWith(this.searchTerm)) {
+                FileListActionCreator.setSelectedRow(f);
+                return;
+            }
+        }
+
     },
 
     _onChange : function() {

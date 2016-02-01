@@ -81,6 +81,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             onloaderror : function() {
                 _sound = null;
                 _isPlaying = false;
+                ActiveMediaStore.emitChange();
             }
         });
 

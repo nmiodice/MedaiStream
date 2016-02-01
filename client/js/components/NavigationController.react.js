@@ -21,7 +21,6 @@ var NavigationController = React.createClass({
         RemoteFileStore.addChangeListener(this._onChange);
         Mousetrap.bind('backspace', function(event) {
             event.preventDefault();
-            event.cancelBubble = true;
             this._onGoBackClick();
         }.bind(this), 'keydown');
     },
