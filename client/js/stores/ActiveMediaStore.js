@@ -16,6 +16,8 @@ var _isPlaying = false;
 
 var _sound = null;
 
+var _soundID = null;
+
 var _volume = 0.5;
 
 var ActiveMediaStore = assign({}, EventEmitter.prototype, {
@@ -58,19 +60,21 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         if (_sound) {
             _sound.stop();
             _sound.unload();
+
+            _sound = null;
+            _soundID = null;
         }
 
         var uri = UriUtils.fileToURI(_activeMediaNode.data);
         _sound = new Howl({
             src     : [uri],
             volume  : _volume,
-            html5   : true,  // faster, but some songs don't trigger 'onend' properly
+            // html5   : true,  // faster, but some songs don't trigger 'onend' properly
             onend   : ActiveMediaStore._handleNextTrack,
             onload  : function() {
-                _sound.play();
+                _soundID = _sound.play();
+                _sound.seek(230);
                 _isPlaying = true;
-                console.log('sound active')
-                console.log(_sound);
                 ActiveMediaStore.emitChange();
             }
         });
@@ -87,9 +91,9 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             return;
 
         if (_isPlaying)
-            _sound.pause();
+            _sound.pause(_soundID);
         else
-            _sound.play();
+            _sound.play(_soundID);
         
         _isPlaying = !_isPlaying;
         ActiveMediaStore.emitChange();  

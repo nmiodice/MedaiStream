@@ -3,9 +3,11 @@ var FileListItem = require('./FileListItem.react');
 var UriUtils     = require('../utils/UriUtils')
 var FileUtils     = require('../utils/FileUtils')
 var FileTypes    = require('../../../common/constants/FileConstants').types;
-
+var Mousetrap    = require('Mousetrap')
 var RemoteFileStore = require('../stores/RemoteFileStore');
 var RemoteFileActionCreator = require('../actions/RemoteFileActionCreator');
+var FileListStore            = require('../stores/FileListStore')
+var FileListActionCreator = require('../actions/FileListActionCreator');
 
 function getStateFromStores() {
     return  {
@@ -22,10 +24,33 @@ var FileListContainer = React.createClass({
     componentDidMount: function() {
         RemoteFileStore.addChangeListener(this._onChange);
         RemoteFileActionCreator.fetchFiles();
+
+        Mousetrap.bind('down', this._onNextFile);
+        Mousetrap.bind('up', this._onPrevFile);
+        Mousetrap.bind('enter', this._onLoadFile);
     },
 
     componentWillUnmount: function() {
         RemoteFileStore.removeChangeListener(this._onChange);
+
+        Mousetrap.unbind('down');
+        Mousetrap.unbind('up');
+        Mousetrap.unbind('enter');
+    },
+
+    _onNextFile : function() {
+        FileListActionCreator.nextRow();
+    },
+
+    _onPrevFile : function() {
+        FileListActionCreator.prevRow();
+    },
+
+    _onLoadFile : function() {
+        var selectedFile = FileListStore.getSelectedFile();
+        if (selectedFile == null)
+            return;
+        FileUtils.handleFile(selectedFile);
     },
 
     _onChange : function() {

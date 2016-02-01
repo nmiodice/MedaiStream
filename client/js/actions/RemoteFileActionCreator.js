@@ -2,7 +2,6 @@ var $               = require('jquery');
 var ActionTypes     = require('../constants/ActionTypes');
 var AppDispatcher   = require('../dispatcher/AppDispatcher');
 var RemoteFileStore = require('../stores/RemoteFileStore');
-var FileUtils       = require('../utils/FileUtils');
 var UriUtils        = require('../utils/UriUtils');
 var ServerConstants = require('../constants/ServerConstants');
 var LinkedListUtils = require('../utils/LinkedListUtils')
@@ -50,6 +49,14 @@ var RemoteFileActionCreator = {
             }
         });
     },
+
+    setSelectedRow : function(file) {
+
+        AppDispatcher.dispatch({
+            type  : ActionTypes.UI_ROW_SELECTED,
+            path  : file
+        });        
+    }
 };
 
 module.exports = RemoteFileActionCreator;

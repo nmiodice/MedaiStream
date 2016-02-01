@@ -1,5 +1,4 @@
 var RemoteFileStore = require('../stores/RemoteFileStore');
-var FileUtils       = require('./FileUtils');
 var ServerConstants = require('../constants/ServerConstants')
 
 var UriUtils = {

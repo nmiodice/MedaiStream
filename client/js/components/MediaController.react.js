@@ -2,6 +2,7 @@ var React        = require('react');
 var ActiveMediaStore = require('../stores/ActiveMediaStore');
 var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
 var VolumeBar = require('./VolumeBar.react')
+var Mousetrap = require('Mousetrap')
 
 function getStateFromStores() {
     return  {
@@ -18,10 +19,16 @@ var MediaController = React.createClass({
 
     componentDidMount: function() {
         ActiveMediaStore.addChangeListener(this._onChange)
+        Mousetrap.bind('space', this._onPlayPauseClick);
+        Mousetrap.bind('left', this._onPrevClick);
+        Mousetrap.bind('right', this._onNextClick);
     },
 
     componentWillUnmount: function() {
         ActiveMediaStore.removeChangeListener(this._onChange)
+        Mousetrap.unbind('space');
+        Mousetrap.unbind('left');
+        Mousetrap.unbind('right');
     },
 
     _onChange : function() {

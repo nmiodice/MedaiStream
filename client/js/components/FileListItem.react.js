@@ -5,72 +5,75 @@ var React                    = require('react');
 var FileTypes                = require('../../../common/constants/FileConstants').types;
 var UriUtils                 = require('../utils/UriUtils');
 var ActiveMediaStore         = require('../stores/ActiveMediaStore');
+var FileListActionCreator    = require('../actions/FileListActionCreator')
+var FileListStore            = require('../stores/FileListStore')
 
 var FileListItem = React.createClass({
 
     componentDidMount: function() {
         ActiveMediaStore.addChangeListener(this._onChange);
+        FileListStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function() {
         ActiveMediaStore.removeChangeListener(this._onChange);
+        FileListStore.removeChangeListener(this._onChange);
     },
 
     _onChange : function() {
-    	// when file becomes active, file object doesn't change,
-    	// but the rendering for this component might
+        // when file becomes active, file object doesn't change,
+        // but the rendering for this component might
         this.forceUpdate();
     },
 
-	_onClick : function() {
-		var file = this.props.file;
-		
-		switch (file.type) {
-			case FileTypes.DIRECTORY:
-				RemoteFileActionCreator.setFile(file);
-				break;
+    _onSelect : function(event) {
+        FileListActionCreator.setSelectedRow(this.props.file);
+    },
 
-			case FileTypes.FILE:
-				ActiveMediaActionCreator.setActivePlaylist(file);
-				break;
+    _onLoad : function(event) {
+        var file = this.props.file;
+        FileListActionCreator.setSelectedRow(this.props.file);
+        FileUtils.handleFile(file);
+        event.stopPropagation();
+        event.cancelBubble = true;
+    },
 
-			default:
-				break;
-		}
-	},
+    render: function() {
+        var file = this.props.file;
+        var text = FileUtils.fileToDisplayString(file);
+        var iconClass;
+        var activeFile = ActiveMediaStore.getActiveMedia();
+        var selectedFile = FileListStore.getSelectedFile();
 
-  	render: function() {
-  		var file = this.props.file;
-  		var text = FileUtils.fileToDisplayString(file);
-    	var iconClass;
-    	var activeFile = ActiveMediaStore.getActiveMedia();
+        var className = "list-group-item noselect";
+        if (activeFile != null && file.path == activeFile.path) {
+            className += " active-media-item";
+        } else if (selectedFile != null && file.path == selectedFile.path) {
+            className += " active-media-item";
+        }
 
-    	var className = "list-group-item noselect";
-    	if (activeFile != null && file.path == activeFile.path) {
-    		className += " active-media-item"
-    	}
+        switch (file.type) {
+            case FileTypes.DIRECTORY:
+                iconClass = "glyphicon glyphicon-folder-close"
+                break;
 
-    	switch (file.type) {
-			case FileTypes.DIRECTORY:
-				iconClass = "glyphicon glyphicon-folder-close"
-				break;
+            case FileTypes.FILE:
+                iconClass = "glyphicon glyphicon-play-circle"
+                break;
 
-			case FileTypes.FILE:
-				iconClass = "glyphicon glyphicon-play-circle"
-				break;
+            default:
+                iconClass = "glyphicon glyphicon-question-sign"
+                break;      
+        }
 
-			default:
-				iconClass = "glyphicon glyphicon-question-sign"
-				break;    	
-			}
-
-    	return (
-      		<li className={className} onClick={this._onClick}>
-      			<span className={iconClass}/>
-      			<a className="default-margin">{text}</a>
-      		</li>
-    	);
-  	}
+        return (
+            <li className={className} onClick={this._onSelect}>
+                <span className={iconClass}/>
+                <a className="default-margin" 
+                    onClick={this._onLoad}>{text}</a>
+                </li>
+        );
+    }
 
 });
 

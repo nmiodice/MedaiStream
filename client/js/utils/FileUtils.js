@@ -1,4 +1,7 @@
-var FileConstants = require('../../../common/constants/FileConstants')
+var FileConstants            = require('../../../common/constants/FileConstants')
+var FileTypes                = require('../../../common/constants/FileConstants').types;
+var RemoteFileActionCreator  = require('../actions/RemoteFileActionCreator');
+var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
 
 var FileUtils = {
 
@@ -24,6 +27,22 @@ var FileUtils = {
 		if (path.slice(-1) == "/")
 			return path;
 		return path ;
+	},
+
+	handleFile : function(file) {
+		console.log(RemoteFileActionCreator);
+        switch (file.type) {
+            case FileTypes.DIRECTORY:
+                RemoteFileActionCreator.setFile(file);
+                break;
+
+            case FileTypes.FILE:
+                ActiveMediaActionCreator.setActivePlaylist(file);
+                break;
+
+            default:
+                break;
+        }
 	}
 }
 
