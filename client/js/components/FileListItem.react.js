@@ -46,11 +46,14 @@ var FileListItem = React.createClass({
         var selectedFile = FileListStore.getSelectedFile();
 
         var className = "list-group-item noselect";
-        if (activeFile != null && file.path == activeFile.path) {
+        var isActive = activeFile != null && file.path == activeFile.path;
+        var isSelect = selectedFile != null && file.path == selectedFile.path;
+
+        if (isActive) {
             className += " active-media-item";
-        } else if (selectedFile != null && file.path == selectedFile.path) {
-            className += " active-media-item";
-        }
+        } else if (isSelect) {
+            className += " selected-media-item";
+        } 
 
         switch (file.type) {
             case FileTypes.DIRECTORY:
@@ -67,7 +70,7 @@ var FileListItem = React.createClass({
         }
 
         return (
-            <li className={className} onClick={this._onSelect}>
+            <li className={className} onClick={this._onSelect} onDoubleClick={this._onLoad}>
                 <span className={iconClass}/>
                 <a className="default-margin" 
                     onClick={this._onLoad}>{text}</a>

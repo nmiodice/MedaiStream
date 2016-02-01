@@ -1,7 +1,6 @@
-
 var React        = require('react');
 var UriUtils     = require('../utils/UriUtils')
-
+var Mousetrap    = require('Mousetrap')
 var RemoteFileStore = require('../stores/RemoteFileStore');
 var RemoteFileActionCreator = require('../actions/RemoteFileActionCreator');
 
@@ -20,10 +19,16 @@ var NavigationController = React.createClass({
 
     componentDidMount: function() {
         RemoteFileStore.addChangeListener(this._onChange);
+        Mousetrap.bind('backspace', function(event) {
+            event.preventDefault();
+            event.cancelBubble = true;
+            this._onGoBackClick();
+        }.bind(this), 'keydown');
     },
 
     componentWillUnmount: function() {
         RemoteFileStore.removeChangeListener(this._onChange);
+        Mousetrap.unbind('backspace');
     },
 
     _onChange : function() {

@@ -5,7 +5,6 @@ var assign              = require('object-assign');
 var Howler       = require('howler')
 var UriUtils     = require('../utils/UriUtils')
 var LinkedListUtils     = require('../utils/LinkedListUtils')
-var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
 
 
 var CHANGE_EVENT = 'change';
@@ -57,6 +56,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
     },
 
     _playFromCurrentTrack : function() {
+        console.log(_sound)
         if (_sound) {
             _sound.stop();
             _sound.unload();
@@ -64,18 +64,23 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _sound = null;
             _soundID = null;
         }
-
         var uri = UriUtils.fileToURI(_activeMediaNode.data);
         _sound = new Howl({
+            // html5   : true,  // faster, but some songs don't trigger 'onend' properly
             src     : [uri],
             volume  : _volume,
-            // html5   : true,  // faster, but some songs don't trigger 'onend' properly
-            onend   : ActiveMediaStore._handleNextTrack,
+            onend   : function() {
+                _isPlaying = false;
+                ActiveMediaStore._handleNextTrack()
+            },
             onload  : function() {
                 _soundID = _sound.play();
-                _sound.seek(230);
                 _isPlaying = true;
                 ActiveMediaStore.emitChange();
+            },
+            onloaderror : function() {
+                _sound = null;
+                _isPlaying = false;
             }
         });
 
