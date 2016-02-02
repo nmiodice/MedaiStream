@@ -1,13 +1,13 @@
 var React                   = require('react');
 var FileListItem            = require('./FileListItem.react');
-var UriUtils                = require('../utils/UriUtils')
-var FileUtils               = require('../utils/FileUtils')
-var FileTypes               = require('../../../common/constants/FileConstants').types;
+var UriUtils                = require('../../utils/UriUtils')
+var FileUtils               = require('../../utils/FileUtils')
+var FileTypes               = require('../../../../common/constants/FileConstants').types;
 var Mousetrap               = require('Mousetrap');
-var RemoteFileStore         = require('../stores/RemoteFileStore');
-var RemoteFileActionCreator = require('../actions/RemoteFileActionCreator');
-var FileListStore           = require('../stores/FileListStore')
-var FileListActionCreator   = require('../actions/FileListActionCreator');
+var RemoteFileStore         = require('../../stores/RemoteFileStore');
+var RemoteFileActionCreator = require('../../actions/RemoteFileActionCreator');
+var FileListStore           = require('../../stores/FileListStore')
+var FileListActionCreator   = require('../../actions/FileListActionCreator');
 
 function getStateFromStores() {
     return  {

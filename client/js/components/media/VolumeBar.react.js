@@ -1,6 +1,6 @@
 var React                    = require('react');
-var ActiveMediaStore         = require('../stores/ActiveMediaStore');
-var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
+var ActiveMediaStore         = require('../../stores/ActiveMediaStore');
+var ActiveMediaActionCreator = require('../../actions/ActiveMediaActionCreator');
 
 
 function getStateFromStores() {

@@ -1,8 +1,8 @@
 var React                = require('react');
-var FileListContainer    = require('./FileListContainer.react')
+var FileListContainer    = require('./nav/FileListContainer.react')
 var AppBar               = require('./AppBar.react')
-var NavigationController = require('./NavigationController.react');
-var MediaController      = require('./MediaController.react');
+var NavigationController = require('./nav/NavigationController.react');
+var MediaController      = require('./media/MediaController.react');
 
 var Main = React.createClass({
 

@@ -1,13 +1,10 @@
 var $                        = require('jquery');
-var RemoteFileActionCreator  = require('../actions/RemoteFileActionCreator');
-var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
-var FileUtils                = require('../utils/FileUtils');
+var FileUtils                = require('../../utils/FileUtils');
 var React                    = require('react');
-var FileTypes                = require('../../../common/constants/FileConstants').types;
-var UriUtils                 = require('../utils/UriUtils');
-var ActiveMediaStore         = require('../stores/ActiveMediaStore');
-var FileListActionCreator    = require('../actions/FileListActionCreator')
-var FileListStore            = require('../stores/FileListStore')
+var FileTypes                = require('../../../../common/constants/FileConstants').types;
+var ActiveMediaStore         = require('../../stores/ActiveMediaStore');
+var FileListActionCreator    = require('../../actions/FileListActionCreator')
+var FileListStore            = require('../../stores/FileListStore')
 
 var FileListItem = React.createClass({
 
