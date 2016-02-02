@@ -48,6 +48,22 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         return _volume;
     },
 
+    getDonePercentage : function() {
+        var progress = 0;
+        if (_sound != null && _sound.duration() > 0) {
+            progress = _sound.seek() / _sound.duration();
+        }
+        return progress * 100;
+    },
+
+    getFilePos : function() {
+        return _sound == null ? 0 : _sound.seek();
+    },
+
+    getFileDuration : function() {
+        return _sound == null ? 0 : _sound.duration();
+    },
+
     _setPlayListFromFile : function(active) {
         var playlist = LinkedListUtils.fromList(active.parent.files)
 
@@ -82,7 +98,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
                 _sound = null;
                 _isPlaying = false;
                 ActiveMediaStore.emitChange();
-            }
+            },
         });
 
     },
@@ -128,6 +144,12 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _sound.volume(_volume);
         }
         ActiveMediaStore.emitChange();
+    },
+
+    _handleSeek : function(event) {
+        if (_sound) {
+            _sound.seek(event.time);
+        }
     }
 
 });
@@ -154,6 +176,10 @@ ActiveMediaStore.dispatchToken = AppDispatcher.register(function(action) {
 
         case ActionTypes.MEDIA_VOLUME_CHANGE:
             ActiveMediaStore._handleVolumeChange(action);
+            break;
+
+        case ActionTypes.MEDIA_SEEK:
+            ActiveMediaStore._handleSeek(action);
             break;
 
         default:

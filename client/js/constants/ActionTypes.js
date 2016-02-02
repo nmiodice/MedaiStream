@@ -11,6 +11,7 @@ module.exports = keyMirror({
     MEDIA_NEXT_TRACK         : null,	// skip track
     MEDIA_PREV_TRACK		 : null,	// go back track
     MEDIA_VOLUME_CHANGE      : null,	// change volume
+    MEDIA_SEEK               : null,    // go to track position
 
     UI_ROW_SELECTED          : null,    // row selected
     UI_ROW_NEXT              : null,    // row selected

@@ -1,8 +1,9 @@
 var React                    = require('react');
 var ActiveMediaStore         = require('../../stores/ActiveMediaStore');
 var ActiveMediaActionCreator = require('../../actions/ActiveMediaActionCreator');
-var VolumeBar                = require('./VolumeBar.react')
-var Mousetrap                = require('Mousetrap')
+var VolumeBar                = require('./VolumeBar.react');
+var AudioInfoBar             = require('./AudioInfoBar.react');
+var Mousetrap                = require('Mousetrap');
 
 function getStateFromStores() {
     return  {
@@ -61,21 +62,24 @@ var MediaController = React.createClass({
 
         return (
             <div className="footer text-center navbar-fixed-bottom media-controller container-fluid">
-                <img 
-                    className="img-inverse shrink-65" 
-                    src={prevIcon}
-                    onClick={this._onPrevClick}/>
-                
-                <img 
-                    className="img-inverse shrink-65" 
-                    src={playPauseIcon}
-                    onClick={this._onPlayPauseClick}/>
-                
-                <img 
-                    className="img-inverse shrink-65" 
-                    src={nextIcon}
-                    onClick={this._onNextClick}/>
-                <VolumeBar/>                
+                <div className="col-xs-4">
+                    <img 
+                        className="img-inverse shrink-35" 
+                        src={prevIcon}
+                        onClick={this._onPrevClick}/>
+                    
+                    <img 
+                        className="img-inverse shrink-35" 
+                        src={playPauseIcon}
+                        onClick={this._onPlayPauseClick}/>
+                    
+                    <img 
+                        className="img-inverse shrink-35" 
+                        src={nextIcon}
+                        onClick={this._onNextClick}/>
+                </div>
+                <AudioInfoBar gridClass='col-xs-4'/>                
+                <VolumeBar gridClass='col-xs-4'/>
             </div>
         );
     }

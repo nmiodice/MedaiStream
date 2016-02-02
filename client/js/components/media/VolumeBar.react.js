@@ -48,15 +48,16 @@ var VolumeBar = React.createClass({
         var volUp    = 'img/volume-high.png';
         var volDown  = 'img/volume-low.png'
         var volume   = this.state.volume;
+        var cName = this.props.gridClass;
 
         return (
-            <div className="volume">
+            <div className={cName}>
                 <img 
                     className="img-inverse shrink-35" 
                     src={volDown}
                     onClick={this._onMute}/>
 
-                <div className="volume">
+                <div className="inline">
                     <input 
                         type="range"  
                         min="0" 

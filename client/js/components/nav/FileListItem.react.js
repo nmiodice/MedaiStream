@@ -37,8 +37,6 @@ var FileListItem = React.createClass({
         var mTop = me.offset().top - bOff;
         var mBtm = mTop + me.height();
 
-        console.log([bTop, bBtm, mTop, mBtm, $(window).height()])
-
         // row is above the viewport
         if (mTop < bTop) {
             body.scrollTop(mTop - 25);

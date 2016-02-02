@@ -34,6 +34,13 @@ var ActiveMediaActionCreator = {
             type   : ActionTypes.MEDIA_VOLUME_CHANGE,
             volume : volume
         });
+    },
+
+    setSeekPosition : function(secs) {
+        AppDispatcher.dispatch({
+            type : ActionTypes.MEDIA_SEEK,
+            time : secs
+        });
     }
 };
 
