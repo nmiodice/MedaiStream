@@ -1,3 +1,4 @@
+var $                        = require('jquery');
 var RemoteFileActionCreator  = require('../actions/RemoteFileActionCreator');
 var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
 var FileUtils                = require('../utils/FileUtils');
@@ -24,6 +25,31 @@ var FileListItem = React.createClass({
         // when file becomes active, file object doesn't change,
         // but the rendering for this component might
         this.forceUpdate();
+        if (this._isSelected()) {
+            this._scrollToOnScreen();
+        }
+    },
+
+    _scrollToOnScreen : function() {
+        var me = $(this.getDOMNode());
+        var body = $('body');
+        var bOff = 60;
+
+        var bTop = body.scrollTop();
+        var bBtm = bTop + $(window).height();
+        var mTop = me.offset().top - bOff;
+        var mBtm = mTop + me.height();
+
+        console.log([bTop, bBtm, mTop, mBtm, $(window).height()])
+
+        // row is above the viewport
+        if (mTop < bTop) {
+            body.scrollTop(mTop - 25);
+
+        // row is below the viewport
+        } else if (mBtm + 200 > bBtm) {
+            body.scrollTop(mTop - $(window).height() + 200);
+        }
     },
 
     _onSelect : function(event) {
@@ -38,20 +64,27 @@ var FileListItem = React.createClass({
         event.cancelBubble = true;
     },
 
+    _isActive : function() {
+        var activeFile = ActiveMediaStore.getActiveMedia();
+        var file = this.props.file;
+        return activeFile != null && file.path == activeFile.path;
+    },
+
+    _isSelected : function() {
+        var selectedFile = FileListStore.getSelectedFile();
+        var file = this.props.file;
+        return isSelect = selectedFile != null && file.path == selectedFile.path;
+    },
+
     render: function() {
         var file = this.props.file;
         var text = FileUtils.fileToDisplayString(file);
         var iconClass;
-        var activeFile = ActiveMediaStore.getActiveMedia();
-        var selectedFile = FileListStore.getSelectedFile();
-
         var className = "list-group-item noselect";
-        var isActive = activeFile != null && file.path == activeFile.path;
-        var isSelect = selectedFile != null && file.path == selectedFile.path;
 
-        if (isActive) {
+        if (this._isActive()) {
             className += " active-media-item";
-        } else if (isSelect) {
+        } else if (this._isSelected()) {
             className += " selected-media-item";
         } 
 
@@ -74,7 +107,7 @@ var FileListItem = React.createClass({
                 <span className={iconClass}/>
                 <a className="default-margin" 
                     onClick={this._onLoad}>{text}</a>
-                </li>
+            </li>
         );
     }
 

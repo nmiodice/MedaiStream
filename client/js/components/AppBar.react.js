@@ -1,8 +1,6 @@
-
-var React        = require('react');
-var UriUtils     = require('../utils/UriUtils')
+var React           = require('react');
+var UriUtils        = require('../utils/UriUtils')
 var RemoteFileStore = require('../stores/RemoteFileStore');
-
 
 function getStateFromStores() {
     return  {

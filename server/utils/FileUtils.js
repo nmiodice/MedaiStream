@@ -1,7 +1,7 @@
-var fs     = require("fs");
-var path   = require('path');
+var fs            = require("fs");
+var path          = require('path');
 var fileLocations = require('../constants/FileLocationConstants')
-var fileTypes = require('../../common/constants/FileConstants').types;
+var fileTypes     = require('../../common/constants/FileConstants').types;
 
 var fileutils = {
 

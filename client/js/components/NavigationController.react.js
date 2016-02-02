@@ -1,7 +1,7 @@
-var React        = require('react');
-var UriUtils     = require('../utils/UriUtils')
-var Mousetrap    = require('Mousetrap')
-var RemoteFileStore = require('../stores/RemoteFileStore');
+var React                   = require('react');
+var UriUtils                = require('../utils/UriUtils')
+var Mousetrap               = require('Mousetrap')
+var RemoteFileStore         = require('../stores/RemoteFileStore');
 var RemoteFileActionCreator = require('../actions/RemoteFileActionCreator');
 
 function getStateFromStores() {

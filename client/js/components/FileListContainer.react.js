@@ -1,13 +1,13 @@
-var React        = require('react');
-var FileListItem = require('./FileListItem.react');
-var UriUtils     = require('../utils/UriUtils')
-var FileUtils     = require('../utils/FileUtils')
-var FileTypes    = require('../../../common/constants/FileConstants').types;
-var Mousetrap    = require('Mousetrap');
-var RemoteFileStore = require('../stores/RemoteFileStore');
+var React                   = require('react');
+var FileListItem            = require('./FileListItem.react');
+var UriUtils                = require('../utils/UriUtils')
+var FileUtils               = require('../utils/FileUtils')
+var FileTypes               = require('../../../common/constants/FileConstants').types;
+var Mousetrap               = require('Mousetrap');
+var RemoteFileStore         = require('../stores/RemoteFileStore');
 var RemoteFileActionCreator = require('../actions/RemoteFileActionCreator');
-var FileListStore            = require('../stores/FileListStore')
-var FileListActionCreator = require('../actions/FileListActionCreator');
+var FileListStore           = require('../stores/FileListStore')
+var FileListActionCreator   = require('../actions/FileListActionCreator');
 
 function getStateFromStores() {
     return  {
@@ -17,6 +17,8 @@ function getStateFromStores() {
 
 var searchKeys = []
 
+// search any printable characters, identified by this range
+// note: unicode not supported due to lazy developer :)
 for (i = ' '.charCodeAt(0); i < '}'.charCodeAt(0) + 1; i++)
     searchKeys.push(String.fromCharCode(i));
 
@@ -37,6 +39,8 @@ var FileListContainer = React.createClass({
         Mousetrap.bind('up', this._onPrevFile);
         Mousetrap.bind('enter', this._onLoadFile);
         Mousetrap.bind(searchKeys, this._onFilter);
+
+        // this._resetHeight();
     },
 
     componentWillUnmount: function() {
@@ -48,11 +52,27 @@ var FileListContainer = React.createClass({
         Mousetrap.unbind(searchKeys);
     },
 
-    _onNextFile : function() {
+    // _resetHeight : function() {
+    //     var me = this.getDOMNode();
+    //     var top = me.previousSibling.getBoundingClientRect().bottom;
+    //     var btm = me.nextSibling.getBoundingClientRect().top;
+    //     me.top = top;
+    //     me.bottom = btm;
+    //     alert(top);
+    //     alert(btm);
+    // },
+
+    _onNextFile : function(event) {
+        if (event) {
+            event.preventDefault();
+        }
         FileListActionCreator.nextRow(this.state.file);
     },
 
-    _onPrevFile : function() {
+    _onPrevFile : function(event) {
+        if (event) {
+            event.preventDefault();
+        }
         FileListActionCreator.prevRow();
     },
 
@@ -74,9 +94,8 @@ var FileListContainer = React.createClass({
         }
 
         this.searchTerm += String.fromCharCode(event.keyCode).toLowerCase();
-        console.log(this.searchTerm);
-
         var files = this.state.file.files;
+
         for (i = 0; i < files.length; i++) {
             var f = files[i];
             var fdisp = FileUtils.fileToDisplayString(f);
@@ -88,7 +107,6 @@ var FileListContainer = React.createClass({
                 return;
             }
         }
-
     },
 
     _onChange : function() {
@@ -108,24 +126,28 @@ var FileListContainer = React.createClass({
         var path     = fileData.path;
         var name     = UriUtils.stripHTTP(path);
 
-        var hasDirectory = false;
+        this.searchTerm = '';
+        
+        var noDirectory = true;
         for (i = 0; i < fileData.files.length; i++) {
-            if (fileData.files[i].type == FileTypes.DIRECTORY)
-                hasDirectory = true;
-            if (hasDirectory)
+            if (fileData.files[i].type == FileTypes.DIRECTORY) {
+                noDirectory = false;
                 break;
+            }
         }
 
         return (
-            <div className="container body-bottom-adjust">
+            <div className="container body-bottom-adjust full-height">
 
-                <ul className="list-group">
-                    <div 
-                        className="list-group-item noselect"
-                        onClick={this._onSelectAll}>
-                        <span className={''}/>
-                        <a className="default-margin">{'Show all'}</a>
-                    </div>
+                <ul className="list-group file-list">
+                    {noDirectory ? null :
+                        <div 
+                            className="list-group-item noselect"
+                            onClick={this._onSelectAll}>
+                            <span className={''}/>
+                            <a className="default-margin">{'Show all'}</a>
+                        </div>}
+                    
 
                     {fileData.files.map(function(f) {
                         return <FileListItem file={f} key={f.path} isParent={false}/>;
@@ -139,4 +161,3 @@ var FileListContainer = React.createClass({
 });
 
 module.exports = FileListContainer;
-

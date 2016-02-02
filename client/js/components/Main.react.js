@@ -1,16 +1,15 @@
-
-var React             = require('react');
-var FileListContainer = require('./FileListContainer.react')
-var AppBar            = require('./AppBar.react')
+var React                = require('react');
+var FileListContainer    = require('./FileListContainer.react')
+var AppBar               = require('./AppBar.react')
 var NavigationController = require('./NavigationController.react');
-var MediaController = require('./MediaController.react');
+var MediaController      = require('./MediaController.react');
 
 var Main = React.createClass({
 
 	render: function() {
 		return (
-			<div>
-				<AppBar/>
+			<div className='main'>
+				<AppBar id='AppBar'/>
 				<NavigationController/>
 				<FileListContainer/>
 				<MediaController/>

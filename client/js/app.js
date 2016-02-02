@@ -5,8 +5,8 @@
  * This file bootstraps the entire application.
  */
 
-var Main = require('./components/Main.react');
-var React = require('react');
+var Main     = require('./components/Main.react');
+var React    = require('react');
 window.React = React;
 
 React.render(

@@ -1,8 +1,8 @@
-var EventEmitter        = require('events').EventEmitter;
-var AppDispatcher       = require('../dispatcher/AppDispatcher');
-var ActionTypes         = require('../constants/ActionTypes');
-var assign              = require('object-assign');
-var LinkedListUtils     = require('../utils/LinkedListUtils')
+var EventEmitter    = require('events').EventEmitter;
+var AppDispatcher   = require('../dispatcher/AppDispatcher');
+var ActionTypes     = require('../constants/ActionTypes');
+var assign          = require('object-assign');
+var LinkedListUtils = require('../utils/LinkedListUtils')
 
 var CHANGE_EVENT = 'change';
 

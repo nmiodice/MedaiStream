@@ -1,8 +1,8 @@
-var React        = require('react');
-var ActiveMediaStore = require('../stores/ActiveMediaStore');
+var React                    = require('react');
+var ActiveMediaStore         = require('../stores/ActiveMediaStore');
 var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
-var VolumeBar = require('./VolumeBar.react')
-var Mousetrap = require('Mousetrap')
+var VolumeBar                = require('./VolumeBar.react')
+var Mousetrap                = require('Mousetrap')
 
 function getStateFromStores() {
     return  {

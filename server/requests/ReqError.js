@@ -1,5 +1,5 @@
-var fileUtils  = require('../utils/FileUtils');
-var fileErrors = require('../../common/constants/FileConstants').errors;
+var fileUtils     = require('../utils/FileUtils');
+var fileErrors    = require('../../common/constants/FileConstants').errors;
 var fileLocations = require('../constants/FileLocationConstants');
 
 var handler = {
