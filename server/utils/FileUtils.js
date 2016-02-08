@@ -9,38 +9,68 @@ var fileutils = {
         return path.extname(fp)
     },
 
-    getFileListing : function(dir) {
+    _getFileListing : function(topDir, recursive, callback) {
+        if (topDir.slice(-1) != '/')
+            topDir += '/';
+        
         var results = [];
-        if (dir.slice(-1) != '/')
-            dir += '/';
+        var depth = 0;
 
-        fs.readdirSync(dir).forEach(function(file) {
-            // don't return hidden folders or files
-            if (file.startsWith(".")) {
-                return;
-            }
+        /**
+         * find files in a file system directory and accumulate files in 
+         * subdirectories only if the recursive flag is set to true. Uses
+         * callbacks and a depth counter to only respond when the full
+         * search is done
+         */
+        var walk = function(dir, recursive, callback) {
+            fs.readdir(dir, function(err, files) {
+                if (!err) {
+                    console.log(dir);
+                    console.log(files);
+                    files.forEach(function(file) {
+                        // don't return hidden folders or files
+                        if (file.startsWith(".")) return;
 
-            file = {
-                path : dir + file,
-                type : fileTypes.UNKNOWN
-            };
+                        file = {
+                            path : dir + file,
+                            type : fileTypes.UNKNOWN
+                        };
 
-            var stat = fs.statSync(file.path);
+                        var stat = fs.statSync(file.path);
+                        if (stat.isFile()) {
+                            file.type = fileTypes.FILE;
+                        } else if (stat.isDirectory()) {
+                            file.type = fileTypes.DIRECTORY;
+                        }
 
-            if (stat.isFile()) {
-                file.type = fileTypes.FILE;
-            } else if (stat.isDirectory()) {
-                file.type = fileTypes.DIRECTORY;
-            }
+                        if (stat.isDirectory() && recursive) {
+                            depth++;
+                        } else {
+                            results.push(file);
+                        }
+                    });
 
-            results.push(file);
-        });
+                    results.forEach(function(r) {
+                        r.path = r.path.replace(fileLocations.APP_LOCATION, '');
+                    });
+                }
 
-        results.forEach(function(r) {
-            r.path = r.path.replace(fileLocations.APP_LOCATION, '');
-        });
+                if (depth == 0)
+                    callback(err, results);
 
-        return results;
+                depth--;
+            });
+        };
+
+        walk(topDir, recursive, callback);
+    },
+
+    getFileListing : function(dir, callback) {
+        this._getFileListing(dir, false, callback);
+    },
+
+    getRecursiveFileListing : function(dir, callback) {
+        this._getFileListing(dir, true, callback);
     },
 
     getType : function(fp, callback) {

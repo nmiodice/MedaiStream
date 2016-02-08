@@ -1,15 +1,25 @@
-var fileUtils = require('../utils/FileUtils')
+var FileUtils = require('../utils/FileUtils')
 
 var handler = {
-	handle : function(request, response, filePath) {
+	handle : function(request, response, filePath, recursive) {
 
-		var content;		
-		content =  {
-			files : fileUtils.getFileListing(filePath)
+		var content = {};
+		var cbk = function(err, files) {
+			if (!err) {
+				content.files = files;
+				var type = FileUtils.getMimeType("application/json");
+				response.writeHead(200, { 'Content-Type': type });
+				response.end(JSON.stringify(content), 'utf-8');
+			} else {
+				console.log(err);
+			}
 		};
-		var type = fileUtils.getMimeType("application/json");
-		response.writeHead(200, { 'Content-Type': type });
-		response.end(JSON.stringify(content), 'utf-8');  
+
+		if (recursive) {
+			FileUtils.getRecursiveFileListing(filePath, cbk);
+		} else {
+			FileUtils.getFileListing(filePath, cbk);
+		}
 	}
 }
 

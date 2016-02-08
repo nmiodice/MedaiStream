@@ -80,7 +80,8 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _sound = null;
             _soundID = null;
         }
-        var uri = UriUtils.fileToURI(_activeMediaNode.data);
+        var uri = UriUtils.fileToURI(_activeMediaNode.data, true);
+
         _sound = new Howl({
             // html5   : true,  // faster, but some songs don't trigger 'onend' properly
             src     : [uri],
@@ -94,7 +95,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
                 _isPlaying = true;
                 ActiveMediaStore.emitChange();
             },
-            onloaderror : function() {
+            onloaderror : function(e) {
                 _sound = null;
                 _isPlaying = false;
                 ActiveMediaStore.emitChange();

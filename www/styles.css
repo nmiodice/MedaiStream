@@ -1,3 +1,7 @@
+a {
+    color: #2F363D;
+}
+
 .active-media-item {
 	/* darkens image */
     background: linear-gradient(
@@ -75,12 +79,7 @@ html {
     box-shadow: 0px 0px 15px 0px #3B3B44;
 }
 
-.navbar {
-	/*box-shadow: 0px 0px 15px 0px #3B3B44;*/
-}
-
 .navbar-default {
-    /*background-color: #3B3B44;*/
     border-color: #DE887E;
 }
 
@@ -98,6 +97,15 @@ html {
 	-o-user-select: none;
 	user-select: none;
 }
+
+/*progress {
+    background-color: #f3f3f3;
+    border: 0;
+    height: 18px;
+    border-radius: 9px;
+
+}
+*/
 
 .selected-media-item {
 	/* darkens image */

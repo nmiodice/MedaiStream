@@ -39,8 +39,6 @@ var FileListContainer = React.createClass({
         Mousetrap.bind('up', this._onPrevFile);
         Mousetrap.bind('enter', this._onLoadFile);
         Mousetrap.bind(searchKeys, this._onFilter);
-
-        // this._resetHeight();
     },
 
     componentWillUnmount: function() {
@@ -51,16 +49,6 @@ var FileListContainer = React.createClass({
         Mousetrap.unbind('enter');
         Mousetrap.unbind(searchKeys);
     },
-
-    // _resetHeight : function() {
-    //     var me = this.getDOMNode();
-    //     var top = me.previousSibling.getBoundingClientRect().bottom;
-    //     var btm = me.nextSibling.getBoundingClientRect().top;
-    //     me.top = top;
-    //     me.bottom = btm;
-    //     alert(top);
-    //     alert(btm);
-    // },
 
     _onNextFile : function(event) {
         if (event) {
@@ -114,11 +102,7 @@ var FileListContainer = React.createClass({
     },
 
     _onSelectAll : function() {
-        // var file = this.state.file;
-        // var wildFile = FileUtils.fileToWildcardFile(file);;
-        // var uri = UriUtils.fileToURI(wildFile);
-
-        // RemoteFileActionCreator.setFile(wildFile);
+        RemoteFileActionCreator.setFileRecursive(this.state.file);
     },
 
     render: function() {

@@ -23,9 +23,10 @@ var handler = {
 			while (media.charAt(0) == '/' || media.charAt(0) == '.')
 				media = media.substring(1);
 
+			console.log(queryData);
 			filePath = path.format({
-				dir   : fileLocations.APP_LOCATION,
-				base  : media,
+				dir       : fileLocations.APP_LOCATION,
+				base      : media
 			});
 		} else {
 			if (filePath == '') {
@@ -38,9 +39,7 @@ var handler = {
 			});
 		}
 
-		// filePath = decodeURIComponent(filePath);
 		console.log(filePath)
-
 		fileUtils.getType(filePath, function(type) {
 
 			switch (type) {
@@ -49,7 +48,7 @@ var handler = {
 					break;
 
 				case fileTypes.DIRECTORY:
-					reqDirectory.handle(request, response, filePath)
+					reqDirectory.handle(request, response, filePath, queryData.recursive == '1')
 					break;
 
 				default:

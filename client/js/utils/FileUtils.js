@@ -6,15 +6,7 @@ var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
 var FileUtils = {
 
 	fileToDisplayString : function(file) {
-
-		switch (file.type) {
-			case FileConstants.types.DIRECTORY:
-				return FileUtils.makeDirectoryName(FileUtils.getLastPathSection(file.path));
-
-			default:
-				return FileUtils.getLastPathSection(file.path);
-		}
-		
+		return FileUtils.getLastPathSection(file.path);		
 	},
 
 	getLastPathSection : function(path) {
@@ -23,15 +15,10 @@ var FileUtils = {
 		return path.replace(/^.*(\\|\/|\:)/, '');
 	},
 
-	makeDirectoryName : function(path) {
-		if (path.slice(-1) == "/")
-			return path;
-		return path ;
-	},
-
 	handleFile : function(file) {
 		console.log(RemoteFileActionCreator);
         switch (file.type) {
+        	
             case FileTypes.DIRECTORY:
                 RemoteFileActionCreator.setFile(file);
                 break;
@@ -41,6 +28,7 @@ var FileUtils = {
                 break;
 
             default:
+            	console.log("cannot handle file. type: " + file.type);
                 break;
         }
 	}

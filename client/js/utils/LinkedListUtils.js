@@ -12,7 +12,6 @@ var LinkedListUtils = {
 
 		});
 
-		console.log(head);
 		return head;
 	},
 
@@ -33,8 +32,6 @@ var LinkedListUtils = {
 	find : function(xs, x) {
 		var curr = xs;
 
-		console.log(xs);
-		console.log(x);
 		while (curr != null) {
 			if (curr.data == x)
 				return curr;

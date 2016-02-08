@@ -9,6 +9,7 @@ var constants = {
 	BASE              : base,
 	MEDIA_HOME_BASE   : '/',
 	MEDIA_QPARAM      : 'media',
+	RECURSE_QPARAM    : 'recursive'
 };
 
 module.exports = constants

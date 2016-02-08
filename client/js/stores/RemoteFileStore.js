@@ -53,7 +53,9 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
         _fileData        = {};
         _fileData.status = ConnectionConstants.CONNECTING;
         _fileData.path   = action.path;
-        _fileData.files  = []
+        _fileData.files  = [];
+        _fileData.recursive = action.recursive ? true : false;
+        
         RemoteFileStore.emitChange();
     },
 

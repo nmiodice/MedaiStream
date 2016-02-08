@@ -13,14 +13,22 @@ var RemoteFileActionCreator = {
     },
 
     setFile : function(file) {
-        console.log("changing to: " + file.path);
+        this._setFile(file, false);
+    },
 
+    setFileRecursive : function(file) {
+        this._setFile(file, true);
+    },
+
+    _setFile : function(file, recursive) {
+        console.log("changing to: " + file.path);
         AppDispatcher.dispatch({
-            type  : ActionTypes.MEDIA_URI_CHANGE,
-            path  : file.path
+            type      : ActionTypes.MEDIA_URI_CHANGE,
+            path      : file.path,
+            recursive : recursive
         });
 
-        RemoteFileActionCreator.fetchFiles();
+        this.fetchFiles();
     },
 
     fetchFiles : function() {
