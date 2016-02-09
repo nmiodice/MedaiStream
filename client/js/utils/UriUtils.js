@@ -3,16 +3,26 @@ var ServerConstants = require('../constants/ServerConstants')
 
 var UriUtils = {
 	fileToURI : function(file, skip_recursive_flag) {
-		console.log("converting file to uri: ");
-		console.log(file);
-		
-		uri = file.path;
-		uri = ServerConstants.MEDIA_HOME_BASE + '?' + ServerConstants.MEDIA_QPARAM + '=' + uri;
-		if (skip_recursive_flag)
-			return encodeURIComponent(uri);
 
-		uri += '&' + ServerConstants.RECURSE_QPARAM + '=' + (file.recursive ? '1' : '0');
-		return encodeURIComponent(uri);
+		//console.log("converting file to uri: ");
+		//console.log(file);
+		
+		var uri = encodeURIComponent(ServerConstants.MEDIA_HOME_BASE)
+			  + '?'
+			  + encodeURIComponent(ServerConstants.MEDIA_QPARAM)
+			  + '='
+			  + encodeURIComponent(file.path)
+
+		if (skip_recursive_flag === undefined || !skip_recursive_flag) {
+			uri += '&'
+			+ encodeURIComponent(ServerConstants.RECURSE_QPARAM)
+			+ '='
+			+  encodeURIComponent(file.recursive ? '1' : '0');
+		}
+
+		uri = encodeURIComponent(uri); // Howler.js won't load audio w/o this encoding
+		//console.log(uri);
+		return uri;
 	},
 
 	stripHTTP : function(uri) {
