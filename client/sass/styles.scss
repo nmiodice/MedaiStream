@@ -1,0 +1,172 @@
+$default-margin      : 16px;
+
+$color-dark          : #2F363D;
+$color-light         : #F4F4F4;
+$color-shadow        : #3B3B44;
+$color-nav-border    : #DE887E;
+
+$nav-height          : 60px;
+
+$img-primary         : "img/tile-body.png";
+$img-secondary       : "img/tile-navigation.png";
+
+
+
+
+
+
+
+@mixin background-primary() {
+  background: url($img-primary);
+}
+
+@mixin background-secondary() {
+  background: url($img-secondary);
+}
+
+@mixin drop-shadow() {
+  @include shadow(0px, 0px, 15px, 0px, $color-shadow);
+}
+
+@mixin img-gradient($c1, $c2, $background) {
+  background: linear-gradient($c1, $c2), $background;
+}
+
+@mixin scale($x) {
+  transform: scale($x, $x);
+  -ms-transform: scale($x, $x);
+  -webkit-transform: scale($x, $x);
+}
+
+@mixin shadow($o1, $o2, $o3, $o4, $c) {
+  box-shadow: $o1 $o2 $o3 $o4 $c;
+}
+
+@mixin list-formatter($width, $pos) {
+  position: fixed;
+  top: $nav-height + 4 * $default-margin;
+  bottom:0;
+
+  width: $width;
+  left: $width * $pos;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
+
+
+
+
+
+
+body {
+  @include background-primary;
+  padding-top: $nav-height;
+}
+
+html {
+  height: 100vh;
+}
+
+a {
+  color: $color-dark;
+}
+
+
+
+
+
+
+.active-media-item {
+  @include img-gradient(
+                  rgba(0, 0, 0, 0.1),
+                  rgba(0, 0, 0, 0.1),
+                  url($img-secondary) !important);
+}
+
+.audio-info-bar {
+  padding-top: 8px;
+}
+
+.audio-progress-bar {
+  width: 100%
+}
+
+.body-bottom-adjust {
+	margin-bottom: $nav-height;
+}
+
+.default-margin {
+	margin : $default-margin;
+}
+
+.default-margin-verticle {
+	margin-top : $default-margin;
+	margin-bottom : $default-margin;
+}
+
+.inline {
+	display: inline-block;
+	vertical-align : middle;
+}
+
+.light-text {
+	color: $color-light;
+}
+
+.list-group-container-left {
+  @include list-formatter(33%, 0)
+}
+
+.list-group-container-mid {
+  @include list-formatter(33%, 1)
+}
+
+.list-group-container-right {
+  @include list-formatter(33%, 2)
+}
+
+.list-group-item:hover {
+    @include background-secondary;
+}
+
+.media-controller {
+  @include background-secondary;
+  @include drop-shadow;
+}
+
+.navbar-default {
+    border-color: $color-nav-border;
+}
+
+.navbar-inner {
+  @include background-secondary;
+  @include drop-shadow;
+}
+
+.noselect {
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	user-select: none;
+}
+
+.selected-media-item {
+  @include img-gradient(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.025), url($img-secondary))
+}
+
+.shrink-35 {
+	@include scale(0.35);
+}
+
+.shrink-50 {
+  @include scale(0.50);
+}
+
+.shrink-65 {
+  @include scale(0.65);
+}
+
+.small-text {
+	font-size: 75%;
+}
+

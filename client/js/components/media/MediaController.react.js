@@ -64,17 +64,17 @@ var MediaController = React.createClass({
             <div className="footer text-center navbar-fixed-bottom media-controller container-fluid">
                 <div className="col-xs-4">
                     <img 
-                        className="img-inverse shrink-35" 
+                        className="shrink-35"
                         src={prevIcon}
                         onClick={this._onPrevClick}/>
                     
                     <img 
-                        className="img-inverse shrink-35" 
+                        className="shrink-35"
                         src={playPauseIcon}
                         onClick={this._onPlayPauseClick}/>
                     
                     <img 
-                        className="img-inverse shrink-35" 
+                        className="shrink-35"
                         src={nextIcon}
                         onClick={this._onNextClick}/>
                 </div>

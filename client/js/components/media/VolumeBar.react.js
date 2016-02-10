@@ -53,7 +53,7 @@ var VolumeBar = React.createClass({
         return (
             <div className={cName}>
                 <img 
-                    className="img-inverse shrink-35" 
+                    className="shrink-35"
                     src={volDown}
                     onClick={this._onMute}/>
 
@@ -67,7 +67,7 @@ var VolumeBar = React.createClass({
                 </div>
                 
                 <img 
-                    className="img-inverse shrink-35" 
+                    className="shrink-35"
                     src={volUp}
                     onClick={this._onMax}/>
 

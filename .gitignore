@@ -4,6 +4,11 @@
 # javascript files
 bundle.js
 
+# dot files
+.idea/
+.sass-cache/
+
 # full directories
 client/node_modules/
+client/.sass-cache/
 __examples/

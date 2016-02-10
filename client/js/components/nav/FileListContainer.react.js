@@ -10,9 +10,10 @@ var FileListStore           = require('../../stores/FileListStore')
 var FileListActionCreator   = require('../../actions/FileListActionCreator');
 
 function getStateFromStores() {
-    return  {
-        file : RemoteFileStore.getFileData(),
-    }
+    //return  {
+    //    file : RemoteFileStore.getFileData(),
+    //}
+    return {};
 }
 
 var searchKeys = []
@@ -54,7 +55,7 @@ var FileListContainer = React.createClass({
         if (event) {
             event.preventDefault();
         }
-        FileListActionCreator.nextRow(this.state.file);
+        FileListActionCreator.nextRow(this.props.file);
     },
 
     _onPrevFile : function(event) {
@@ -82,7 +83,7 @@ var FileListContainer = React.createClass({
         }
 
         this.searchTerm += String.fromCharCode(event.keyCode).toLowerCase();
-        var files = this.state.file.files;
+        var files = this.props.file.files;
 
         for (i = 0; i < files.length; i++) {
             var f = files[i];
@@ -102,18 +103,18 @@ var FileListContainer = React.createClass({
     },
 
     _onSelectAll : function() {
-        RemoteFileActionCreator.setFileRecursive(this.state.file);
+        RemoteFileActionCreator.setFileRecursive(this.props.file);
     },
 
     render: function() {
-        var fileData = this.state.file;
-        var path     = fileData.path;
-        var name     = UriUtils.stripHTTP(path);
+        var fileData = this.props.file;
+        var position = this.props.pos;
+        var isTop = this.props.isTop;
 
         this.searchTerm = '';
-        
         var noDirectory = true;
-        for (i = 0; i < fileData.files.length; i++) {
+
+        for (var i = 0; i < fileData.files.length; i++) {
             if (fileData.files[i].type == FileTypes.DIRECTORY) {
                 noDirectory = false;
                 break;
@@ -121,10 +122,10 @@ var FileListContainer = React.createClass({
         }
 
         return (
-            <div className="container body-bottom-adjust">
+            <div className={"container body-bottom-adjust list-group-container-" + position}>
 
                 <ul className="list-group file-list">
-                    {noDirectory ? null :
+                    {noDirectory ? null:
                         <div 
                             className="list-group-item noselect"
                             onClick={this._onSelectAll}>

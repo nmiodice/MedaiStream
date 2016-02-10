@@ -1,139 +1,108 @@
-a {
-    color: #2F363D;
-}
-
-.active-media-item {
-	/* darkens image */
-    background: linear-gradient(
-      rgba(0, 0, 0, 0.1), 
-      rgba(0, 0, 0, 0.1)
-    ), url("img/tile-navigation.png") !important;
-}
-
-.audio-info-bar {
-	padding-top: 8px;
-}
-
-.audio-progress-bar {
-	width: 100%
-}
-
 body {
-	padding-top: 60px; /* for navbar */
-	background-image: url("img/tile-body.png");
-	/*height: 100%;*/
-}
+  background: url("img/tile-body.png");
+  padding-top: 60px; }
 
 html {
-	height: 100vh;
-}
+  height: 100vh; }
+
+a {
+  color: #2F363D; }
+
+.active-media-item {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("img/tile-navigation.png") !important; }
+
+.audio-info-bar {
+  padding-top: 8px; }
+
+.audio-progress-bar {
+  width: 100%; }
 
 .body-bottom-adjust {
-	margin-bottom: 60px;
-}
+  margin-bottom: 60px; }
 
 .default-margin {
-	margin : 16px;
-}
+  margin: 16px; }
 
 .default-margin-verticle {
-	margin-top : 16px;
-	margin-bottom : 16px;
-}
-
-.float-left {
-	float: left;
-}
-
-.float-right {
-	float: right;
-}
-
-.img-media {
-/*
-    -webkit-filter: invert(1);
-    filter: invert(1);
-*/
-}
+  margin-top: 16px;
+  margin-bottom: 16px; }
 
 .inline {
-	display: inline-block;
-	vertical-align : middle;
-}
+  display: inline-block;
+  vertical-align: middle; }
 
 .light-text {
-	color: #F4F4F4;
-}
+  color: #F4F4F4; }
+
+.list-group-container-left {
+  position: fixed;
+  top: 124px;
+  bottom: 0;
+  width: 33%;
+  left: 0%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+
+.list-group-container-mid {
+  position: fixed;
+  top: 124px;
+  bottom: 0;
+  width: 33%;
+  left: 33%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+
+.list-group-container-right {
+  position: fixed;
+  top: 124px;
+  bottom: 0;
+  width: 33%;
+  left: 66%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
 
 .list-group-item:hover {
-    background: url("img/tile-navigation.png");
-}
+  background: url("img/tile-navigation.png"); }
 
-/*.main {
-	height: 100vh;
-}
-*/
 .media-controller {
-	/*background-color : #3B3B44;*/
-	background-image: url("img/tile-navigation.png");
-    box-shadow: 0px 0px 15px 0px #3B3B44;
-}
+  background: url("img/tile-navigation.png");
+  box-shadow: 0px 0px 15px 0px #3B3B44; }
 
 .navbar-default {
-    border-color: #DE887E;
-}
+  border-color: #DE887E; }
 
 .navbar-inner {
-	background-image: url("img/tile-navigation.png");
-	box-shadow: 0px 0px 15px 0px #3B3B44;
-}
+  background: url("img/tile-navigation.png");
+  box-shadow: 0px 0px 15px 0px #3B3B44; }
 
 .noselect {
-	-webkit-user-select: none; /* Chrome/Safari */        
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* IE10+ */
-
-	/* Rules below not implemented in browsers yet */
-	-o-user-select: none;
-	user-select: none;
-}
-
-/*progress {
-    background-color: #f3f3f3;
-    border: 0;
-    height: 18px;
-    border-radius: 9px;
-
-}
-*/
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+  user-select: none; }
 
 .selected-media-item {
-	/* darkens image */
-	background: linear-gradient(
-	  90deg,
-      rgba(0, 0, 0, 0.025),
-      rgba(0, 0, 0, 0.025)
-    ), url("img/tile-navigation.png");
-}
+  background: linear-gradient(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.025)), url("img/tile-navigation.png"); }
 
 .shrink-35 {
-	transform: scale(0.35, 0.35);
-	-ms-transform: scale(0.35, 0.35);
-	-webkit-transform: scale(0.35, 0.35);
-}
+  transform: scale(0.35, 0.35);
+  -ms-transform: scale(0.35, 0.35);
+  -webkit-transform: scale(0.35, 0.35); }
 
 .shrink-50 {
-	transform: scale(0.5, 0.5);
-	-ms-transform: scale(0.5, 0.5);
-	-webkit-transform: scale(0.5, 0.5);
-}
+  transform: scale(0.5, 0.5);
+  -ms-transform: scale(0.5, 0.5);
+  -webkit-transform: scale(0.5, 0.5); }
 
 .shrink-65 {
-	transform: scale(0.65, 0.65);
-	-ms-transform: scale(0.65, 0.65);
-	-webkit-transform: scale(0.65, 0.65);
-}
+  transform: scale(0.65, 0.65);
+  -ms-transform: scale(0.65, 0.65);
+  -webkit-transform: scale(0.65, 0.65); }
 
 .small-text {
-	font-size: 75%;
-}
+  font-size: 75%; }
+
+/*# sourceMappingURL=styles.css.map */
