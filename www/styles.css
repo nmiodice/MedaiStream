@@ -27,21 +27,18 @@ a {
   margin-top: 16px;
   margin-bottom: 16px; }
 
+.float-left {
+  float: left; }
+
+.float-right {
+  float: right; }
+
 .inline {
   display: inline-block;
   vertical-align: middle; }
 
 .light-text {
   color: #F4F4F4; }
-
-.list-group-container {
-  position: fixed;
-  top: 124px;
-  bottom: 0;
-  width: 33%;
-  left: 0%;
-  overflow-y: scroll;
-  overflow-x: hidden; }
 
 .list-group-item:hover {
   background: url("img/tile-navigation.png"); }

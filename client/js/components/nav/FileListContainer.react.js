@@ -127,7 +127,7 @@ var FileListContainer = React.createClass({
         }
 
         return (
-            <div className={"container body-bottom-adjust list-group-container"}>
+            <div className={"container body-bottom-adjust"}>
 
                 <ul className="list-group file-list">
                     {noDirectory ? null:

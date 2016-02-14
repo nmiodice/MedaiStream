@@ -42,16 +42,6 @@ $img-secondary       : "img/tile-navigation.png";
   box-shadow : $o1 $o2 $o3 $o4 $c;
 }
 
-@mixin list-formatter($width, $pos) {
-  position    : fixed;
-  top         : $nav-height + 4 * $default-margin;
-  bottom      : 0;
-
-  width       : $width;
-  left        : $width * $pos;
-  overflow-y  : scroll;
-  overflow-x  : hidden;
-}
 
 
 
@@ -104,6 +94,14 @@ a {
 	margin-bottom : $default-margin;
 }
 
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
 .inline {
 	display        : inline-block;
 	vertical-align : middle;
@@ -112,11 +110,6 @@ a {
 .light-text {
 	color : $color-light;
 }
-
-.list-group-container {
-  @include list-formatter(33%, 0)
-}
-
 
 .list-group-item:hover {
     @include background-secondary;
@@ -165,3 +158,4 @@ a {
 .small-text {
 	font-size : 75%;
 }
+

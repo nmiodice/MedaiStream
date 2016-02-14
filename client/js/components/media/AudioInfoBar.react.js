@@ -48,7 +48,7 @@ var VolumeBar = React.createClass({
             secs = 0;
 
         // Output like "1:01" or "4:03:59" or "123:03:59"
-        ret = "";
+        var ret = "";
 
         if (hrs > 0)
             ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
