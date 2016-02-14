@@ -16,11 +16,11 @@ function getStateFromStores() {
     return {};
 }
 
-var searchKeys = []
+var searchKeys = [];
 
 // search any printable characters, identified by this range
 // note: unicode not supported due to lazy developer :)
-for (i = ' '.charCodeAt(0); i < '}'.charCodeAt(0) + 1; i++)
+for (var i = ' '.charCodeAt(0); i < '}'.charCodeAt(0) + 1; i++)
     searchKeys.push(String.fromCharCode(i));
 
 var FileListContainer = React.createClass({
@@ -33,18 +33,26 @@ var FileListContainer = React.createClass({
     },
 
     componentDidMount: function() {
+        //FileListStore.addChangeListener(this._onChange);
         RemoteFileStore.addChangeListener(this._onChange);
         RemoteFileActionCreator.fetchFiles();
+        this.bindKeys();
+    },
 
+    componentWillUnmount: function() {
+        //FileListStore.removeChangeListener(this._onChange);
+        RemoteFileStore.removeChangeListener(this._onChange);
+        this.unBindKeys();
+    },
+
+    bindKeys : function() {
         Mousetrap.bind('down', this._onNextFile);
         Mousetrap.bind('up', this._onPrevFile);
         Mousetrap.bind('enter', this._onLoadFile);
         Mousetrap.bind(searchKeys, this._onFilter);
     },
 
-    componentWillUnmount: function() {
-        RemoteFileStore.removeChangeListener(this._onChange);
-
+    unBindKeys : function() {
         Mousetrap.unbind('down');
         Mousetrap.unbind('up');
         Mousetrap.unbind('enter');

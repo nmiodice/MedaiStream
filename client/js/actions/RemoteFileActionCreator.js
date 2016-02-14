@@ -7,6 +7,7 @@ var UriUtils        = require('../utils/UriUtils');
 var RemoteFileActionCreator = {
 
     moveUpDirectory : function() {
+
         AppDispatcher.dispatch({
             type : ActionTypes.MEDIA_URI_UP
         });

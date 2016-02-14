@@ -50,7 +50,7 @@ var NavigationController = React.createClass({
         }
 
         return (
-            <div className="container default-margin-verticle">
+            <div className="container default-margin-vertical">
                 <span>
                     <a
                         role="button" 
