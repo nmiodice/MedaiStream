@@ -113,17 +113,10 @@ a {
 	color : $color-light;
 }
 
-.list-group-container-left {
+.list-group-container {
   @include list-formatter(33%, 0)
 }
 
-.list-group-container-mid {
-  @include list-formatter(33%, 1)
-}
-
-.list-group-container-right {
-  @include list-formatter(33%, 2)
-}
 
 .list-group-item:hover {
     @include background-secondary;

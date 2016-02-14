@@ -1,6 +1,6 @@
 var React                = require('react');
-var NavigationPane       = require('./nav/NavigationPane.react')
-var AppBar               = require('./AppBar.react')
+var FileListContainer    = require('./nav/FileListContainer.react');
+var AppBar               = require('./AppBar.react');
 var NavigationController = require('./nav/NavigationController.react');
 var MediaController      = require('./media/MediaController.react');
 
@@ -11,7 +11,7 @@ var Main = React.createClass({
 			<div className='main'>
 				<AppBar id='AppBar'/>
 				<NavigationController/>
-				<NavigationPane/>
+				<FileListContainer/>
 				<MediaController/>
 			</div>
 		);

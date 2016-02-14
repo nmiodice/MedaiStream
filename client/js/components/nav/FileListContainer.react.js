@@ -10,10 +10,9 @@ var FileListStore           = require('../../stores/FileListStore')
 var FileListActionCreator   = require('../../actions/FileListActionCreator');
 
 function getStateFromStores() {
-    //return  {
-    //    file : RemoteFileStore.getFileData(),
-    //}
-    return {};
+    return  {
+        file : RemoteFileStore.getFileData(),
+    }
 }
 
 var searchKeys = [];
@@ -63,7 +62,7 @@ var FileListContainer = React.createClass({
         if (event) {
             event.preventDefault();
         }
-        FileListActionCreator.nextRow(this.props.file);
+        FileListActionCreator.nextRow(this.state.file);
     },
 
     _onPrevFile : function(event) {
@@ -91,7 +90,7 @@ var FileListContainer = React.createClass({
         }
 
         this.searchTerm += String.fromCharCode(event.keyCode).toLowerCase();
-        var files = this.props.file.files;
+        var files = this.state.file.files;
 
         for (i = 0; i < files.length; i++) {
             var f = files[i];
@@ -111,13 +110,11 @@ var FileListContainer = React.createClass({
     },
 
     _onSelectAll : function() {
-        RemoteFileActionCreator.setFileRecursive(this.props.file);
+        RemoteFileActionCreator.setFileRecursive(this.state.file);
     },
 
     render: function() {
-        var fileData = this.props.file;
-        var position = this.props.pos;
-        var isTop = this.props.isTop;
+        var fileData = this.state.file;
 
         this.searchTerm = '';
         var noDirectory = true;
@@ -130,17 +127,17 @@ var FileListContainer = React.createClass({
         }
 
         return (
-            <div className={"container body-bottom-adjust list-group-container-" + position}>
+            <div className={"container body-bottom-adjust list-group-container"}>
 
                 <ul className="list-group file-list">
                     {noDirectory ? null:
-                        <div 
+                        <div
                             className="list-group-item noselect"
                             onClick={this._onSelectAll}>
                             <span className={''}/>
                             <a className="default-margin">{'Show all'}</a>
                         </div>}
-                    
+
 
                     {fileData.files.map(function(f) {
                         return <FileListItem file={f} key={f.path} isParent={false}/>;
