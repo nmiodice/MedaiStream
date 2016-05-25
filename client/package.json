@@ -20,11 +20,11 @@
     "watchify"        : "^2.1.1",
     "jquery"          : "2.2.0",
     "bootstrap"       : "3.3.6",
-    "howler"          : "2.0.0-beta7"
+    "howler"          : "2.0.0-beta13"
   },
   "scripts"         : {
-    "start"           : "watchify -o ../www/bundle.js -v -d js/app.js & sass --watch sass:../www/",
-    "build"           : "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > ../www/bundle.min.js",
+    "start"           : "watchify -o ./webapp/bundle.js -v -d js/app.js & sass --watch sass:./webapp/",
+    "build"           : "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > ./webapp/bundle.min.js",
     "test"            : "jest"
   },
   "author"          : "Nicholas M. Iodice",

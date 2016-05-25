@@ -2,7 +2,7 @@ var React                   = require('react');
 var UriUtils                = require('../../utils/UriUtils')
 var Mousetrap               = require('Mousetrap')
 var RemoteFileStore         = require('../../stores/RemoteFileStore');
-var RemoteFileActionCreator = require('../../actions/RemoteFileActionCreator');
+var RemoteDirectoryActionCreator = require('../../actions/RemoteDirectoryActionCreator');
 
 function getStateFromStores() {
     return  {
@@ -35,7 +35,7 @@ var NavigationController = React.createClass({
     },
 
     _onGoBackClick : function() {
-        RemoteFileActionCreator.moveUpDirectory();
+        RemoteDirectoryActionCreator.moveUpDirectory();
     },
 
     render: function() {

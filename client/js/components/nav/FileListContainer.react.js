@@ -5,7 +5,7 @@ var FileUtils               = require('../../utils/FileUtils')
 var FileTypes               = require('../../../../common/constants/FileConstants').types;
 var Mousetrap               = require('Mousetrap');
 var RemoteFileStore         = require('../../stores/RemoteFileStore');
-var RemoteFileActionCreator = require('../../actions/RemoteFileActionCreator');
+var RemoteDirectoryActionCreator = require('../../actions/RemoteDirectoryActionCreator');
 var FileListStore           = require('../../stores/FileListStore')
 var FileListActionCreator   = require('../../actions/FileListActionCreator');
 
@@ -32,14 +32,12 @@ var FileListContainer = React.createClass({
     },
 
     componentDidMount: function() {
-        //FileListStore.addChangeListener(this._onChange);
         RemoteFileStore.addChangeListener(this._onChange);
-        RemoteFileActionCreator.fetchFiles();
+        RemoteDirectoryActionCreator.fetchFiles();
         this.bindKeys();
     },
 
     componentWillUnmount: function() {
-        //FileListStore.removeChangeListener(this._onChange);
         RemoteFileStore.removeChangeListener(this._onChange);
         this.unBindKeys();
     },
@@ -110,7 +108,7 @@ var FileListContainer = React.createClass({
     },
 
     _onSelectAll : function() {
-        RemoteFileActionCreator.setFileRecursive(this.state.file);
+        RemoteDirectoryActionCreator.setDirectoryRecursive(this.state.file);
     },
 
     render: function() {

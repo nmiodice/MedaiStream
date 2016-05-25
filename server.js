@@ -1,5 +1,5 @@
 var http       = require('http');
-var reqHandler = require('./server/requests/ReqHandler')
+var reqHandler = require('./server_js/requests/ReqHandler')
 
 http.createServer(function (request, response) {
     reqHandler.handle(request, response);

@@ -9,7 +9,7 @@ var CHANGE_EVENT = 'change';
 
 var _fileData = {
     status : ConnectionConstants.OFFLINE,
-    path   : ServerConstants.MEDIA_HOME_BASE,
+    path   : '/', //ServerConstants.MEDIA_HOME_BASE,
     files  : []
 };
 

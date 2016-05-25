@@ -1,6 +1,6 @@
 var FileConstants            = require('../../../common/constants/FileConstants')
 var FileTypes                = require('../../../common/constants/FileConstants').types;
-var RemoteFileActionCreator  = require('../actions/RemoteFileActionCreator');
+var RemoteDirectoryActionCreator  = require('../actions/RemoteDirectoryActionCreator');
 var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
 
 var FileUtils = {
@@ -16,11 +16,11 @@ var FileUtils = {
 	},
 
 	handleFile : function(file) {
-		console.log(RemoteFileActionCreator);
+		console.log(RemoteDirectoryActionCreator);
         switch (file.type) {
         	
             case FileTypes.DIRECTORY:
-                RemoteFileActionCreator.setFile(file);
+				RemoteDirectoryActionCreator.setDirectory(file);
                 break;
 
             case FileTypes.FILE:

@@ -80,10 +80,13 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _sound = null;
             _soundID = null;
         }
-        var uri = UriUtils.fileToURI(_activeMediaNode.data, true);
+        var uri = UriUtils.fileToURI(_activeMediaNode.data);
+        //uri = encodeURIComponent(uri);
+        console.log('Howler trying to load: ' + uri);
+
 
         _sound = new Howl({
-            // html5   : true,  // faster, but some songs don't trigger 'onend' properly
+
             src     : [uri],
             volume  : _volume,
             onend   : function() {
@@ -95,11 +98,12 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
                 _isPlaying = true;
                 ActiveMediaStore.emitChange();
             },
-            onloaderror : function(e) {
+            onloaderror : function() {
+                alert('Failed to load media file');
                 _sound = null;
                 _isPlaying = false;
                 ActiveMediaStore.emitChange();
-            },
+            }
         });
 
     },

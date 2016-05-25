@@ -4,7 +4,7 @@ var AppDispatcher   = require('../dispatcher/AppDispatcher');
 var RemoteFileStore = require('../stores/RemoteFileStore');
 var UriUtils        = require('../utils/UriUtils');
 
-var RemoteFileActionCreator = {
+var RemoteDirectoryActionCreator = {
 
     moveUpDirectory : function() {
 
@@ -13,15 +13,15 @@ var RemoteFileActionCreator = {
         });
     },
 
-    setFile : function(file) {
-        this._setFile(file, false);
+    setDirectory : function(file) {
+        this._setDirectory(file, false);
     },
 
-    setFileRecursive : function(file) {
-        this._setFile(file, true);
+    setDirectoryRecursive : function(file) {
+        this._setDirectory(file, true);
     },
 
-    _setFile : function(file, recursive) {
+    _setDirectory : function(file, recursive) {
         console.log("changing to: " + file.path);
         AppDispatcher.dispatch({
             type      : ActionTypes.MEDIA_URI_CHANGE,
@@ -36,7 +36,7 @@ var RemoteFileActionCreator = {
         console.log("requesting files from server");
 
         var parent = RemoteFileStore.getFileData();
-        var uri = UriUtils.fileToURI(parent);
+        var uri = UriUtils.directoryToURI(parent);
       
         $.getJSON(uri, function(result) {
 
@@ -66,4 +66,4 @@ var RemoteFileActionCreator = {
     }
 };
 
-module.exports = RemoteFileActionCreator;
+module.exports = RemoteDirectoryActionCreator;
