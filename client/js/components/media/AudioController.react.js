@@ -1,32 +1,32 @@
 var React                    = require('react');
-var ActiveMediaStore         = require('../../stores/ActiveMediaStore');
-var ActiveMediaActionCreator = require('../../actions/ActiveMediaActionCreator');
+var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
+var ActiveAudioActionCreator = require('../../actions/ActiveAudioActionCreator');
 var VolumeBar                = require('./VolumeBar.react');
 var AudioInfoBar             = require('./AudioInfoBar.react');
 var Mousetrap                = require('Mousetrap');
 
 function getStateFromStores() {
     return  {
-        playing     : ActiveMediaStore.getIsPlaying(),
-        activeMedia : ActiveMediaStore.getActiveMedia()
+        playing     : ActiveAudioStore.getIsPlaying(),
+        activeMedia : ActiveAudioStore.getActiveAudio()
     }
 }
 
-var MediaController = React.createClass({
+var AudioController = React.createClass({
     
     getInitialState: function() {
         return getStateFromStores();
     },
 
     componentDidMount: function() {
-        ActiveMediaStore.addChangeListener(this._onChange)
+        ActiveAudioStore.addChangeListener(this._onChange)
         Mousetrap.bind('space', this._onPlayPauseClick);
         Mousetrap.bind('left', this._onPrevClick);
         Mousetrap.bind('right', this._onNextClick);
     },
 
     componentWillUnmount: function() {
-        ActiveMediaStore.removeChangeListener(this._onChange)
+        ActiveAudioStore.removeChangeListener(this._onChange)
         Mousetrap.unbind('space');
         Mousetrap.unbind('left');
         Mousetrap.unbind('right');
@@ -37,19 +37,18 @@ var MediaController = React.createClass({
     },
 
     _onPrevClick : function() {
-        ActiveMediaActionCreator.previousTrack();
+        ActiveAudioActionCreator.previousTrack();
     },
 
     _onNextClick : function() {
-        ActiveMediaActionCreator.nextTrack()
+        ActiveAudioActionCreator.nextTrack()
     },
 
     _onPlayPauseClick : function() {
-        ActiveMediaActionCreator.togglePlayState();
+        ActiveAudioActionCreator.togglePlayState();
     },
 
     render: function() {
-        var file = this.props.file;
         var playPauseIcon = 'img/play.png';
         var nextIcon      = 'img/next.png';
         var prevIcon      = 'img/previous.png';
@@ -86,5 +85,5 @@ var MediaController = React.createClass({
 
 });
 
-module.exports = MediaController;
+module.exports = AudioController;
 

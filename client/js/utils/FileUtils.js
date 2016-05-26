@@ -1,7 +1,7 @@
 var FileConstants            = require('../../../common/constants/FileConstants')
 var FileTypes                = require('../../../common/constants/FileConstants').types;
 var RemoteDirectoryActionCreator  = require('../actions/RemoteDirectoryActionCreator');
-var ActiveMediaActionCreator = require('../actions/ActiveMediaActionCreator');
+var ActiveAudioActionCreator = require('../actions/ActiveAudioActionCreator');
 
 var FileUtils = {
 
@@ -24,7 +24,7 @@ var FileUtils = {
                 break;
 
             case FileTypes.FILE:
-                ActiveMediaActionCreator.setActivePlaylist(file);
+                ActiveAudioActionCreator.setActivePlaylist(file);
                 break;
 
             default:

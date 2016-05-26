@@ -1,8 +1,7 @@
 var ActionTypes      = require('../constants/ActionTypes');
 var AppDispatcher    = require('../dispatcher/AppDispatcher');
-var ActiveMediaStore = require('../stores/ActiveMediaStore');
 
-var ActiveMediaActionCreator = {
+var ActiveAudioActionCreator = {
 
     setActivePlaylist : function(file) {
         AppDispatcher.dispatch({
@@ -44,4 +43,4 @@ var ActiveMediaActionCreator = {
     }
 };
 
-module.exports = ActiveMediaActionCreator;
+module.exports = ActiveAudioActionCreator;

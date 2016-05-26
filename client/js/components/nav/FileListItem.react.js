@@ -2,19 +2,19 @@ var $                        = require('jquery');
 var FileUtils                = require('../../utils/FileUtils');
 var React                    = require('react');
 var FileTypes                = require('../../../../common/constants/FileConstants').types;
-var ActiveMediaStore         = require('../../stores/ActiveMediaStore');
+var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
 var FileListActionCreator    = require('../../actions/FileListActionCreator')
 var FileListStore            = require('../../stores/FileListStore')
 
 var FileListItem = React.createClass({
 
     componentDidMount: function() {
-        ActiveMediaStore.addChangeListener(this._onChange);
+        ActiveAudioStore.addChangeListener(this._onChange);
         FileListStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function() {
-        ActiveMediaStore.removeChangeListener(this._onChange);
+        ActiveAudioStore.removeChangeListener(this._onChange);
         FileListStore.removeChangeListener(this._onChange);
     },
 
@@ -60,7 +60,7 @@ var FileListItem = React.createClass({
     },
 
     _isActive : function() {
-        var activeFile = ActiveMediaStore.getActiveMedia();
+        var activeFile = ActiveAudioStore.getActiveAudio();
         var file = this.props.file;
         return activeFile != null && file.path == activeFile.path;
     },

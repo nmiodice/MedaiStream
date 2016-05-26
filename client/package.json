@@ -23,8 +23,8 @@
     "howler"          : "2.0.0-beta13"
   },
   "scripts"         : {
-    "start"           : "watchify -o ./webapp/bundle.js -v -d js/app.js & sass --watch sass:./webapp/",
-    "build"           : "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > ./webapp/bundle.min.js",
+    "start"           : "watchify -o ./static/bundle.js -v -d js/app.js & sass --watch sass:./static/",
+    "build"           : "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > ./static/bundle.min.js",
     "test"            : "jest"
   },
   "author"          : "Nicholas M. Iodice",

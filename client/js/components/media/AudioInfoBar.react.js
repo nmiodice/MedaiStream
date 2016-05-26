@@ -1,20 +1,20 @@
 var $                        = require('jquery');
 var React                    = require('react');
-var ActiveMediaStore         = require('../../stores/ActiveMediaStore');
-var ActiveMediaActionCreator = require('../../actions/ActiveMediaActionCreator');
+var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
+var ActiveAudioActionCreator = require('../../actions/ActiveAudioActionCreator');
 
 function getStateFromStores() {
     return  {
-        file     : ActiveMediaStore.getActiveMedia(),
-        percComp : ActiveMediaStore.getDonePercentage(),
-        pos      : ActiveMediaStore.getFilePos(),
-        duration : ActiveMediaStore.getFileDuration()
+        file     : ActiveAudioStore.getActiveAudio(),
+        percComp : ActiveAudioStore.getDonePercentage(),
+        pos      : ActiveAudioStore.getFilePos(),
+        duration : ActiveAudioStore.getFileDuration()
     }
 }
 
-var VolumeBar = React.createClass({
+var AudioInfoBar = React.createClass({
     
-    intervalID : null,
+    intervalID : -1,
 
     getInitialState: function() {
         return getStateFromStores();
@@ -22,11 +22,11 @@ var VolumeBar = React.createClass({
 
     componentDidMount: function() {
         this.intervalID = setInterval(this._onChange, 100);
-        ActiveMediaStore.addChangeListener(this._onChange);
+        ActiveAudioStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function() {
-        ActiveMediaStore.removeChangeListener(this._onChange)
+        ActiveAudioStore.removeChangeListener(this._onChange);
         window.clearInterval(this.intervalID);
     },
 
@@ -65,7 +65,7 @@ var VolumeBar = React.createClass({
         var off = event.clientX - elem.offset().left;
         var offPercent = off / elem.width();
         var seekPos = offPercent * this.state.duration;
-        ActiveMediaActionCreator.setSeekPosition(seekPos)
+        ActiveAudioActionCreator.setSeekPosition(seekPos)
     },
 
     render: function() {
@@ -89,5 +89,5 @@ var VolumeBar = React.createClass({
 
 });
 
-module.exports = VolumeBar;
+module.exports = AudioInfoBar;
 

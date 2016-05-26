@@ -1,11 +1,11 @@
 var React                    = require('react');
-var ActiveMediaStore         = require('../../stores/ActiveMediaStore');
-var ActiveMediaActionCreator = require('../../actions/ActiveMediaActionCreator');
+var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
+var ActiveAudioActionCreator = require('../../actions/ActiveAudioActionCreator');
 
 
 function getStateFromStores() {
     return  {
-        volume: ActiveMediaStore.getVolume(),
+        volume: ActiveAudioStore.getVolume(),
     }
 }
 
@@ -16,11 +16,11 @@ var VolumeBar = React.createClass({
     },
 
     componentDidMount: function() {
-        ActiveMediaStore.addChangeListener(this._onChange)
+        ActiveAudioStore.addChangeListener(this._onChange)
     },
 
     componentWillUnmount: function() {
-        ActiveMediaStore.removeChangeListener(this._onChange)
+        ActiveAudioStore.removeChangeListener(this._onChange)
     },
 
     _onChange : function() {
@@ -41,7 +41,7 @@ var VolumeBar = React.createClass({
     },
 
     _setVolume : function(volume) {
-        ActiveMediaActionCreator.setVolume(volume);
+        ActiveAudioActionCreator.setVolume(volume);
     },
 
     render: function() {

@@ -1,9 +1,10 @@
 package com.iodice.controller;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.lf5.LogLevel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ public class IOFileRequests extends IORequestBase {
     private static final String FILE_REQUEST_PREFIX = "/file/";
     private static final String FILE_REQUEST_PATH = FILE_REQUEST_PREFIX + "**";
 
+    private static final Logger mLogger = Logger.getLogger(IOFileRequests.class.getName());
+
 
     @RequestMapping(value=FILE_REQUEST_PATH, method=RequestMethod.GET)
     void file(HttpServletRequest request, HttpServletResponse response) {
@@ -33,8 +36,8 @@ public class IOFileRequests extends IORequestBase {
                 response.flushBuffer();
 
                 is.close();
-            } catch (IOException ex) {
-                throw new RuntimeException("IOError writing file to output stream");
+            } catch (IOException e) {
+                mLogger.info(String.format("IOError writing file to output stream: %s", e.getMessage()));
             }
         }
     }

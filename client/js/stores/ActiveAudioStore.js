@@ -9,7 +9,7 @@ var LinkedListUtils = require('../utils/LinkedListUtils')
 
 var CHANGE_EVENT = 'change';
 
-var _activeMediaNode = null;
+var _activeAudioNode = null;
 
 var _isPlaying = false;
 
@@ -19,7 +19,7 @@ var _soundID = null;
 
 var _volume = 0.5;
 
-var ActiveMediaStore = assign({}, EventEmitter.prototype, {
+var ActiveAudioStore = assign({}, EventEmitter.prototype, {
     
     emitChange : function() {
         this.emit(CHANGE_EVENT);
@@ -36,8 +36,8 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, callback);
     },
 
-    getActiveMedia : function() {
-        return _activeMediaNode == null ? null : _activeMediaNode.data;
+    getActiveAudio : function() {
+        return _activeAudioNode == null ? null : _activeAudioNode.data;
     },
 
     getIsPlaying : function() {
@@ -67,8 +67,8 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
     _setPlayListFromFile : function(active) {
         var playlist = LinkedListUtils.fromList(active.parent.files)
 
-        _activeMediaNode = LinkedListUtils.find(playlist, active);
-        console.log(_activeMediaNode);
+        _activeAudioNode = LinkedListUtils.find(playlist, active);
+        console.log(_activeAudioNode);
     },
 
     _playFromCurrentTrack : function() {
@@ -80,40 +80,38 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _sound = null;
             _soundID = null;
         }
-        var uri = UriUtils.fileToURI(_activeMediaNode.data);
-        //uri = encodeURIComponent(uri);
+        var uri = UriUtils.fileToURI(_activeAudioNode.data);
         console.log('Howler trying to load: ' + uri);
 
-
         _sound = new Howl({
-
             src     : [uri],
             volume  : _volume,
             onend   : function() {
                 _isPlaying = false;
-                ActiveMediaStore._handleNextTrack()
+                ActiveAudioStore._handleNextTrack()
             },
             onload  : function() {
                 _soundID = _sound.play();
                 _isPlaying = true;
-                ActiveMediaStore.emitChange();
+                ActiveAudioStore.emitChange();
             },
             onloaderror : function() {
                 alert('Failed to load media file');
                 _sound = null;
                 _isPlaying = false;
-                ActiveMediaStore.emitChange();
+                _activeAudioNode = null;
+                ActiveAudioStore.emitChange();
             }
         });
 
     },
 
-    _handleMediaBecomingActive : function(action) {
-        ActiveMediaStore._setPlayListFromFile(action.file);
-        ActiveMediaStore._playFromCurrentTrack();
+    _handleAudioBecomingActive : function(action) {
+        ActiveAudioStore._setPlayListFromFile(action.file);
+        ActiveAudioStore._playFromCurrentTrack();
     },
 
-    _handleMediaPlayStateTogge : function(action) {
+    _handleAudioPlayStateToggle : function(action) {
         if (_sound == null) 
             return;
 
@@ -123,23 +121,23 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
             _sound.play(_soundID);
         
         _isPlaying = !_isPlaying;
-        ActiveMediaStore.emitChange();  
+        ActiveAudioStore.emitChange();
     },
 
     _handleNextTrack : function() {
-        if (_activeMediaNode != null && _activeMediaNode.next != null) {
-            _activeMediaNode = _activeMediaNode.next;
-            ActiveMediaStore._playFromCurrentTrack();
+        if (_activeAudioNode != null && _activeAudioNode.next != null) {
+            _activeAudioNode = _activeAudioNode.next;
+            ActiveAudioStore._playFromCurrentTrack();
         }
-        ActiveMediaStore.emitChange();
+        ActiveAudioStore.emitChange();
     },
 
     _handlePrevTrack : function() {
-        if (_activeMediaNode != null && _activeMediaNode.prev != null) {
-            _activeMediaNode = _activeMediaNode.prev;
-            ActiveMediaStore._playFromCurrentTrack();
+        if (_activeAudioNode != null && _activeAudioNode.prev != null) {
+            _activeAudioNode = _activeAudioNode.prev;
+            ActiveAudioStore._playFromCurrentTrack();
         }
-        ActiveMediaStore.emitChange();
+        ActiveAudioStore.emitChange();
     },
 
     _handleVolumeChange : function(action) {
@@ -148,7 +146,7 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
         if (_sound) {
             _sound.volume(_volume);
         }
-        ActiveMediaStore.emitChange();
+        ActiveAudioStore.emitChange();
     },
 
     _handleSeek : function(event) {
@@ -159,32 +157,32 @@ var ActiveMediaStore = assign({}, EventEmitter.prototype, {
 
 });
 
-ActiveMediaStore.dispatchToken = AppDispatcher.register(function(action) {
+ActiveAudioStore.dispatchToken = AppDispatcher.register(function(action) {
 
     switch(action.type) {
         
         case ActionTypes.MEDIA_NEW_PLAYLIST:
-            ActiveMediaStore._handleMediaBecomingActive(action);
+            ActiveAudioStore._handleAudioBecomingActive(action);
             break;
 
         case ActionTypes.MEDIA_PLAY_STATE_TOGGLE:
-            ActiveMediaStore._handleMediaPlayStateTogge(action);
+            ActiveAudioStore._handleAudioPlayStateToggle(action);
             break;
 
         case ActionTypes.MEDIA_NEXT_TRACK:
-            ActiveMediaStore._handleNextTrack();
+            ActiveAudioStore._handleNextTrack();
             break;
 
         case ActionTypes.MEDIA_PREV_TRACK:
-            ActiveMediaStore._handlePrevTrack();
+            ActiveAudioStore._handlePrevTrack();
             break;
 
         case ActionTypes.MEDIA_VOLUME_CHANGE:
-            ActiveMediaStore._handleVolumeChange(action);
+            ActiveAudioStore._handleVolumeChange(action);
             break;
 
         case ActionTypes.MEDIA_SEEK:
-            ActiveMediaStore._handleSeek(action);
+            ActiveAudioStore._handleSeek(action);
             break;
 
         default:
@@ -192,5 +190,5 @@ ActiveMediaStore.dispatchToken = AppDispatcher.register(function(action) {
     }
 });
 
-ActiveMediaStore.setMaxListeners(0);
-module.exports = ActiveMediaStore;
+ActiveAudioStore.setMaxListeners(0);
+module.exports = ActiveAudioStore;
