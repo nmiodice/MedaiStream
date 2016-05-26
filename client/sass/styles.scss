@@ -13,6 +13,13 @@ $img-secondary       : "img/tile-navigation.png";
 
 
 
+@mixin shadow($o1, $o2, $o3, $o4, $c) {
+  box-shadow : $o1 $o2 $o3 $o4 $c;
+}
+
+@mixin drop-shadow() {
+  @include shadow(0px, 0px, 15px, 0px, $color-shadow);
+}
 
 
 
@@ -24,8 +31,9 @@ $img-secondary       : "img/tile-navigation.png";
   background : url($img-secondary);
 }
 
-@mixin drop-shadow() {
-  @include shadow(0px, 0px, 15px, 0px, $color-shadow);
+@mixin bar-item() {
+  @include background-secondary;
+  @include drop-shadow;
 }
 
 @mixin img-gradient($c1, $c2, $background) {
@@ -36,10 +44,6 @@ $img-secondary       : "img/tile-navigation.png";
   transform         : scale($x, $x);
   -ms-transform     : scale($x, $x);
   -webkit-transform : scale($x, $x);
-}
-
-@mixin shadow($o1, $o2, $o3, $o4, $c) {
-  box-shadow : $o1 $o2 $o3 $o4 $c;
 }
 
 
@@ -102,6 +106,11 @@ a {
   float: right;
 }
 
+.form-control {
+  width: auto;
+  //@include background-secondary
+}
+
 .inline {
 	display        : inline-block;
 	vertical-align : middle;
@@ -116,8 +125,7 @@ a {
 }
 
 .media-controller {
-  @include background-secondary;
-  @include drop-shadow;
+  @include bar-item;
 }
 
 .navbar-default {
@@ -125,8 +133,7 @@ a {
 }
 
 .navbar-inner {
-  @include background-secondary;
-  @include drop-shadow;
+  @include bar-item;
 }
 
 .noselect {

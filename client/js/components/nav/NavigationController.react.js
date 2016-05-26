@@ -38,6 +38,11 @@ var NavigationController = React.createClass({
         RemoteDirectoryActionCreator.moveUpDirectory();
     },
 
+    _onFilterChange : function(event) {
+        var text = event.target.value.toLowerCase();
+
+    },
+
     render: function() {
         var fileData = this.state.file;
         var path     = fileData.path;
@@ -52,15 +57,22 @@ var NavigationController = React.createClass({
         return (
             <div className="container default-margin-vertical">
                 <span>
-                    <a
-                        role="button" 
-                        className="btn btn-default btn-sm"
-                        disabled={disabledButton}
-                        onClick={this._onGoBackClick}>
-                        &#8592;
-                    </a>
+                    <div className="form-group">
+                        <a
+                            role="button"
+                            className="btn btn-default btn-sm"
+                            disabled={disabledButton}
+                            onClick={this._onGoBackClick}>
+                            &#8592;
+                        </a>
+                        <input
+                            className="float-right form-control"
+                            type="text"
+                            placeholder="Filter..."
+                            onChange={this._onFilterChange}/>
+                    </div>
                 </span>
-                <span className="default-margin light-text">{name}</span>
+                <span className="light-text">{name}</span>
             </div>
         );
     }

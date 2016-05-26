@@ -33,6 +33,9 @@ a {
 .float-right {
   float: right; }
 
+.form-control {
+  width: auto; }
+
 .inline {
   display: inline-block;
   vertical-align: middle; }

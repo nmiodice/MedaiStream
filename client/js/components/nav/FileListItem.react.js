@@ -22,7 +22,7 @@ var FileListItem = React.createClass({
         // when file becomes active, file object doesn't change,
         // but the rendering for this component might
         this.forceUpdate();
-        if (this._isSelected()) {
+        if (this._isSelectedFile()) {
             this._scrollToOnScreen();
         }
     },
@@ -59,13 +59,13 @@ var FileListItem = React.createClass({
         event.cancelBubble = true;
     },
 
-    _isActive : function() {
+    _isActiveFile : function() {
         var activeFile = ActiveAudioStore.getActiveAudio();
         var file = this.props.file;
         return activeFile != null && file.path == activeFile.path;
     },
 
-    _isSelected : function() {
+    _isSelectedFile : function() {
         var selectedFile = FileListStore.getSelectedFile();
         var file = this.props.file;
         return isSelect = selectedFile != null && file.path == selectedFile.path;
@@ -77,9 +77,9 @@ var FileListItem = React.createClass({
         var iconClass;
         var className = "list-group-item noselect";
 
-        if (this._isActive()) {
+        if (this._isActiveFile()) {
             className += " active-media-item";
-        } else if (this._isSelected()) {
+        } else if (this._isSelectedFile()) {
             className += " selected-media-item";
         } 
 
