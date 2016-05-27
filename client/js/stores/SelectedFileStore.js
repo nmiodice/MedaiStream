@@ -10,7 +10,7 @@ var _selectedNode = null;
 
 var _selectedFileStack = [];
 
-var FileListStore = assign({}, EventEmitter.prototype, {
+var SelectedFileStore = assign({}, EventEmitter.prototype, {
     
     emitChange : function() {
         this.emit(CHANGE_EVENT);
@@ -68,27 +68,27 @@ var FileListStore = assign({}, EventEmitter.prototype, {
 
 });
 
-FileListStore.dispatchToken = AppDispatcher.register(function(action) {
+SelectedFileStore.dispatchToken = AppDispatcher.register(function(action) {
 
     switch(action.type) {
         case ActionTypes.UI_ROW_SELECTED:
-            FileListStore._handleRowSelected(action);
+            SelectedFileStore._handleRowSelected(action);
             break;
 
         case ActionTypes.UI_ROW_NEXT:
-            FileListStore._handleNextRow(action);
+            SelectedFileStore._handleNextRow(action);
             break;
 
         case ActionTypes.UI_ROW_PREV:
-            FileListStore._handlePrevRow(action);
+            SelectedFileStore._handlePrevRow(action);
             break;
         
-        case ActionTypes.MEDIA_URI_UP:
-            FileListStore._handleMediaUriUpAction(action);
+        case ActionTypes.URI_UP:
+            SelectedFileStore._handleMediaUriUpAction(action);
             break;
 
-        case ActionTypes.MEDIA_URI_CHANGE:
-            FileListStore._handleMediaUriChangeAction(action);
+        case ActionTypes.URI_CHANGE:
+            SelectedFileStore._handleMediaUriChangeAction(action);
             break;
             
         default:
@@ -96,4 +96,4 @@ FileListStore.dispatchToken = AppDispatcher.register(function(action) {
     }
 });
 
-module.exports = FileListStore;
+module.exports = SelectedFileStore;

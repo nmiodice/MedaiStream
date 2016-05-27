@@ -1,7 +1,7 @@
 var $               = require('jquery');
 var ActionTypes     = require('../constants/ActionTypes');
 var AppDispatcher   = require('../dispatcher/AppDispatcher');
-var RemoteFileStore = require('../stores/RemoteFileStore');
+var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
 var UriUtils        = require('../utils/UriUtils');
 var FileUtils       = require('../utils/FileUtils');
 var ConnectionConstants = require('../constants/ConnectionConstants');
@@ -11,14 +11,14 @@ var FileActionCreator = {
     fetchFiles : function() {
         console.log("requesting files from server");
 
-        var parent = RemoteFileStore.getFileData();
+        var parent = FileAndDirectoryStore.getFileData();
         var uri = UriUtils.directoryToURI(parent);
 
         $.getJSON(uri, function(result) {
 
             if (result && result.files) {
                 AppDispatcher.dispatch({
-                    type   : ActionTypes.MEDIA_FILES_CHANGE,
+                    type   : ActionTypes.URI_FILES_CHANGE_OR_LOAD,
                     parent : parent,
                     files  : result.files
                 });
@@ -26,7 +26,7 @@ var FileActionCreator = {
             } else {
 
                 AppDispatcher.dispatch({
-                    type  : ActionTypes.MEDIA_REQUEST_FAILED
+                    type  : ActionTypes.URI_REQUEST_FAILED
                 });
 
             }
@@ -34,17 +34,17 @@ var FileActionCreator = {
     },
 
     filter : function(filter) {
-        var currFilter = RemoteFileStore.getFilter();
+        var currFilter = FileAndDirectoryStore.getFilter();
 
         // remove current filtered file
         if (currFilter != "") {
             AppDispatcher.dispatch({
-                type : ActionTypes.MEDIA_URI_UP
+                type : ActionTypes.URI_UP
             });
         }
 
         if (filter == "") {
-            var top = RemoteFileStore.getFileData();
+            var top = FileAndDirectoryStore.getFileData();
             top.files.forEach(function(x) {
                 x.parent = top;
             });
@@ -53,8 +53,8 @@ var FileActionCreator = {
 
         filter = filter.toLowerCase();
         // copy parent of filtered file
-        var oldTop = RemoteFileStore.getFileData();
-        var newTop = RemoteFileStore.makeFile(
+        var oldTop = FileAndDirectoryStore.getFileData();
+        var newTop = FileAndDirectoryStore.makeFile(
             ConnectionConstants.ONLINE,
             oldTop.path,
             [],
@@ -71,14 +71,14 @@ var FileActionCreator = {
 
 
         AppDispatcher.dispatch({
-            type      : ActionTypes.MEDIA_URI_CHANGE,
+            type      : ActionTypes.URI_CHANGE,
             path      : newTop.path,
             recursive : newTop.recursive,
             filter    : filter
         });
 
         AppDispatcher.dispatch({
-            type   : ActionTypes.MEDIA_FILES_CHANGE,
+            type   : ActionTypes.URI_FILES_CHANGE_OR_LOAD,
             parent : newTop,
             files  : newTop.files
         });

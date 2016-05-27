@@ -1,7 +1,7 @@
 var constants = {
 	types : {
 		DIRECTORY : 0,
-		FILE      : 1,
+		AUDIO     : 1,
 		UNKNOWN   : 100
 	},
 

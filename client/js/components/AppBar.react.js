@@ -1,10 +1,10 @@
 var React           = require('react');
 var UriUtils        = require('../utils/UriUtils')
-var RemoteFileStore = require('../stores/RemoteFileStore');
+var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
 
 function getStateFromStores() {
     return  {
-        file : RemoteFileStore.getFileData(),
+        file : FileAndDirectoryStore.getFileData(),
     }
 }
 
@@ -15,11 +15,11 @@ var NavigationBar = React.createClass({
     },
 
     componentDidMount: function() {
-        RemoteFileStore.addChangeListener(this._onChange);
+        FileAndDirectoryStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function() {
-        RemoteFileStore.removeChangeListener(this._onChange);
+        FileAndDirectoryStore.removeChangeListener(this._onChange);
     },
 
     _onChange : function() {

@@ -4,19 +4,19 @@ var FileHandler              = require('../../utils/FileHandler');
 var React                    = require('react');
 var FileTypes                = require('../../constants/FileConstants').types;
 var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
-var FileListActionCreator    = require('../../actions/FileListActionCreator');
-var FileListStore            = require('../../stores/FileListStore');
+var SelectedFileActionCreator    = require('../../actions/SelectedFileActionCreator');
+var SelectedFileStore            = require('../../stores/SelectedFileStore');
 
 var FileListItem = React.createClass({
 
     componentDidMount: function() {
         ActiveAudioStore.addChangeListener(this._onChange);
-        FileListStore.addChangeListener(this._onChange);
+        SelectedFileStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function() {
         ActiveAudioStore.removeChangeListener(this._onChange);
-        FileListStore.removeChangeListener(this._onChange);
+        SelectedFileStore.removeChangeListener(this._onChange);
     },
 
     _onChange : function() {
@@ -49,12 +49,12 @@ var FileListItem = React.createClass({
     },
 
     _onSelect : function(event) {
-        FileListActionCreator.setSelectedRow(this.props.file);
+        SelectedFileActionCreator.setSelectedRow(this.props.file);
     },
 
     _onLoad : function(event) {
         var file = this.props.file;
-        FileListActionCreator.setSelectedRow(this.props.file);
+        SelectedFileActionCreator.setSelectedRow(this.props.file);
         FileHandler.handleFile(file);
         event.stopPropagation();
         event.cancelBubble = true;
@@ -67,7 +67,7 @@ var FileListItem = React.createClass({
     },
 
     _isSelectedFile : function() {
-        var selectedFile = FileListStore.getSelectedFile();
+        var selectedFile = SelectedFileStore.getSelectedFile();
         var file = this.props.file;
         return isSelect = selectedFile != null && file.path == selectedFile.path;
     },
@@ -89,7 +89,7 @@ var FileListItem = React.createClass({
                 iconClass = "glyphicon glyphicon-folder-close"
                 break;
 
-            case FileTypes.FILE:
+            case FileTypes.AUDIO:
                 iconClass = "glyphicon glyphicon-play-circle"
                 break;
 

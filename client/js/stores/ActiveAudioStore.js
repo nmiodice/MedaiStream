@@ -161,27 +161,27 @@ ActiveAudioStore.dispatchToken = AppDispatcher.register(function(action) {
 
     switch(action.type) {
         
-        case ActionTypes.MEDIA_NEW_PLAYLIST:
+        case ActionTypes.AUDIO_NEW_PLAYLIST:
             ActiveAudioStore._handleAudioBecomingActive(action);
             break;
 
-        case ActionTypes.MEDIA_PLAY_STATE_TOGGLE:
+        case ActionTypes.AUDIO_PLAY_STATE_TOGGLE:
             ActiveAudioStore._handleAudioPlayStateToggle(action);
             break;
 
-        case ActionTypes.MEDIA_NEXT_TRACK:
+        case ActionTypes.AUDIO_NEXT_TRACK:
             ActiveAudioStore._handleNextTrack();
             break;
 
-        case ActionTypes.MEDIA_PREV_TRACK:
+        case ActionTypes.AUDIO_PREV_TRACK:
             ActiveAudioStore._handlePrevTrack();
             break;
 
-        case ActionTypes.MEDIA_VOLUME_CHANGE:
+        case ActionTypes.AUDIO_VOLUME_CHANGE:
             ActiveAudioStore._handleVolumeChange(action);
             break;
 
-        case ActionTypes.MEDIA_SEEK:
+        case ActionTypes.AUDIO_SEEK:
             ActiveAudioStore._handleSeek(action);
             break;
 

@@ -1,8 +1,8 @@
 var ActionTypes     = require('../constants/ActionTypes');
 var AppDispatcher   = require('../dispatcher/AppDispatcher');
-var FileListStore   = require('../stores/FileListStore');
+var SelectedFileStore   = require('../stores/SelectedFileStore');
 
-var FileListActionCreator = {
+var SelectedFileActionCreator = {
 
     setSelectedRow : function(file) {
         AppDispatcher.dispatch({
@@ -13,7 +13,7 @@ var FileListActionCreator = {
 
     nextRow : function(parent) {
         // set first row to be active if none is active yet
-        if (FileListStore.getSelectedFile() == null) {
+        if (SelectedFileStore.getSelectedFile() == null) {
             if (parent && parent.files.length > 0) {
                 this.setSelectedRow(parent.files[0]);
             }
@@ -31,4 +31,4 @@ var FileListActionCreator = {
     }
 };
 
-module.exports = FileListActionCreator;
+module.exports = SelectedFileActionCreator;

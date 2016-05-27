@@ -9,7 +9,7 @@ var FileUtils           = require('../utils/FileUtils');
 var CHANGE_EVENT = 'change';
 
 
-var RemoteFileStore = assign({}, EventEmitter.prototype, {
+var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
 
     makeFile : function(status, path, files, isRecursive) {
         return {
@@ -48,13 +48,13 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
         if (_fileStack.length > 1) {
             _fileStack.pop();
             _filter = "";
-            RemoteFileStore.emitChange();
+            FileAndDirectoryStore.emitChange();
         }
     },
 
     _handleMediaUriChangeAction : function(action) {
 
-        _fileStack.push(RemoteFileStore.makeFile(
+        _fileStack.push(FileAndDirectoryStore.makeFile(
             ConnectionConstants.CONNECTING,
             action.path,
             [],
@@ -62,7 +62,7 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
         ));
 
         _filter = action.filter;
-        RemoteFileStore.emitChange();
+        FileAndDirectoryStore.emitChange();
     },
 
     _handleMediaFilesChangeAction : function(action) {
@@ -75,7 +75,7 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
             x.parent = action.parent;
         });
 
-        RemoteFileStore.emitChange();
+        FileAndDirectoryStore.emitChange();
     },
 
     _handleRequestFailedAction : function(action) {
@@ -83,12 +83,12 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
 
         fileData.files  = [];
         fileData.status = ConnectionConstants.OFFLINE;
-        RemoteFileStore.emitChange();
+        FileAndDirectoryStore.emitChange();
     },
 
 });
 
-var _fileStack = [RemoteFileStore.makeFile(ConnectionConstants.OFFLINE, '/', [], 0)];
+var _fileStack = [FileAndDirectoryStore.makeFile(ConnectionConstants.OFFLINE, '/', [], 0)];
 
 var _filter = "";
 
@@ -99,23 +99,23 @@ var getHead = function(stack) {
 };
 
 
-RemoteFileStore.dispatchToken = AppDispatcher.register(function(action) {
+FileAndDirectoryStore.dispatchToken = AppDispatcher.register(function(action) {
 
     switch(action.type) {
-        case ActionTypes.MEDIA_URI_UP:
-            RemoteFileStore._handleMediaUriUpAction(action);
+        case ActionTypes.URI_UP:
+            FileAndDirectoryStore._handleMediaUriUpAction(action);
             break;
 
-        case ActionTypes.MEDIA_URI_CHANGE:
-            RemoteFileStore._handleMediaUriChangeAction(action);
+        case ActionTypes.URI_CHANGE:
+            FileAndDirectoryStore._handleMediaUriChangeAction(action);
             break;
 
-        case ActionTypes.MEDIA_FILES_CHANGE:
-            RemoteFileStore._handleMediaFilesChangeAction(action);
+        case ActionTypes.URI_FILES_CHANGE_OR_LOAD:
+            FileAndDirectoryStore._handleMediaFilesChangeAction(action);
             break;
 
-        case ActionTypes.MEDIA_REQUEST_FAILED:
-            RemoteFileStore._handleRequestFailedAction(action);
+        case ActionTypes.URI_REQUEST_FAILED:
+            FileAndDirectoryStore._handleRequestFailedAction(action);
             break;
 
         default:
@@ -123,4 +123,4 @@ RemoteFileStore.dispatchToken = AppDispatcher.register(function(action) {
     }
 });
 
-module.exports = RemoteFileStore;
+module.exports = FileAndDirectoryStore;

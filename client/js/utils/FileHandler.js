@@ -1,5 +1,5 @@
 var FileTypes                = require('../constants/FileConstants').types;
-var RemoteDirectoryActionCreator  = require('../actions/RemoteDirectoryActionCreator');
+var DirectoryActionCreator  = require('../actions/DirectoryActionCreator');
 var ActiveAudioActionCreator = require('../actions/ActiveAudioActionCreator');
 
 var FileHandler = {
@@ -8,7 +8,7 @@ var FileHandler = {
         switch (file.type) {
 
             case FileTypes.DIRECTORY:
-                RemoteDirectoryActionCreator.setDirectory(file);
+                DirectoryActionCreator.setDirectory(file);
                 break;
 
             case FileTypes.FILE:

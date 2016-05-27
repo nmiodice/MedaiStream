@@ -1,15 +1,15 @@
 var React                   = require('react');
 var UriUtils                = require('../../utils/UriUtils')
 var Mousetrap               = require('Mousetrap')
-var RemoteFileStore         = require('../../stores/RemoteFileStore');
-var RemoteDirectoryActionCreator = require('../../actions/RemoteDirectoryActionCreator');
+var FileAndDirectoryStore         = require('../../stores/FileAndDirectoryStore');
+var DirectoryActionCreator = require('../../actions/DirectoryActionCreator');
 var FileActionCreator = require('../../actions/FileActionCreator');
 
 function getStateFromStores() {
     return  {
-        file     : RemoteFileStore.getFileData(),
-        stackPos : RemoteFileStore.getFileStackSize(),
-        filter   : RemoteFileStore.getFilter()
+        file     : FileAndDirectoryStore.getFileData(),
+        stackPos : FileAndDirectoryStore.getFileStackSize(),
+        filter   : FileAndDirectoryStore.getFilter()
     }
 }
 
@@ -20,7 +20,7 @@ var NavigationController = React.createClass({
     },
 
     componentDidMount: function() {
-        RemoteFileStore.addChangeListener(this._onChange);
+        FileAndDirectoryStore.addChangeListener(this._onChange);
         Mousetrap.bind('backspace', function(event) {
             event.preventDefault();
             this._onGoBackClick();
@@ -28,7 +28,7 @@ var NavigationController = React.createClass({
     },
 
     componentWillUnmount: function() {
-        RemoteFileStore.removeChangeListener(this._onChange);
+        FileAndDirectoryStore.removeChangeListener(this._onChange);
         Mousetrap.unbind('backspace');
     },
 
@@ -37,7 +37,7 @@ var NavigationController = React.createClass({
     },
 
     _onGoBackClick : function() {
-        RemoteDirectoryActionCreator.moveUpDirectory();
+        DirectoryActionCreator.moveUpDirectory();
     },
 
     _onFilterChange : function(event) {
