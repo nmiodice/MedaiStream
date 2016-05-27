@@ -1,4 +1,4 @@
-var FileTypes                = require('../../../common/constants/FileConstants').types;
+var FileTypes                = require('../constants/FileConstants').types;
 var RemoteDirectoryActionCreator  = require('../actions/RemoteDirectoryActionCreator');
 var ActiveAudioActionCreator = require('../actions/ActiveAudioActionCreator');
 
