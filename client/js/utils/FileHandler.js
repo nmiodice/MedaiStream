@@ -11,12 +11,12 @@ var FileHandler = {
                 DirectoryActionCreator.setDirectory(file);
                 break;
 
-            case FileTypes.FILE:
+            case FileTypes.AUDIO:
                 ActiveAudioActionCreator.setActivePlaylist(file);
                 break;
 
             default:
-                console.log("cannot handle file. type: " + file.type);
+                alert("Cannot open file!");
                 break;
         }
     }

@@ -86,15 +86,34 @@ var FileListItem = React.createClass({
 
         switch (file.type) {
             case FileTypes.DIRECTORY:
-                iconClass = "glyphicon glyphicon-folder-close"
+                if (this._isSelectedFile())
+                    iconClass = "glyphicon glyphicon-folder-open";
+                else
+                    iconClass = "glyphicon glyphicon-folder-close";
                 break;
 
             case FileTypes.AUDIO:
-                iconClass = "glyphicon glyphicon-play-circle"
+                iconClass = "glyphicon glyphicon-play-circle";
+                break;
+
+            case FileTypes.IMAGE:
+                iconClass = "glyphicon glyphicon-picture";
+                break;
+
+            case FileTypes.VIDEO:
+                iconClass = "glyphicon glyphicon-facetime-video";
+                break;
+
+            case FileTypes.COMPRESSED:
+                iconClass = "glyphicon glyphicon-compressed";
+                break;
+
+            case FileTypes.TEXT:
+                iconClass = "glyphicon glyphicon-pencil";
                 break;
 
             default:
-                iconClass = "glyphicon glyphicon-question-sign"
+                iconClass = "glyphicon glyphicon-file";
                 break;      
         }
 
