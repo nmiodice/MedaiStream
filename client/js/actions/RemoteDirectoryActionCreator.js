@@ -1,8 +1,7 @@
-var $               = require('jquery');
 var ActionTypes     = require('../constants/ActionTypes');
 var AppDispatcher   = require('../dispatcher/AppDispatcher');
+var FileActionCreator = require('./FileActionCreator');
 var RemoteFileStore = require('../stores/RemoteFileStore');
-var UriUtils        = require('../utils/UriUtils');
 
 var RemoteDirectoryActionCreator = {
 
@@ -14,6 +13,8 @@ var RemoteDirectoryActionCreator = {
     },
 
     setDirectory : function(file) {
+        if (RemoteFileStore.getFilter() != "")
+            FileActionCreator.filter("");
         this._setDirectory(file, false);
     },
 
@@ -26,43 +27,11 @@ var RemoteDirectoryActionCreator = {
         AppDispatcher.dispatch({
             type      : ActionTypes.MEDIA_URI_CHANGE,
             path      : file.path,
-            recursive : recursive
+            recursive : recursive,
+            filter    : ""
         });
 
-        this.fetchFiles();
-    },
-
-    fetchFiles : function() {
-        console.log("requesting files from server");
-
-        var parent = RemoteFileStore.getFileData();
-        var uri = UriUtils.directoryToURI(parent);
-      
-        $.getJSON(uri, function(result) {
-
-            if (result && result.files) {
-                AppDispatcher.dispatch({
-                    type   : ActionTypes.MEDIA_FILES_CHANGE,
-                    parent : parent,
-                    files  : result.files
-                });
-
-            } else {
-            
-                AppDispatcher.dispatch({
-                    type  : ActionTypes.MEDIA_REQUEST_FAILED
-                });
-
-            }
-        });
-    },
-
-    setSelectedRow : function(file) {
-
-        AppDispatcher.dispatch({
-            type  : ActionTypes.UI_ROW_SELECTED,
-            path  : file
-        });        
+        FileActionCreator.fetchFiles();
     }
 };
 

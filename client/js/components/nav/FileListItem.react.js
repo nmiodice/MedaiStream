@@ -1,10 +1,11 @@
 var $                        = require('jquery');
 var FileUtils                = require('../../utils/FileUtils');
+var FileHandler              = require('../../utils/FileHandler');
 var React                    = require('react');
 var FileTypes                = require('../../../../common/constants/FileConstants').types;
 var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
-var FileListActionCreator    = require('../../actions/FileListActionCreator')
-var FileListStore            = require('../../stores/FileListStore')
+var FileListActionCreator    = require('../../actions/FileListActionCreator');
+var FileListStore            = require('../../stores/FileListStore');
 
 var FileListItem = React.createClass({
 
@@ -54,7 +55,7 @@ var FileListItem = React.createClass({
     _onLoad : function(event) {
         var file = this.props.file;
         FileListActionCreator.setSelectedRow(this.props.file);
-        FileUtils.handleFile(file);
+        FileHandler.handleFile(file);
         event.stopPropagation();
         event.cancelBubble = true;
     },

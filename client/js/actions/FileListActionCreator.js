@@ -19,14 +19,14 @@ var FileListActionCreator = {
             }
         } else {
             AppDispatcher.dispatch({
-                type  : ActionTypes.UI_ROW_NEXT,
+                type  : ActionTypes.UI_ROW_NEXT
             });
         }
     },
 
     prevRow : function() {
         AppDispatcher.dispatch({
-            type  : ActionTypes.UI_ROW_PREV,
+            type  : ActionTypes.UI_ROW_PREV
         });
     }
 };

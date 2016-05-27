@@ -4,26 +4,26 @@ var ActionTypes         = require('../constants/ActionTypes');
 var assign              = require('object-assign');
 var ServerConstants     = require('../constants/ServerConstants');
 var ConnectionConstants = require('../constants/ConnectionConstants');
+var FileUtils           = require('../utils/FileUtils');
 
 var CHANGE_EVENT = 'change';
 
-var _fileData = {
-    status : ConnectionConstants.OFFLINE,
-    path   : '/', //ServerConstants.MEDIA_HOME_BASE,
-    files  : []
-};
-
-var _fileStack = []
 
 var RemoteFileStore = assign({}, EventEmitter.prototype, {
+
+    makeFile : function(status, path, files, isRecursive) {
+        return {
+            status : status,
+            path   : path,
+            files  : files,
+            recursive : isRecursive
+        }
+    },
     
     emitChange : function() {
         this.emit(CHANGE_EVENT);
     },
 
-    /**
-    * @param {function} callback
-    */
     addChangeListener : function(callback) {
         this.on(CHANGE_EVENT, callback);
     },
@@ -33,41 +33,45 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
     },
 
     getFileData : function() {
-        return _fileData;
+        return getHead(_fileStack);
+    },
+
+    getFilter : function() {
+        return _filter;
     },
 
     getFileStackSize : function() {
         return _fileStack.length;
     },
 
-    getFileStack : function() {
-        return _fileStack;
-    },
-
     _handleMediaUriUpAction : function(action) {
-        if (_fileStack.length > 0) {
-            _fileData = _fileStack.pop();
+        if (_fileStack.length > 1) {
+            _fileStack.pop();
+            _filter = "";
             RemoteFileStore.emitChange();
         }
     },
 
     _handleMediaUriChangeAction : function(action) {
-        _fileStack.push(_fileData);
-        
-        _fileData        = {};
-        _fileData.status = ConnectionConstants.CONNECTING;
-        _fileData.path   = action.path;
-        _fileData.files  = [];
-        _fileData.recursive = action.recursive ? true : false;
-        
+
+        _fileStack.push(RemoteFileStore.makeFile(
+            ConnectionConstants.CONNECTING,
+            action.path,
+            [],
+            action.recursive ? true : false
+        ));
+
+        _filter = action.filter;
         RemoteFileStore.emitChange();
     },
 
     _handleMediaFilesChangeAction : function(action) {
-        _fileData.status = ConnectionConstants.ONLINE;
-        _fileData.files  = action.files;
+        var fileData = getHead(_fileStack);
 
-        _fileData.files.forEach(function(x) {
+        fileData.status = ConnectionConstants.ONLINE;
+        fileData.files  = action.files;
+
+        fileData.files.forEach(function(x) {
             x.parent = action.parent;
         });
 
@@ -75,12 +79,25 @@ var RemoteFileStore = assign({}, EventEmitter.prototype, {
     },
 
     _handleRequestFailedAction : function(action) {
-        _fileData.files  = [];
-        _fileData.status = ConnectionConstants.OFFLINE;
+        var fileData = getHead(_fileStack);
+
+        fileData.files  = [];
+        fileData.status = ConnectionConstants.OFFLINE;
         RemoteFileStore.emitChange();
-    }
+    },
 
 });
+
+var _fileStack = [RemoteFileStore.makeFile(ConnectionConstants.OFFLINE, '/', [], 0)];
+
+var _filter = "";
+
+var getHead = function(stack) {
+    if (stack.length == 0)
+        return null;
+    return stack[stack.length - 1]
+};
+
 
 RemoteFileStore.dispatchToken = AppDispatcher.register(function(action) {
 

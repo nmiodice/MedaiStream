@@ -3,11 +3,13 @@ var UriUtils                = require('../../utils/UriUtils')
 var Mousetrap               = require('Mousetrap')
 var RemoteFileStore         = require('../../stores/RemoteFileStore');
 var RemoteDirectoryActionCreator = require('../../actions/RemoteDirectoryActionCreator');
+var FileActionCreator = require('../../actions/FileActionCreator');
 
 function getStateFromStores() {
     return  {
         file     : RemoteFileStore.getFileData(),
-        stackPos : RemoteFileStore.getFileStackSize()
+        stackPos : RemoteFileStore.getFileStackSize(),
+        filter   : RemoteFileStore.getFilter()
     }
 }
 
@@ -40,7 +42,7 @@ var NavigationController = React.createClass({
 
     _onFilterChange : function(event) {
         var text = event.target.value.toLowerCase();
-
+        FileActionCreator.filter(text);
     },
 
     render: function() {
@@ -48,7 +50,7 @@ var NavigationController = React.createClass({
         var path     = fileData.path;
         var name     = UriUtils.stripHTTP(path);
         var stackPos = this.state.stackPos;
-        var disabledButton = stackPos == 0;
+        var disabledButton = stackPos == 1;
         
         if (name == '' || name == '/') {
             name = "";
@@ -69,6 +71,7 @@ var NavigationController = React.createClass({
                             className="float-right form-control"
                             type="text"
                             placeholder="Filter..."
+                            value={this.state.filter}
                             onChange={this._onFilterChange}/>
                     </div>
                 </span>

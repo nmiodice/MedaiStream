@@ -1,11 +1,12 @@
 var React                   = require('react');
 var FileListItem            = require('./FileListItem.react');
-var UriUtils                = require('../../utils/UriUtils')
-var FileUtils               = require('../../utils/FileUtils')
+var FileUtils               = require('../../utils/FileUtils');
+var FileHandler             = require('../../utils/FileHandler');
 var FileTypes               = require('../../../../common/constants/FileConstants').types;
 var Mousetrap               = require('Mousetrap');
 var RemoteFileStore         = require('../../stores/RemoteFileStore');
 var RemoteDirectoryActionCreator = require('../../actions/RemoteDirectoryActionCreator');
+var FileActionCreator = require('../../actions/FileActionCreator');
 var FileListStore           = require('../../stores/FileListStore')
 var FileListActionCreator   = require('../../actions/FileListActionCreator');
 
@@ -33,7 +34,7 @@ var FileListContainer = React.createClass({
 
     componentDidMount: function() {
         RemoteFileStore.addChangeListener(this._onChange);
-        RemoteDirectoryActionCreator.fetchFiles();
+        FileActionCreator.fetchFiles();
         this.bindKeys();
     },
 
@@ -74,7 +75,7 @@ var FileListContainer = React.createClass({
         var selectedFile = FileListStore.getSelectedFile();
         if (selectedFile == null)
             return;
-        FileUtils.handleFile(selectedFile);
+        FileHandler.handleFile(selectedFile);
     },
 
     _onFilter : function(event) {

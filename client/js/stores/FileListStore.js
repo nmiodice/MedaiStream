@@ -8,7 +8,7 @@ var CHANGE_EVENT = 'change';
 
 var _selectedNode = null;
 
-var _fileStack = [];
+var _selectedFileStack = [];
 
 var FileListStore = assign({}, EventEmitter.prototype, {
     
@@ -33,21 +33,21 @@ var FileListStore = assign({}, EventEmitter.prototype, {
 
     _handleRowSelected : function(action) {
         var file = action.file;
-        var playlist = LinkedListUtils.fromList(file.parent.files)
+        var playlist = LinkedListUtils.fromList(file.parent.files);
 
         _selectedNode = LinkedListUtils.find(playlist, file);
         this.emitChange();
     },
 
     _handleMediaUriUpAction : function(action) {
-        if (_fileStack.length > 0) {
-            _selectedNode = _fileStack.pop();
+        if (_selectedFileStack.length > 0) {
+            _selectedNode = _selectedFileStack.pop();
             this.emitChange();
         }        
     },
 
     _handleMediaUriChangeAction : function(action) {
-        _fileStack.push(_selectedNode);
+        _selectedFileStack.push(_selectedNode);
         _selectedNode = null;
         this.emitChange();
     },
@@ -64,7 +64,7 @@ var FileListStore = assign({}, EventEmitter.prototype, {
             _selectedNode = _selectedNode.prev;
             this.emitChange();
         }
-    },
+    }
 
 });
 
