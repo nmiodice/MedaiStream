@@ -27,6 +27,12 @@ a {
   margin-top: 16px;
   margin-bottom: 16px; }
 
+.exit-button {
+  float: right;
+  margin: 16px;
+  color: #fff;
+  font-size: 1.5em; }
+
 .float-left {
   float: left; }
 
@@ -35,6 +41,27 @@ a {
 
 .form-control {
   width: auto; }
+
+.image {
+  padding-top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  overflow: auto;
+  position: fixed; }
+
+.image-viewport {
+  padding-top: 60px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(51, 51, 51, 0.97); }
 
 .inline {
   display: inline-block;
@@ -86,5 +113,9 @@ a {
 
 .small-text {
   font-size: 75%; }
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden; }
 
 /*# sourceMappingURL=styles.css.map */

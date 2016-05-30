@@ -1,6 +1,7 @@
 var FileTypes                = require('../constants/FileConstants').types;
 var DirectoryActionCreator  = require('../actions/DirectoryActionCreator');
 var ActiveAudioActionCreator = require('../actions/ActiveAudioActionCreator');
+var ActiveImageActionCreator = require('../actions/ActiveImageActionCreator');
 
 var FileHandler = {
 
@@ -13,6 +14,10 @@ var FileHandler = {
 
             case FileTypes.AUDIO:
                 ActiveAudioActionCreator.setActivePlaylist(file);
+                break;
+
+            case FileTypes.IMAGE:
+                ActiveImageActionCreator.setImage(file);
                 break;
 
             default:

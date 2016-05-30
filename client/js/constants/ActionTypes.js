@@ -13,6 +13,9 @@ module.exports = keyMirror({
     AUDIO_VOLUME_CHANGE      : null,	// change volume
     AUDIO_SEEK               : null,    // go to track position
 
+    IMAGE_ACTIVE             : null,    // image to show
+    IMAGE_CLEAR              : null,    // image to clear
+
     UI_ROW_SELECTED          : null,    // row selected
     UI_ROW_NEXT              : null,    // row selected
     UI_ROW_PREV              : null     // row selected

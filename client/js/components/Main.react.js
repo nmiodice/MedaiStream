@@ -2,7 +2,8 @@ var React                = require('react');
 var FileListContainer    = require('./nav/FileListContainer.react');
 var AppBar               = require('./AppBar.react');
 var NavigationController = require('./nav/NavigationController.react');
-var AudioController      = require('./media/AudioController.react');
+var AudioController      = require('./audio/AudioController.react');
+var ImageDisplay         = require('./image/ImageDisplay.react');
 
 var Main = React.createClass({
 
@@ -13,6 +14,7 @@ var Main = React.createClass({
 				<NavigationController/>
 				<FileListContainer/>
 				<AudioController/>
+				<ImageDisplay/>
 			</div>
 		);
 	}
