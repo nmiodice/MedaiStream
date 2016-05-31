@@ -84,7 +84,7 @@ var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
         fileData.files  = [];
         fileData.status = ConnectionConstants.OFFLINE;
         FileAndDirectoryStore.emitChange();
-    },
+    }
 
 });
 

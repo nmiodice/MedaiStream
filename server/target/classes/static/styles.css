@@ -73,6 +73,11 @@ a {
 .list-group-item:hover {
   background: url("img/tile-navigation.png"); }
 
+.loader {
+  left: 50%;
+  top: 50%;
+  position: absolute; }
+
 .media-controller {
   background: url("img/tile-navigation.png");
   box-shadow: 0px 0px 15px 0px #3B3B44; }

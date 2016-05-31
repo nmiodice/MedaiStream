@@ -37,6 +37,14 @@ $img-secondary       : "img/tile-navigation.png";
   @include drop-shadow;
 }
 
+@mixin full-screen() {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
 @mixin img-gradient($c1, $c2, $background) {
   background : linear-gradient($c1, $c2), $background;
 }
@@ -137,11 +145,7 @@ a {
 
 .image-viewport {
   @include nav-bar-adjust;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+  @include full-screen;
   background: $color-overlay;
 }
 
@@ -156,6 +160,12 @@ a {
 
 .list-group-item:hover {
     @include background-secondary;
+}
+
+.loader {
+  left: 50%;
+  top: 50%;
+  position: absolute;
 }
 
 .media-controller {

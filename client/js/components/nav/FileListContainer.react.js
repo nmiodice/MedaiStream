@@ -1,18 +1,23 @@
-var React                   = require('react');
-var FileListItem            = require('./FileListItem.react');
-var FileUtils               = require('../../utils/FileUtils');
-var FileHandler             = require('../../utils/FileHandler');
-var FileTypes               = require('../../constants/FileConstants').types;
-var Mousetrap               = require('Mousetrap');
-var FileAndDirectoryStore         = require('../../stores/FileAndDirectoryStore');
-var DirectoryActionCreator = require('../../actions/DirectoryActionCreator');
-var FileActionCreator = require('../../actions/FileActionCreator');
-var SelectedFileStore           = require('../../stores/SelectedFileStore')
+var React                       = require('react');
+var FileListItem                = require('./FileListItem.react');
+var FileUtils                   = require('../../utils/FileUtils');
+var UIUtils                     = require('../../utils/UIUtils');
+var FileHandler                 = require('../../utils/FileHandler');
+var FileTypes                   = require('../../constants/FileConstants').types;
+var Mousetrap                   = require('Mousetrap');
+var FileAndDirectoryStore       = require('../../stores/FileAndDirectoryStore');
+var DirectoryActionCreator      = require('../../actions/DirectoryActionCreator');
+var FileActionCreator           = require('../../actions/FileActionCreator');
+var SelectedFileStore           = require('../../stores/SelectedFileStore');
 var SelectedFileActionCreator   = require('../../actions/SelectedFileActionCreator');
+var ConnectionConstants         = require('../../constants/ConnectionConstants');
+
 
 function getStateFromStores() {
+    var file = FileAndDirectoryStore.getFileData();
     return  {
-        file : FileAndDirectoryStore.getFileData(),
+        file   : file,
+        online : file.status == ConnectionConstants.ONLINE
     }
 }
 
@@ -105,7 +110,17 @@ var FileListContainer = React.createClass({
     },
 
     _onChange : function() {
-        this.setState(getStateFromStores());
+        this.setState(getStateFromStores(), this._setLoaderVisibility);
+        //this._setLoaderVisibility();
+    },
+
+    _setLoaderVisibility : function() {
+        console.log('-------', this.state);
+        if (this.state.online) {
+            UIUtils.removeLoader();
+        } else {
+            UIUtils.addLoader();
+        }
     },
 
     _onSelectAll : function() {
@@ -126,7 +141,7 @@ var FileListContainer = React.createClass({
         }
 
         return (
-            <div className={"container body-bottom-adjust"}>
+            <div className={"container body-bottom-adjust"} ref={this._setLoaderVisibility}>
 
                 <ul className="list-group file-list">
                     {noDirectory ? null:

@@ -11,7 +11,8 @@
     "react"               : "15.1.0",
     "react-dom"           : "15.1.0",
     "mousetrap"           : "^1.5.3",
-    "blueimp-load-image"  : "2.6.1"
+    "blueimp-load-image"  : "2.6.1",
+    "spin.js"             : "2.3.2"
 
   },
   "devDependencies" : {

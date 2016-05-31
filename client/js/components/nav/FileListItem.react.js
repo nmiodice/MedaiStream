@@ -55,7 +55,7 @@ var FileListItem = React.createClass({
         }
     },
 
-    _onSelect : function(event) {
+    _onSelect : function() {
         SelectedFileActionCreator.setSelectedRow(this.props.file);
     },
 
@@ -64,7 +64,6 @@ var FileListItem = React.createClass({
         SelectedFileActionCreator.setSelectedRow(this.props.file);
         FileHandler.handleFile(file);
         event.stopPropagation();
-        event.cancelBubble = true;
     },
 
     _isActiveFile : function() {

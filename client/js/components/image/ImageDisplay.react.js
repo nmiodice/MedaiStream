@@ -5,7 +5,7 @@ var ActiveImageActionCreator = require('../../actions/ActiveImageActionCreator')
 var UriUtils                 = require('../../utils/UriUtils');
 var Mousetrap                = require('Mousetrap');
 var loadImage                = require('blueimp-load-image');
-//var loadImageExif            = require('blueimp-load-image/js/load-image-exif');
+var UIUtils                  = require('../../utils/UIUtils');
 
 function getStateFromStores() {
     return  {
@@ -13,7 +13,7 @@ function getStateFromStores() {
     }
 }
 
-var AudioController = React.createClass({
+var ImageDisplay = React.createClass({
 
     getInitialState: function() {
         return getStateFromStores();
@@ -39,82 +39,48 @@ var AudioController = React.createClass({
 
     _onRenderedComponent : function(divDOM) {
         if (this.state.activeImage) {
-            var uri = UriUtils.fileToURI(this.state.activeImage);
-
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', uri, true);
-            xhr.responseType = 'arraybuffer';
-
-            var onloadImage = function(imgDOM) {
-                imgDOM.className = "image";
-                divDOM.appendChild(imgDOM);
-            };
-
-            xhr.onload = function(e) {
-                var ori = 0;
-                if (this.status == 200) {
-                    //var blob = this.response;
-                    var arrayBufferView = new Uint8Array(this.response);
-                    var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-                    var onLoadEXIF = function(data) {
-                        console.log('exif');
-                        console.log(data);
-                        console.log(blob);
-                        if (data.exif)
-                            ori = data.exif.get('Orientation');
-
-                        loadImage(blob, onloadImage, {orientation: ori});
-                    };
-
-                    loadImage.parseMetaData(blob, onLoadEXIF);
-                } else {
-                    console.log("error loading image: " + this.status);
-                    alert('Cannot load image file!');
-                }
-            };
-            xhr.send();
-
-
-
-
-            //
-            //$.get(
-            //    uri,
-            //    function(imgData, status) {
-            //        if (imgData) {
-            //            loadImage.parseMetaData(imgData, function(exifData) {
-            //                var ori;
-            //                console.log(exifData);
-            //                if (exifData.exif) {
-            //                    ori = exifData.exif.get('Orientation');
-            //                    alert(ori);
-            //                }
-            //                loadImage(uri,
-            //                    function (imgDOM) {
-            //                        imgDOM.className = "image";
-            //                        divDOM.appendChild(imgDOM);
-            //                    }, {
-            //                        orientation : ori
-            //                    })
-            //            });
-            //        } else {
-            //            console.log("Error loading image from server: " + status);
-            //            alert("Cannot load image from server!");
-            //        }
-            //    }
-            //);
-
-
-
-
-            //loadImage(uri,
-            //    function (imgDOM) {
-            //        imgDOM.className = "image";
-            //        divDOM.appendChild(imgDOM);
-            //    }, {
-            //        orientation : true
-            //    })
+            UIUtils.addLoader();
+            this._handleImageExifLoad(divDOM);
         }
+    },
+
+    /**
+     * Load an image and rotate it based on its parsed EXIF metadata,
+     * if possible
+     */
+    _handleImageExifLoad : function(divDOM) {
+        var uri = UriUtils.fileToURI(this.state.activeImage);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', uri, true);
+        xhr.responseType = 'arraybuffer';
+
+        var onloadImage = function(imgDOM) {
+            UIUtils.removeLoader();
+            imgDOM.className = "image";
+            divDOM.appendChild(imgDOM);
+        };
+
+        xhr.onload = function(e) {
+            var ori = 0;
+            if (this.status == 200) {
+                //var blob = this.response;
+                var arrayBufferView = new Uint8Array(this.response);
+                var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+
+                var onLoadEXIF = function(data) {
+                    if (data.exif)
+                        ori = data.exif.get('Orientation');
+                    loadImage(blob, onloadImage, {orientation: ori});
+                };
+
+                loadImage.parseMetaData(blob, onLoadEXIF);
+            } else {
+                console.log("error loading image: " + this.status);
+                alert('Cannot load image file!');
+            }
+        };
+        xhr.send();
    },
 
     render: function() {
@@ -143,5 +109,5 @@ var AudioController = React.createClass({
 
 });
 
-module.exports = AudioController;
+module.exports = ImageDisplay;
 
