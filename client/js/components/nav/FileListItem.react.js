@@ -12,6 +12,7 @@ var FileListItem = React.createClass({
     componentDidMount: function() {
         ActiveAudioStore.addChangeListener(this._onChange);
         SelectedFileStore.addChangeListener(this._onChange);
+        this.wasSelected = false;
     },
 
     componentWillUnmount: function() {
@@ -22,14 +23,20 @@ var FileListItem = React.createClass({
     _onChange : function() {
         // when file becomes active, file object doesn't change,
         // but the rendering for this component might
-        this.forceUpdate();
+        //this.forceUpdate();
         if (this._isSelectedFile()) {
+            this.wasSelected = true;
+            this.forceUpdate();
             this._scrollToOnScreen();
+        } else {
+            if (this.wasSelected)
+                this.forceUpdate();
+            this.wasSelected = false;
         }
     },
 
     _scrollToOnScreen : function() {
-        var me = $(this.getDOMNode());
+        var me = $(this.me);
         var body = $('body');
         var bOff = 60;
 
@@ -69,7 +76,7 @@ var FileListItem = React.createClass({
     _isSelectedFile : function() {
         var selectedFile = SelectedFileStore.getSelectedFile();
         var file = this.props.file;
-        return isSelect = selectedFile != null && file.path == selectedFile.path;
+        return selectedFile != null && file.path == selectedFile.path;
     },
 
     render: function() {
@@ -118,7 +125,11 @@ var FileListItem = React.createClass({
         }
 
         return (
-            <li className={className} onClick={this._onSelect} onDoubleClick={this._onLoad}>
+            <li
+                className={className}
+                onClick={this._onSelect}
+                onDoubleClick={this._onLoad}
+                ref={(ref) => this.me = ref}>
                 <span className={iconClass}/>
                 <a className="default-margin" 
                     onClick={this._onLoad}>{text}</a>
