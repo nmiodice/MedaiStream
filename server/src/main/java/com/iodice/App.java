@@ -14,7 +14,7 @@ import java.io.File;
 @Configuration
 public class App {
 
-    public static String MEDIA_FP = "mediadir";
+    public static final String MEDIA_FP = "mediadir";
 
     private static void usage() {
         System.out.println(String.format(
