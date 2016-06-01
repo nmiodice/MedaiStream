@@ -115,7 +115,6 @@ var FileListContainer = React.createClass({
     },
 
     _setLoaderVisibility : function() {
-        console.log('-------', this.state);
         if (this.state.online) {
             UIUtils.removeLoader();
         } else {

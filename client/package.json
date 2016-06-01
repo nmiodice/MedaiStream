@@ -27,7 +27,7 @@
     "howler"              : "2.0.0-beta13"
   },
   "scripts"         : {
-    "start"           : "watchify -o ./static/bundle.js -v -d js/app.js & sass --watch sass:./static/",
+    "start"           : "watchify -o ./static/bundle.js -v -d js/app.js & sass --watch sass:./static/assets/",
     "build"           : "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > ./static/bundle.min.js",
     "test"            : "jest"
   },

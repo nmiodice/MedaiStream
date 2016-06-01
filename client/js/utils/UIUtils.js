@@ -28,6 +28,7 @@ var UIUtils = {
             new Spinner(opts).spin(loaderDOM);
 
             //$(loaderDOM).hide().appendTo("#spinner-container").fadeIn("fast");
+            //$(loaderDOM).hide().appendTo("#spinner-container").fadeIn();
 
             $("#spinner-container").append(loaderDOM);
         }
