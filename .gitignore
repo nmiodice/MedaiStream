@@ -12,3 +12,4 @@ bundle.js
 client/node_modules/
 client/.sass-cache/
 __examples/
+server/target/
