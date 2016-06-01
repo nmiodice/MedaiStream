@@ -1,6 +1,6 @@
 var protocol    = "http://";
 var server_ip   = "127.0.0.1";
-var server_port = 8080
+var server_port = 8080;
 var base        = protocol + server_ip + ":" + server_port;
 
 var constants = {
@@ -13,4 +13,4 @@ var constants = {
 	RECURSE_QPARAM           : 'recursive'
 };
 
-module.exports = constants
+module.exports = constants;

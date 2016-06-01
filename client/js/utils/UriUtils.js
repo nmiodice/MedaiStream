@@ -1,5 +1,5 @@
 var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
-var ServerConstants = require('../constants/ServerConstants')
+var ServerConstants = require('../constants/ServerConstants');
 
 var UriUtils = {
 	directoryToURI : function(file) {

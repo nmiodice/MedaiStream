@@ -14,4 +14,4 @@ var constants = {
 	}
 };
 
-module.exports = constants
+module.exports = constants;

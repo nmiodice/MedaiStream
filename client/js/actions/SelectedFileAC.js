@@ -1,8 +1,8 @@
-var ActionTypes     = require('../constants/ActionTypes');
-var AppDispatcher   = require('../dispatcher/AppDispatcher');
+var ActionTypes         = require('../constants/ActionTypes');
+var AppDispatcher       = require('../dispatcher/AppDispatcher');
 var SelectedFileStore   = require('../stores/SelectedFileStore');
 
-var SelectedFileActionCreator = {
+var SelectedFileAC = {
 
     setSelectedRow : function(file) {
         AppDispatcher.dispatch({
@@ -31,4 +31,4 @@ var SelectedFileActionCreator = {
     }
 };
 
-module.exports = SelectedFileActionCreator;
+module.exports = SelectedFileAC;

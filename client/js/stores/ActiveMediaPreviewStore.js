@@ -8,7 +8,7 @@ var CHANGE_EVENT = 'change';
 
 var _imageFile = null;
 
-var ActiveImageStore = assign({}, EventEmitter.prototype, {
+var ActiveMediaPreviewStore = assign({}, EventEmitter.prototype, {
 
     emitChange : function() {
         this.emit(CHANGE_EVENT);
@@ -38,16 +38,16 @@ var ActiveImageStore = assign({}, EventEmitter.prototype, {
 
 });
 
-ActiveImageStore.dispatchToken = AppDispatcher.register(function(action) {
+ActiveMediaPreviewStore.dispatchToken = AppDispatcher.register(function(action) {
 
     switch(action.type) {
 
         case ActionTypes.IMAGE_ACTIVE:
-            ActiveImageStore._handleImageActive(action);
+            ActiveMediaPreviewStore._handleImageActive(action);
             break;
 
         case ActionTypes.IMAGE_CLEAR:
-            ActiveImageStore._handleImageClear();
+            ActiveMediaPreviewStore._handleImageClear();
             break;
 
         default:
@@ -55,4 +55,4 @@ ActiveImageStore.dispatchToken = AppDispatcher.register(function(action) {
     }
 });
 
-module.exports = ActiveImageStore;
+module.exports = ActiveMediaPreviewStore;

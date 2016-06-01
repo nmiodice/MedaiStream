@@ -1,9 +1,9 @@
-var ActionTypes     = require('../constants/ActionTypes');
-var AppDispatcher   = require('../dispatcher/AppDispatcher');
-var FileActionCreator = require('./FileActionCreator');
+var ActionTypes           = require('../constants/ActionTypes');
+var AppDispatcher         = require('../dispatcher/AppDispatcher');
+var FileAC                = require('./FileAC');
 var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
 
-var DirectoryActionCreator = {
+var DirectoryAC = {
 
     moveUpDirectory : function() {
 
@@ -14,7 +14,7 @@ var DirectoryActionCreator = {
 
     setDirectory : function(file) {
         if (FileAndDirectoryStore.getFilter() != "")
-            FileActionCreator.filter("");
+            FileAC.filter("");
         this._setDirectory(file, false);
     },
 
@@ -31,8 +31,8 @@ var DirectoryActionCreator = {
             filter    : ""
         });
 
-        FileActionCreator.fetchFiles();
+        FileAC.fetchFiles();
     }
 };
 
-module.exports = DirectoryActionCreator;
+module.exports = DirectoryAC;

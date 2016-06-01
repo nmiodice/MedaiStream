@@ -1,10 +1,10 @@
-var React           = require('react');
-var UriUtils        = require('../utils/UriUtils')
-var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
+var React                  = require('react');
+var UriUtils               = require('../utils/UriUtils');
+var FileAndDirectoryStore  = require('../stores/FileAndDirectoryStore');
 
 function getStateFromStores() {
     return  {
-        file : FileAndDirectoryStore.getFileData(),
+        file : FileAndDirectoryStore.getFileData()
     }
 }
 
@@ -27,10 +27,6 @@ var NavigationBar = React.createClass({
     },
 
     render: function() {
-        var fileData = this.state.file;
-        var path     = fileData.path;
-        var name     = UriUtils.stripHTTP(path);
-
         return (
             <nav className="navbar navbar-default navbar-fixed-top navbar-inner">
                 <div className="container-fluid">

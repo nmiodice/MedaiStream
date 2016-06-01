@@ -1,7 +1,7 @@
 var $                        = require('jquery');
 var React                    = require('react');
-var ActiveImageStore         = require('../../stores/ActiveImageStore');
-var ActiveImageActionCreator = require('../../actions/ActiveImageActionCreator');
+var ActiveMediaPreviewStore  = require('../../stores/ActiveMediaPreviewStore');
+var MediaPreviewAC           = require('../../actions/MediaPreviewAC');
 var UriUtils                 = require('../../utils/UriUtils');
 var Mousetrap                = require('Mousetrap');
 var loadImage                = require('blueimp-load-image');
@@ -9,7 +9,7 @@ var UIUtils                  = require('../../utils/UIUtils');
 
 function getStateFromStores() {
     return  {
-        activeImage     : ActiveImageStore.getActiveImage()
+        activeImage     : ActiveMediaPreviewStore.getActiveImage()
     }
 }
 
@@ -20,12 +20,12 @@ var ImageDisplay = React.createClass({
     },
 
     componentDidMount: function() {
-        ActiveImageStore.addChangeListener(this._onChange);
+        ActiveMediaPreviewStore.addChangeListener(this._onChange);
         Mousetrap.bind('esc', this._onCloseClick);
     },
 
     componentWillUnmount: function() {
-        ActiveImageStore.removeChangeListener(this._onChange);
+        ActiveMediaPreviewStore.removeChangeListener(this._onChange);
         Mousetrap.unbind('esc');
     },
 
@@ -34,7 +34,7 @@ var ImageDisplay = React.createClass({
     },
 
     _onCloseClick : function() {
-        ActiveImageActionCreator.clearImage(this.state.activeImage);
+        MediaPreviewAC.clearImage(this.state.activeImage);
     },
 
     _onRenderedComponent : function(divDOM) {
@@ -61,7 +61,7 @@ var ImageDisplay = React.createClass({
             divDOM.appendChild(imgDOM);
         };
 
-        xhr.onload = function(e) {
+        xhr.onload = function() {
             var ori = 0;
             if (this.status == 200) {
                 //var blob = this.response;

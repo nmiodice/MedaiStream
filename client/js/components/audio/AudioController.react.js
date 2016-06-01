@@ -1,9 +1,9 @@
-var React                    = require('react');
-var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
-var ActiveAudioActionCreator = require('../../actions/ActiveAudioActionCreator');
-var VolumeBar                = require('./VolumeBar.react');
-var AudioInfoBar             = require('./AudioInfoBar.react');
-var Mousetrap                = require('Mousetrap');
+var React             = require('react');
+var ActiveAudioStore  = require('../../stores/ActiveAudioStore');
+var ActiveAudioAC     = require('../../actions/ActiveAudioAC');
+var VolumeBar         = require('./VolumeBar.react');
+var AudioInfoBar      = require('./AudioInfoBar.react');
+var Mousetrap         = require('Mousetrap');
 
 function getStateFromStores() {
     return  {
@@ -19,14 +19,14 @@ var AudioController = React.createClass({
     },
 
     componentDidMount: function() {
-        ActiveAudioStore.addChangeListener(this._onChange)
+        ActiveAudioStore.addChangeListener(this._onChange);
         Mousetrap.bind('space', this._onPlayPauseClick);
         Mousetrap.bind('left', this._onPrevClick);
         Mousetrap.bind('right', this._onNextClick);
     },
 
     componentWillUnmount: function() {
-        ActiveAudioStore.removeChangeListener(this._onChange)
+        ActiveAudioStore.removeChangeListener(this._onChange);
         Mousetrap.unbind('space');
         Mousetrap.unbind('left');
         Mousetrap.unbind('right');
@@ -37,15 +37,15 @@ var AudioController = React.createClass({
     },
 
     _onPrevClick : function() {
-        ActiveAudioActionCreator.previousTrack();
+        ActiveAudioAC.previousTrack();
     },
 
     _onNextClick : function() {
-        ActiveAudioActionCreator.nextTrack()
+        ActiveAudioAC.nextTrack()
     },
 
     _onPlayPauseClick : function() {
-        ActiveAudioActionCreator.togglePlayState();
+        ActiveAudioAC.togglePlayState();
     },
 
     render: function() {

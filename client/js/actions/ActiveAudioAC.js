@@ -1,7 +1,7 @@
 var ActionTypes      = require('../constants/ActionTypes');
 var AppDispatcher    = require('../dispatcher/AppDispatcher');
 
-var ActiveAudioActionCreator = {
+var ActiveAudioAC = {
 
     setActivePlaylist : function(file) {
         AppDispatcher.dispatch({
@@ -12,7 +12,7 @@ var ActiveAudioActionCreator = {
 
     togglePlayState : function() {
         AppDispatcher.dispatch({
-            type : ActionTypes.AUDIO_PLAY_STATE_TOGGLE,
+            type : ActionTypes.AUDIO_PLAY_STATE_TOGGLE
         });	
     },
 
@@ -43,4 +43,4 @@ var ActiveAudioActionCreator = {
     }
 };
 
-module.exports = ActiveAudioActionCreator;
+module.exports = ActiveAudioAC;

@@ -2,7 +2,7 @@ var EventEmitter    = require('events').EventEmitter;
 var AppDispatcher   = require('../dispatcher/AppDispatcher');
 var ActionTypes     = require('../constants/ActionTypes');
 var assign          = require('object-assign');
-var LinkedListUtils = require('../utils/LinkedListUtils')
+var LinkedListUtils = require('../utils/LinkedListUtils');
 
 var CHANGE_EVENT = 'change';
 
@@ -39,27 +39,27 @@ var SelectedFileStore = assign({}, EventEmitter.prototype, {
         this.emitChange();
     },
 
-    _handleMediaUriUpAction : function(action) {
+    _handleMediaUriUpAction : function() {
         if (_selectedFileStack.length > 0) {
             _selectedNode = _selectedFileStack.pop();
             this.emitChange();
         }        
     },
 
-    _handleMediaUriChangeAction : function(action) {
+    _handleMediaUriChangeAction : function() {
         _selectedFileStack.push(_selectedNode);
         _selectedNode = null;
         this.emitChange();
     },
 
-    _handleNextRow : function(action) {
+    _handleNextRow : function() {
         if (_selectedNode != null && _selectedNode.next != null) {
             _selectedNode = _selectedNode.next;
             this.emitChange();
         }
     },
 
-    _handlePrevRow : function(action) {
+    _handlePrevRow : function() {
         if (_selectedNode != null && _selectedNode.prev != null) {
             _selectedNode = _selectedNode.prev;
             this.emitChange();
@@ -76,19 +76,19 @@ SelectedFileStore.dispatchToken = AppDispatcher.register(function(action) {
             break;
 
         case ActionTypes.UI_ROW_NEXT:
-            SelectedFileStore._handleNextRow(action);
+            SelectedFileStore._handleNextRow();
             break;
 
         case ActionTypes.UI_ROW_PREV:
-            SelectedFileStore._handlePrevRow(action);
+            SelectedFileStore._handlePrevRow();
             break;
         
         case ActionTypes.URI_UP:
-            SelectedFileStore._handleMediaUriUpAction(action);
+            SelectedFileStore._handleMediaUriUpAction();
             break;
 
         case ActionTypes.URI_CHANGE:
-            SelectedFileStore._handleMediaUriChangeAction(action);
+            SelectedFileStore._handleMediaUriChangeAction();
             break;
             
         default:

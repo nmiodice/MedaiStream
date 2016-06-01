@@ -40,6 +40,6 @@ var LinkedListUtils = {
 
 		return null;
 	}
-}
+};
 
 module.exports = LinkedListUtils;

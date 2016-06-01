@@ -1,11 +1,11 @@
-var React                    = require('react');
-var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
-var ActiveAudioActionCreator = require('../../actions/ActiveAudioActionCreator');
+var React             = require('react');
+var ActiveAudioStore  = require('../../stores/ActiveAudioStore');
+var ActiveAudioAC     = require('../../actions/ActiveAudioAC');
 
 
 function getStateFromStores() {
     return  {
-        volume: ActiveAudioStore.getVolume(),
+        volume: ActiveAudioStore.getVolume()
     }
 }
 
@@ -41,12 +41,12 @@ var VolumeBar = React.createClass({
     },
 
     _setVolume : function(volume) {
-        ActiveAudioActionCreator.setVolume(volume);
+        ActiveAudioAC.setVolume(volume);
     },
 
     render: function() {
         var volUp    = 'img/volume-high.png';
-        var volDown  = 'img/volume-low.png'
+        var volDown  = 'img/volume-low.png';
         var volume   = this.state.volume;
         var cName = this.props.gridClass;
 

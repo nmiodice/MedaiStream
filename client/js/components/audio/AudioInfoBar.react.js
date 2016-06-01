@@ -1,7 +1,7 @@
-var $                        = require('jquery');
-var React                    = require('react');
-var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
-var ActiveAudioActionCreator = require('../../actions/ActiveAudioActionCreator');
+var $                 = require('jquery');
+var React             = require('react');
+var ActiveAudioStore  = require('../../stores/ActiveAudioStore');
+var ActiveAudioAC     = require('../../actions/ActiveAudioAC');
 
 function getStateFromStores() {
     return  {
@@ -65,7 +65,7 @@ var AudioInfoBar = React.createClass({
         var off = event.clientX - elem.offset().left;
         var offPercent = off / elem.width();
         var seekPos = offPercent * this.state.duration;
-        ActiveAudioActionCreator.setSeekPosition(seekPos)
+        ActiveAudioAC.setSeekPosition(seekPos)
     },
 
     render: function() {

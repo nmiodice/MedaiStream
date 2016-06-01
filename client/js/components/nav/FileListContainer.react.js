@@ -1,16 +1,16 @@
-var React                       = require('react');
-var FileListItem                = require('./FileListItem.react');
-var FileUtils                   = require('../../utils/FileUtils');
-var UIUtils                     = require('../../utils/UIUtils');
-var FileHandler                 = require('../../utils/FileHandler');
-var FileTypes                   = require('../../constants/FileConstants').types;
-var Mousetrap                   = require('Mousetrap');
-var FileAndDirectoryStore       = require('../../stores/FileAndDirectoryStore');
-var DirectoryActionCreator      = require('../../actions/DirectoryActionCreator');
-var FileActionCreator           = require('../../actions/FileActionCreator');
-var SelectedFileStore           = require('../../stores/SelectedFileStore');
-var SelectedFileActionCreator   = require('../../actions/SelectedFileActionCreator');
-var ConnectionConstants         = require('../../constants/ConnectionConstants');
+var React                   = require('react');
+var FileListItem            = require('./FileListItem.react');
+var FileUtils               = require('../../utils/FileUtils');
+var UIUtils                 = require('../../utils/UIUtils');
+var FileHandler             = require('../../utils/FileHandler');
+var FileTypes               = require('../../constants/FileConstants').types;
+var Mousetrap               = require('Mousetrap');
+var FileAndDirectoryStore   = require('../../stores/FileAndDirectoryStore');
+var DirectoryAC             = require('../../actions/DirectoryAC');
+var FileAC                  = require('../../actions/FileAC');
+var SelectedFileStore       = require('../../stores/SelectedFileStore');
+var SelectedFileAC          = require('../../actions/SelectedFileAC');
+var ConnectionConstants     = require('../../constants/ConnectionConstants');
 
 
 function getStateFromStores() {
@@ -39,7 +39,7 @@ var FileListContainer = React.createClass({
 
     componentDidMount: function() {
         FileAndDirectoryStore.addChangeListener(this._onChange);
-        FileActionCreator.fetchFiles();
+        FileAC.fetchFiles();
         this.bindKeys();
     },
 
@@ -66,14 +66,14 @@ var FileListContainer = React.createClass({
         if (event) {
             event.preventDefault();
         }
-        SelectedFileActionCreator.nextRow(this.state.file);
+        SelectedFileAC.nextRow(this.state.file);
     },
 
     _onPrevFile : function(event) {
         if (event) {
             event.preventDefault();
         }
-        SelectedFileActionCreator.prevRow();
+        SelectedFileAC.prevRow();
     },
 
     _onLoadFile : function() {
@@ -103,7 +103,7 @@ var FileListContainer = React.createClass({
             fdisp = fdisp.toLowerCase();
 
             if (fdisp.startsWith(this.searchTerm)) {
-                SelectedFileActionCreator.setSelectedRow(f);
+                SelectedFileAC.setSelectedRow(f);
                 return;
             }
         }
@@ -123,7 +123,7 @@ var FileListContainer = React.createClass({
     },
 
     _onSelectAll : function() {
-        DirectoryActionCreator.setDirectoryRecursive(this.state.file);
+        DirectoryAC.setDirectoryRecursive(this.state.file);
     },
 
     render: function() {

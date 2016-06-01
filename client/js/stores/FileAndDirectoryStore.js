@@ -44,7 +44,7 @@ var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
         return _fileStack.length;
     },
 
-    _handleMediaUriUpAction : function(action) {
+    _handleMediaUriUpAction : function() {
         if (_fileStack.length > 1) {
             _fileStack.pop();
             _filter = "";
@@ -78,7 +78,7 @@ var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
         FileAndDirectoryStore.emitChange();
     },
 
-    _handleRequestFailedAction : function(action) {
+    _handleRequestFailedAction : function() {
         var fileData = getHead(_fileStack);
 
         fileData.files  = [];
@@ -103,7 +103,7 @@ FileAndDirectoryStore.dispatchToken = AppDispatcher.register(function(action) {
 
     switch(action.type) {
         case ActionTypes.URI_UP:
-            FileAndDirectoryStore._handleMediaUriUpAction(action);
+            FileAndDirectoryStore._handleMediaUriUpAction();
             break;
 
         case ActionTypes.URI_CHANGE:
@@ -115,7 +115,7 @@ FileAndDirectoryStore.dispatchToken = AppDispatcher.register(function(action) {
             break;
 
         case ActionTypes.URI_REQUEST_FAILED:
-            FileAndDirectoryStore._handleRequestFailedAction(action);
+            FileAndDirectoryStore._handleRequestFailedAction();
             break;
 
         default:

@@ -1,7 +1,7 @@
 var ActionTypes      = require('../constants/ActionTypes');
 var AppDispatcher    = require('../dispatcher/AppDispatcher');
 
-var ActiveImageActionCreator = {
+var MediaPreviewAC = {
 
     setImage : function(file) {
         AppDispatcher.dispatch({
@@ -18,4 +18,4 @@ var ActiveImageActionCreator = {
     }
 };
 
-module.exports = ActiveImageActionCreator;
+module.exports = MediaPreviewAC;

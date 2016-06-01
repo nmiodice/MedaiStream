@@ -65,14 +65,14 @@ var ActiveAudioStore = assign({}, EventEmitter.prototype, {
     },
 
     _setPlayListFromFile : function(active) {
-        var playlist = LinkedListUtils.fromList(active.parent.files)
+        var playlist = LinkedListUtils.fromList(active.parent.files);
 
         _activeAudioNode = LinkedListUtils.find(playlist, active);
         console.log(_activeAudioNode);
     },
 
     _playFromCurrentTrack : function() {
-        console.log(_sound)
+        console.log(_sound);
         if (_sound) {
             _sound.stop();
             _sound.unload();
@@ -111,7 +111,7 @@ var ActiveAudioStore = assign({}, EventEmitter.prototype, {
         ActiveAudioStore._playFromCurrentTrack();
     },
 
-    _handleAudioPlayStateToggle : function(action) {
+    _handleAudioPlayStateToggle : function() {
         if (_sound == null) 
             return;
 
@@ -166,7 +166,7 @@ ActiveAudioStore.dispatchToken = AppDispatcher.register(function(action) {
             break;
 
         case ActionTypes.AUDIO_PLAY_STATE_TOGGLE:
-            ActiveAudioStore._handleAudioPlayStateToggle(action);
+            ActiveAudioStore._handleAudioPlayStateToggle();
             break;
 
         case ActionTypes.AUDIO_NEXT_TRACK:

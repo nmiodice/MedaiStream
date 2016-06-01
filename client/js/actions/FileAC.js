@@ -1,12 +1,12 @@
-var $               = require('jquery');
-var ActionTypes     = require('../constants/ActionTypes');
-var AppDispatcher   = require('../dispatcher/AppDispatcher');
+var $                     = require('jquery');
+var ActionTypes           = require('../constants/ActionTypes');
+var AppDispatcher         = require('../dispatcher/AppDispatcher');
 var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
-var UriUtils        = require('../utils/UriUtils');
-var FileUtils       = require('../utils/FileUtils');
-var ConnectionConstants = require('../constants/ConnectionConstants');
+var UriUtils              = require('../utils/UriUtils');
+var FileUtils             = require('../utils/FileUtils');
+var ConnectionConstants   = require('../constants/ConnectionConstants');
 
-var FileActionCreator = {
+var FileAC = {
 
     fetchFiles : function() {
         console.log("requesting files from server");
@@ -86,4 +86,4 @@ var FileActionCreator = {
 
 };
 
-module.exports = FileActionCreator;
+module.exports = FileAC;

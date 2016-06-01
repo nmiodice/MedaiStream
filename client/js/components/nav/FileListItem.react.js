@@ -1,11 +1,11 @@
-var $                        = require('jquery');
-var FileUtils                = require('../../utils/FileUtils');
-var FileHandler              = require('../../utils/FileHandler');
-var React                    = require('react');
-var FileTypes                = require('../../constants/FileConstants').types;
-var ActiveAudioStore         = require('../../stores/ActiveAudioStore');
-var SelectedFileActionCreator    = require('../../actions/SelectedFileActionCreator');
-var SelectedFileStore            = require('../../stores/SelectedFileStore');
+var $                   = require('jquery');
+var FileUtils           = require('../../utils/FileUtils');
+var FileHandler         = require('../../utils/FileHandler');
+var React               = require('react');
+var FileTypes           = require('../../constants/FileConstants').types;
+var ActiveAudioStore    = require('../../stores/ActiveAudioStore');
+var SelectedFileAC      = require('../../actions/SelectedFileAC');
+var SelectedFileStore   = require('../../stores/SelectedFileStore');
 
 var FileListItem = React.createClass({
 
@@ -56,12 +56,12 @@ var FileListItem = React.createClass({
     },
 
     _onSelect : function() {
-        SelectedFileActionCreator.setSelectedRow(this.props.file);
+        SelectedFileAC.setSelectedRow(this.props.file);
     },
 
     _onLoad : function(event) {
         var file = this.props.file;
-        SelectedFileActionCreator.setSelectedRow(this.props.file);
+        SelectedFileAC.setSelectedRow(this.props.file);
         FileHandler.handleFile(file);
         event.stopPropagation();
     },

@@ -1,10 +1,10 @@
-var React                  = require('react');
-var UriUtils               = require('../../utils/UriUtils')
-var Mousetrap              = require('Mousetrap')
-var FileAndDirectoryStore  = require('../../stores/FileAndDirectoryStore');
-var DirectoryActionCreator = require('../../actions/DirectoryActionCreator');
-var FileActionCreator      = require('../../actions/FileActionCreator');
-var ActiveImageStore       = require('../../stores/ActiveImageStore');
+var React                     = require('react');
+var UriUtils                  = require('../../utils/UriUtils');
+var Mousetrap                 = require('Mousetrap');
+var FileAndDirectoryStore     = require('../../stores/FileAndDirectoryStore');
+var DirectoryAC               = require('../../actions/DirectoryAC');
+var FileAC                    = require('../../actions/FileAC');
+var ActiveMediaPreviewStore   = require('../../stores/ActiveMediaPreviewStore');
 
 function getStateFromStores() {
     return  {
@@ -38,13 +38,13 @@ var NavigationController = React.createClass({
     },
 
     _onGoBackClick : function() {
-        if (ActiveImageStore.getActiveImage() == null)
-            DirectoryActionCreator.moveUpDirectory();
+        if (ActiveMediaPreviewStore.getActiveImage() == null)
+            DirectoryAC.moveUpDirectory();
     },
 
     _onFilterChange : function(event) {
         var text = event.target.value.toLowerCase();
-        FileActionCreator.filter(text);
+        FileAC.filter(text);
     },
 
     render: function() {
