@@ -13,7 +13,7 @@ function getStateFromStores() {
     }
 }
 
-var ImageDisplay = React.createClass({
+var PreviewViewport = React.createClass({
 
     getInitialState: function() {
         return getStateFromStores();
@@ -109,5 +109,5 @@ var ImageDisplay = React.createClass({
 
 });
 
-module.exports = ImageDisplay;
+module.exports = PreviewViewport;
 

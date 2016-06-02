@@ -45,8 +45,8 @@ var VolumeBar = React.createClass({
     },
 
     render: function() {
-        var volUp    = 'img/volume-high.png';
-        var volDown  = 'img/volume-low.png';
+        var volUp    = 'assets/img/volume-high.png';
+        var volDown  = 'assets/img/volume-low.png';
         var volume   = this.state.volume;
         var cName = this.props.gridClass;
 
