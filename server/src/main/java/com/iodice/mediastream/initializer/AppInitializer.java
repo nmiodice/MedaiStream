@@ -1,4 +1,4 @@
-package com.iodice.initializer;
+package com.iodice.mediastream.initializer;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;

@@ -1,4 +1,4 @@
-package com.iodice.types;
+package com.iodice.mediastream.types;
 
 public class FileType {
     public static final int DIRECTORY    = 0;

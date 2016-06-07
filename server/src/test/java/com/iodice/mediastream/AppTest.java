@@ -1,4 +1,4 @@
-package com.iodice;
+package com.iodice.mediastream;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

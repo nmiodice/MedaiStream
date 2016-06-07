@@ -1,4 +1,4 @@
-package com.iodice.config;
+package com.iodice.mediastream.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;

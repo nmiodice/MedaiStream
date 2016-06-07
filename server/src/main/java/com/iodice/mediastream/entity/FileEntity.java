@@ -1,4 +1,4 @@
-package com.iodice.entity;
+package com.iodice.mediastream.entity;
 
 public class FileEntity {
     public String path;

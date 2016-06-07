@@ -31,7 +31,7 @@ var NavigationBar = React.createClass({
             <nav className="navbar navbar-default navbar-fixed-top navbar-inner">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="#">Media • Server</a>
+                        <a className="navbar-brand" href="#">Media • Stream</a>
                     </div>
                 </div>
             </nav>

@@ -1,4 +1,4 @@
-package com.iodice.controller;
+package com.iodice.mediastream.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;

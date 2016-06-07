@@ -1,6 +1,6 @@
-package com.iodice.controller;
+package com.iodice.mediastream.controller;
 
-import com.iodice.App;
+import com.iodice.mediastream.App;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 

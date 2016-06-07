@@ -1,8 +1,8 @@
-package com.iodice.controller;
+package com.iodice.mediastream.controller;
 
-import com.iodice.App;
-import com.iodice.entity.FileEntity;
-import com.iodice.types.FileType;
+import com.iodice.mediastream.App;
+import com.iodice.mediastream.entity.FileEntity;
+import com.iodice.mediastream.types.FileType;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.springframework.stereotype.Controller;

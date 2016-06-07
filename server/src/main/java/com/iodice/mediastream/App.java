@@ -1,4 +1,4 @@
-package com.iodice;
+package com.iodice.mediastream;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
