@@ -1,6 +1,7 @@
 package com.iodice.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,8 +29,14 @@ public class IOFileRequests extends IORequestBase {
         String pathPart = url.replaceFirst(FILE_REQUEST_PREFIX, "");
         File requestedFile = makeRelativeToMediaBase(pathPart);
 
+
         if (requestedFile.exists()) {
             try {
+                String mimeType = getMimeType(requestedFile);
+                if (mimeType != null) {
+                    response.setHeader(HttpHeaders.CONTENT_TYPE, mimeType);
+                }
+
                 InputStream is = new FileInputStream(requestedFile);
                 org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
                 response.flushBuffer();

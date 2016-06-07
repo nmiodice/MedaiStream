@@ -130,25 +130,6 @@ a {
   width: auto;
 }
 
-.image {
-  @include nav-bar-adjust;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  max-width: 90%;
-  max-height: 90%;
-  margin: auto;
-  overflow: auto;
-  position: fixed;
-}
-
-.image-viewport {
-  @include nav-bar-adjust;
-  @include full-screen;
-  background: $color-overlay;
-}
-
 .inline {
 	display        : inline-block;
 	vertical-align : middle;
@@ -213,6 +194,30 @@ a {
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
+}
+
+.preview {
+  @include nav-bar-adjust;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+}
+
+.preview-viewport {
+  @include nav-bar-adjust;
+  @include full-screen;
+  background: $color-overlay;
+}
+
+video {
+  max-width:90%;
+  max-height:90%;
 }
 
 /* static bootstrap glyphicon fix */

@@ -22,7 +22,7 @@ var ActiveMediaPreviewStore = assign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, callback);
     },
 
-    getActiveImage : function() {
+    getActiveFile : function() {
         return _imageFile;
     },
 

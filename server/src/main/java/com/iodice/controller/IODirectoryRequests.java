@@ -3,15 +3,10 @@ package com.iodice.controller;
 import com.iodice.App;
 import com.iodice.entity.FileEntity;
 import com.iodice.types.FileType;
-import org.apache.log4j.Logger;
-import org.apache.tika.Tika;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URLConnection;
-import java.nio.file.Files;
 import java.util.*;
 
 @Controller
@@ -23,31 +18,6 @@ public class IODirectoryRequests extends IORequestBase {
     private static final String DIRECTORY_QPARAM = "directory";
     private static final String RECURSIVE_QPARAM = "recursive";
 
-    private static final Logger mLogger = Logger.getLogger(IOFileRequests.class.getName());
-
-
-    /**
-     * Try to get a mime type of the file, using progressively slower and more
-     * accurate methods (speed is of importance here)
-     * @param f A file for which the mime type will be guessed
-     * @return The mime type, or null if it cannot be determined
-     */
-    private String getMimeType(File f) {
-        String mimeType = URLConnection.guessContentTypeFromName(f.getName());
-
-        if (mimeType == null) {
-            try {
-                mimeType = Files.probeContentType(f.toPath());
-            } catch (IOException ignored){}
-        }
-
-        if (mimeType == null) {
-            try {
-                mimeType = new Tika().detect(f);
-            } catch (IOException ignored){}
-        }
-        return mimeType;
-    }
 
     /**
      * Remove file-system specific path components from a file path, making
