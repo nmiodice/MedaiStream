@@ -17,7 +17,8 @@ var FileHandler = {
                 break;
 
             case FileTypes.IMAGE:
-                MediaPreviewAC.setImage(file);
+            case FileTypes.VIDEO:
+                MediaPreviewAC.setFile(file);
                 break;
 
             default:

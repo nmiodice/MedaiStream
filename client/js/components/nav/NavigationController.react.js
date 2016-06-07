@@ -38,7 +38,7 @@ var NavigationController = React.createClass({
     },
 
     _onGoBackClick : function() {
-        if (ActiveMediaPreviewStore.getActiveImage() == null)
+        if (ActiveMediaPreviewStore.getActiveFile() == null)
             DirectoryAC.moveUpDirectory();
     },
 

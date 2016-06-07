@@ -3,7 +3,7 @@ var FileListContainer    = require('./nav/FileListContainer.react');
 var AppBar               = require('./AppBar.react');
 var NavigationController = require('./nav/NavigationController.react');
 var AudioController      = require('./audio/AudioController.react');
-var ImageDisplay         = require('./image/ImageDisplay.react');
+var PreviewViewport      = require('./preview-pane/PreviewViewport.react');
 
 var Main = React.createClass({
 
@@ -14,7 +14,7 @@ var Main = React.createClass({
 				<NavigationController/>
 				<FileListContainer/>
 				<AudioController/>
-				<ImageDisplay/>
+				<PreviewViewport/>
 				<div id="spinner-container"></div>
 			</div>
 		);
