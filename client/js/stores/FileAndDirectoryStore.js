@@ -88,7 +88,7 @@ var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
 
 });
 
-var _fileStack = [FileAndDirectoryStore.makeFile(ConnectionConstants.OFFLINE, '/Dropbox/Camera Uploads', [], 0)];
+var _fileStack = [FileAndDirectoryStore.makeFile(ConnectionConstants.OFFLINE, '/', [], 0)];
 
 var _filter = "";
 

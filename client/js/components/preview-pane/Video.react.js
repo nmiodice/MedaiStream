@@ -1,6 +1,6 @@
-var React       = require('react');
-var UriUtils    = require('../../utils/UriUtils');
-var VideoJS     = require('video.js');
+var React            = require('react');
+var UriUtils         = require('../../utils/UriUtils');
+var VideoJS          = require('video.js');
 
 var _player = null;
 

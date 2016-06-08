@@ -1,12 +1,13 @@
-var EventEmitter    = require('events').EventEmitter;
-var AppDispatcher   = require('../dispatcher/AppDispatcher');
-var ActionTypes     = require('../constants/ActionTypes');
-var assign          = require('object-assign');
+var EventEmitter     = require('events').EventEmitter;
+var AppDispatcher    = require('../dispatcher/AppDispatcher');
+var ActionTypes      = require('../constants/ActionTypes');
+var assign           = require('object-assign');
 
 
 var CHANGE_EVENT = 'change';
 
-var _imageFile = null;
+var _previewFile = null;
+
 
 var ActiveMediaPreviewStore = assign({}, EventEmitter.prototype, {
 
@@ -23,16 +24,16 @@ var ActiveMediaPreviewStore = assign({}, EventEmitter.prototype, {
     },
 
     getActiveFile : function() {
-        return _imageFile;
+        return _previewFile;
     },
 
-    _handleImageActive : function(action) {
-        _imageFile = action.file;
+    _handlePreviewActive : function(action) {
+        _previewFile = action.file;
         this.emitChange();
     },
 
-    _handleImageClear : function() {
-        _imageFile = null;
+    _handlePreviewClear : function() {
+        _previewFile = null;
         this.emitChange();
     }
 
@@ -42,12 +43,12 @@ ActiveMediaPreviewStore.dispatchToken = AppDispatcher.register(function(action) 
 
     switch(action.type) {
 
-        case ActionTypes.IMAGE_ACTIVE:
-            ActiveMediaPreviewStore._handleImageActive(action);
+        case ActionTypes.PREVIEW_ACTIVE:
+            ActiveMediaPreviewStore._handlePreviewActive(action);
             break;
 
-        case ActionTypes.IMAGE_CLEAR:
-            ActiveMediaPreviewStore._handleImageClear();
+        case ActionTypes.PREVIEW_CLEAR:
+            ActiveMediaPreviewStore._handlePreviewClear();
             break;
 
         default:
