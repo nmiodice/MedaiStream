@@ -2,6 +2,8 @@ var FileTypes      = require('../constants/FileConstants').types;
 var DirectoryAC    = require('../actions/DirectoryAC');
 var ActiveAudioAC  = require('../actions/ActiveAudioAC');
 var MediaPreviewAC = require('../actions/MediaPreviewAC');
+var UriUtils       = require('./UriUtils');
+var FileUtils      = require('./FileUtils');
 
 var FileHandler = {
 
@@ -23,7 +25,10 @@ var FileHandler = {
                 break;
 
             default:
-                alert("Cannot open file!");
+                var fileName = FileUtils.fileToDisplayString(file);
+                if (confirm("'" + fileName + "' cannot be opened. Do you want to download?") == true) {
+                    window.open(UriUtils.fileToURI(file));
+                }
                 break;
         }
     }

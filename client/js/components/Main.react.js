@@ -15,6 +15,7 @@ var Main = React.createClass({
 				<FileListContainer/>
 				<AudioController/>
 				<PreviewViewport/>
+
 				<div id="spinner-container"></div>
 			</div>
 		);

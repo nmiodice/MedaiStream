@@ -18,5 +18,5 @@ module.exports = keyMirror({
 
     UI_ROW_SELECTED          : null,    // row selected
     UI_ROW_NEXT              : null,    // row selected
-    UI_ROW_PREV              : null     // row selected
+    UI_ROW_PREV              : null,    // row selected
 });
