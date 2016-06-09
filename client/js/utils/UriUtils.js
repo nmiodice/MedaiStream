@@ -30,6 +30,7 @@ var UriUtils = {
 			fp = fp.substr(1);
 
 		var uri = ServerConstants.FILE_REQUEST_PATH + fp;
+		uri = encodeURI(uri);
 		console.log('uri: ' + uri);
 		return uri;
 	},

@@ -102,6 +102,15 @@ a {
   height: 100%;
   overflow: hidden; }
 
+.plain-text {
+  padding-top: 60px;
+  white-space: pre-wrap;
+  border-radius: 4px;
+  padding: 8px;
+  background: #F4F4F4;
+  height: 80%;
+  width: 80%; }
+
 .preview {
   padding-top: 60px;
   bottom: 0;

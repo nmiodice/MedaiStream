@@ -6,6 +6,7 @@ var Mousetrap                = require('Mousetrap');
 var FileTypes                = require('../../constants/FileConstants').types;
 var Image                    = require('./Image.react');
 var Video                    = require('./Video.react');
+var PlainText                = require('./PlainText.react');
 
 function getStateFromStores() {
     return  {
@@ -60,6 +61,10 @@ var PreviewViewport = React.createClass({
 
             case FileTypes.VIDEO:
                 innerComponent = <Video file={this.state.activeFile}/>;
+                break;
+
+            case FileTypes.TEXT:
+                innerComponent = <PlainText file={this.state.activeFile}/>;
                 break;
 
             default:
