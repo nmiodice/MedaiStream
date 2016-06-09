@@ -13,3 +13,4 @@ client/node_modules/
 client/.sass-cache/
 __examples/
 server/target/
+media/
