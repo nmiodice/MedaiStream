@@ -1,6 +1,8 @@
 package com.iodice.mediastream.controller;
 
 import com.iodice.mediastream.App;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -18,12 +20,25 @@ public abstract class IORequestBase {
     @Autowired
     protected Environment environment;
 
+    private static final Logger mLogger = Logger.getLogger(IORequestBase.class.getName());
+
+
     protected File makeRelativeToMediaBase(String fp) {
-        fp = new File(environment.getProperty(App.MEDIA_FP) + fp).getAbsolutePath();
-        if (!fp.startsWith(environment.getProperty(App.MEDIA_FP)))
-            return new File(environment.getProperty(App.MEDIA_FP));
-        else
-            return new File(fp);
+
+        // resolve all possible path parts ('.', '..', etc...) to make
+        // sure the path is safe to consume
+        fp = FilenameUtils.normalize(fp);
+        if (fp == null) {
+            fp = "/";
+        }
+
+        File f = new File(environment.getProperty(App.MEDIA_FP) + fp);
+        fp = f.getAbsolutePath();
+        mLogger.info(String.format(
+                        "%s requested: %s",
+                        f.isDirectory() ? "Directory" : "File",
+                        fp));
+        return new File(fp);
     }
 
     /**

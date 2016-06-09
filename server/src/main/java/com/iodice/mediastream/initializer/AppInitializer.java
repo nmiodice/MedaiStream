@@ -23,7 +23,7 @@ public class AppInitializer implements WebApplicationInitializer {
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("com.iodice.config");
+        context.setConfigLocation("com.iodice.mediastream.config");
         return context;
     }
 

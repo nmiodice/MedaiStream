@@ -8,7 +8,7 @@ import org.springframework.stereotype.*;
 
 import java.io.File;
 
-@ComponentScan(basePackages = {"com.iodice"})
+@ComponentScan(basePackages = {"com.iodice.mediastream"})
 @Controller
 @EnableAutoConfiguration
 @Configuration
