@@ -32,7 +32,7 @@ var MediaPreviewAC = {
             ActiveAudioAC.togglePlayState();
             _didPauseAudio = false;
         }
-        
+
         AppDispatcher.dispatch({
             type : ActionTypes.PREVIEW_CLEAR
         });

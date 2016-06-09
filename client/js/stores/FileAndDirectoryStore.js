@@ -107,10 +107,12 @@ FileAndDirectoryStore.dispatchToken = AppDispatcher.register(function(action) {
             break;
 
         case ActionTypes.URI_CHANGE:
+            console.log("uri change", Date.now());
             FileAndDirectoryStore._handleMediaUriChangeAction(action);
             break;
 
         case ActionTypes.URI_FILES_CHANGE_OR_LOAD:
+            console.log("uri loaded", Date.now());
             FileAndDirectoryStore._handleMediaFilesChangeAction(action);
             break;
 

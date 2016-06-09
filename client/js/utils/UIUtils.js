@@ -1,4 +1,4 @@
-var Spinner = require('spin');
+var Spinner = require('spin.js');
 var $       = require('JQuery');
 
 var UIUtils = {

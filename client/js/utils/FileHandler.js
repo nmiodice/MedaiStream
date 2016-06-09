@@ -1,6 +1,6 @@
-var FileTypes                = require('../constants/FileConstants').types;
-var DirectoryAC  = require('../actions/DirectoryAC');
-var ActiveAudioAC = require('../actions/ActiveAudioAC');
+var FileTypes      = require('../constants/FileConstants').types;
+var DirectoryAC    = require('../actions/DirectoryAC');
+var ActiveAudioAC  = require('../actions/ActiveAudioAC');
 var MediaPreviewAC = require('../actions/MediaPreviewAC');
 
 var FileHandler = {
