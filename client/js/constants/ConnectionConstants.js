@@ -4,6 +4,7 @@ module.exports = keyMirror({
 
     ONLINE     : null,
     OFFLINE    : null,
-    CONNECTING : null
+    CONNECTING : null,
+    NEEDS_LOAD : null
 
 });

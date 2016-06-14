@@ -49,15 +49,15 @@ var AudioController = React.createClass({
     },
 
     render: function() {
-        var playPauseIcon = 'assets/img/play.png';
-        var nextIcon      = 'assets/img/next.png';
-        var prevIcon      = 'assets/img/previous.png';
+        var playPauseIcon = '/assets/img/play.png';
+        var nextIcon      = '/assets/img/next.png';
+        var prevIcon      = '/assets/img/previous.png';
 
         if (this.state.activeMedia == null)
             return null;
 
         if (this.state.playing)
-            playPauseIcon = 'assets/img/pause.png';
+            playPauseIcon = '/assets/img/pause.png';
 
         return (
             <div className="footer text-center navbar-fixed-bottom media-controller container-fluid">

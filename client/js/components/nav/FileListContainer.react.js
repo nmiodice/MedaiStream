@@ -11,13 +11,13 @@ var FileAC                  = require('../../actions/FileAC');
 var SelectedFileStore       = require('../../stores/SelectedFileStore');
 var SelectedFileAC          = require('../../actions/SelectedFileAC');
 var ConnectionConstants     = require('../../constants/ConnectionConstants');
-
+var WindowHistoryUtils      = require('../../utils/WindowHistoryUtils');
 
 function getStateFromStores() {
     var file = FileAndDirectoryStore.getFileData();
     return  {
         file   : file,
-        online : file.status == ConnectionConstants.ONLINE
+        status  : file.status
     }
 }
 
@@ -40,6 +40,8 @@ var FileListContainer = React.createClass({
     componentDidMount: function() {
         FileAndDirectoryStore.addChangeListener(this._onChange);
         FileAC.fetchFiles();
+
+        this._setWindowHistoryCallback();
         this.bindKeys();
     },
 
@@ -60,6 +62,57 @@ var FileListContainer = React.createClass({
         Mousetrap.unbind('up');
         Mousetrap.unbind('enter');
         Mousetrap.unbind(searchKeys);
+    },
+
+    _normalizeFilePath : function(fp) {
+        while (fp.endsWith("/") && fp.length > 1) {
+            fp = fp.substr(0, fp.length - 1);
+        }
+
+        while (fp.startsWith("/") && fp.length > 1) {
+            fp = fp.substr(1, fp.length);
+        }
+
+        return fp;
+    },
+
+    _setWindowHistoryCallback : function() {
+        WindowHistoryUtils.pushFileURL(FileAndDirectoryStore.getFileData());
+
+        window.addEventListener("popstate", function() {
+
+            //var currURLPath = this._normalizeFilePath(WindowHistoryUtils.getCurrentURL());
+            //var currFile = FileAndDirectoryStore.getFileData();
+            //var currFilePath = this._normalizeFilePath(currFile.path);
+            //var parentFile = FileAndDirectoryStore.getSecondInStack();
+            //var parentPath = parentFile == null ? null : this._normalizeFilePath(parentFile.path);
+            //
+            //// hash changed, but loaded same directory
+            //if (currFilePath == currURLPath) {
+            //    console.log('hash changed, but same directory');
+            //    WindowHistoryUtils.replaceFileURL(currFile);
+            //    return;
+            //}
+            //
+            //// hash changed b/c of browser back button press
+            //if (parentPath != null && parentPath == currURLPath) {
+            //    console.log('hash changed due to browser back button clicked');
+            //    DirectoryAC.moveUpDirectory();
+            //    WindowHistoryUtils.popFileURL();
+            //}
+
+            alert('pop!');
+
+
+        }.bind(this));
+    },
+
+    _resetWindowURL : function() {
+        //var hash = window.location.hash;
+        //var fn = FileUtils.fileToDisplayString(file);
+
+        //window.location.hash = hash + '/' + fn;
+        WindowHistoryUtils.pushFileURL(FileAndDirectoryStore.getFileData());
     },
 
     _onNextFile : function(event) {
@@ -110,15 +163,20 @@ var FileListContainer = React.createClass({
     },
 
     _onChange : function() {
-        this.setState(getStateFromStores(), this._setLoaderVisibility);
-        //this._setLoaderVisibility();
+        this.setState(getStateFromStores(), this._onRenderAndStateChanged);
     },
 
-    _setLoaderVisibility : function() {
-        if (this.state.online) {
+    _onRenderAndStateChanged : function() {
+        var status = this.state.status;
+
+        if (status == ConnectionConstants.ONLINE) {
             UIUtils.removeLoader();
         } else {
             UIUtils.addLoader();
+        }
+
+        if (status == ConnectionConstants.NEEDS_LOAD) {
+            FileAC.fetchFiles();
         }
     },
 
@@ -139,8 +197,10 @@ var FileListContainer = React.createClass({
             }
         }
 
+        this._resetWindowURL();
+
         return (
-            <div className={"container body-bottom-adjust"} ref={this._setLoaderVisibility}>
+            <div className={"container body-bottom-adjust"} ref={this._onRenderAndStateChanged}>
 
                 <ul className="list-group file-list">
                     {noDirectory ? null:

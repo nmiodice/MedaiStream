@@ -35,6 +35,8 @@ var FileAC = {
 
     filter : function(filter) {
         var currFilter = FileAndDirectoryStore.getFilter();
+        if (filter == currFilter)
+            return;
 
         // remove current filtered file
         if (currFilter != "") {

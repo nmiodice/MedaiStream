@@ -130,7 +130,7 @@ var FileListItem = React.createClass({
                 onDoubleClick={this._onLoad}
                 ref={(ref) => this.me = ref}>
                 <span className={iconClass}/>
-                <a className="default-margin" 
+                <a className="default-margin"
                     onClick={this._onLoad}>{text}</a>
             </li>
         );

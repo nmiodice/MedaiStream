@@ -8,17 +8,25 @@ var FileUtils           = require('../utils/FileUtils');
 
 var CHANGE_EVENT = 'change';
 
+var _makeFile = function(status, path, files, isRecursive) {
+    return {
+        status : status,
+        path   : path,
+        files  : files,
+        recursive : isRecursive
+    }
+};
+
+var _fileData = _makeFile(ConnectionConstants.OFFLINE, '/Dropbox', [], 0);
+
+var _fileCache = {};
+_fileCache[_fileData.path] = _fileData;
+
+
+var _filter = "";
+
 
 var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
-
-    makeFile : function(status, path, files, isRecursive) {
-        return {
-            status : status,
-            path   : path,
-            files  : files,
-            recursive : isRecursive
-        }
-    },
     
     emitChange : function() {
         this.emit(CHANGE_EVENT);
@@ -33,45 +41,69 @@ var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
     },
 
     getFileData : function() {
-        return getHead(_fileStack);
+        return _fileData;
     },
 
     getFilter : function() {
         return _filter;
     },
 
-    getFileStackSize : function() {
-        return _fileStack.length;
+    makeFile : function(status, path, files, isRecursive) {
+        return _makeFile(status, path, files, isRecursive);
     },
 
     _handleMediaUriUpAction : function() {
-        if (_fileStack.length > 1) {
-            _fileStack.pop();
+        // if there is a filter, remove it. the back action
+        // should just remove the filter in this case
+        if (_filter != "") {
             _filter = "";
-            FileAndDirectoryStore.emitChange();
+            _fileData = _fileCache[_fileData.path];
+        } else {
+            var path = _fileData.path;
+            var parts = path.split('/');
+            var newPath;
+
+            if (parts.length > 1) {
+                parts.pop();
+                newPath = parts.join('/');
+
+                if (newPath == '')
+                    newPath = '/';
+
+                if (newPath in _fileCache) {
+                    _fileData = _fileCache[newPath];
+                } else {
+                    _fileData = _makeFile(ConnectionConstants.NEEDS_LOAD, newPath, [], 0);
+                }
+            }
         }
+
+        FileAndDirectoryStore.emitChange();
     },
 
     _handleMediaUriChangeAction : function(action) {
-
-        _fileStack.push(FileAndDirectoryStore.makeFile(
+        // easier to not use the hashed data when moving down
+        // the file system tree.
+        //  TODO: future improvement to use the cache!
+        _fileData = _makeFile(
             ConnectionConstants.CONNECTING,
             action.path,
             [],
             action.recursive ? true : false
-        ));
+        );
+
+        if (action.filter == "")
+            _fileCache[_fileData.path] = _fileData;
 
         _filter = action.filter;
         FileAndDirectoryStore.emitChange();
     },
 
     _handleMediaFilesChangeAction : function(action) {
-        var fileData = getHead(_fileStack);
+        _fileData.status = ConnectionConstants.ONLINE;
+        _fileData.files  = action.files;
 
-        fileData.status = ConnectionConstants.ONLINE;
-        fileData.files  = action.files;
-
-        fileData.files.forEach(function(x) {
+        _fileData.files.forEach(function(x) {
             x.parent = action.parent;
         });
 
@@ -79,24 +111,12 @@ var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
     },
 
     _handleRequestFailedAction : function() {
-        var fileData = getHead(_fileStack);
-
-        fileData.files  = [];
-        fileData.status = ConnectionConstants.OFFLINE;
+        _fileData.files  = [];
+        _fileData.status = ConnectionConstants.OFFLINE;
         FileAndDirectoryStore.emitChange();
     }
 
 });
-
-var _fileStack = [FileAndDirectoryStore.makeFile(ConnectionConstants.OFFLINE, '/', [], 0)];
-
-var _filter = "";
-
-var getHead = function(stack) {
-    if (stack.length == 0)
-        return null;
-    return stack[stack.length - 1]
-};
 
 
 FileAndDirectoryStore.dispatchToken = AppDispatcher.register(function(action) {

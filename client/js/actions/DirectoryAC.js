@@ -1,7 +1,7 @@
 var ActionTypes           = require('../constants/ActionTypes');
 var AppDispatcher         = require('../dispatcher/AppDispatcher');
 var FileAC                = require('./FileAC');
-var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
+//var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
 
 var DirectoryAC = {
 
@@ -13,8 +13,8 @@ var DirectoryAC = {
     },
 
     setDirectory : function(file) {
-        if (FileAndDirectoryStore.getFilter() != "")
-            FileAC.filter("");
+        //if (FileAndDirectoryStore.getFilter() != "")
+        FileAC.filter("");
         this._setDirectory(file, false);
     },
 

@@ -9,7 +9,6 @@ var ActiveMediaPreviewStore   = require('../../stores/ActiveMediaPreviewStore');
 function getStateFromStores() {
     return  {
         file     : FileAndDirectoryStore.getFileData(),
-        stackPos : FileAndDirectoryStore.getFileStackSize(),
         filter   : FileAndDirectoryStore.getFilter()
     }
 }
@@ -51,8 +50,7 @@ var NavigationController = React.createClass({
         var fileData = this.state.file;
         var path     = fileData.path;
         var name     = UriUtils.stripHTTP(path);
-        var stackPos = this.state.stackPos;
-        var disabledButton = stackPos == 1;
+        var disabledButton = path == '/' || path == '';
         
         if (name == '' || name == '/') {
             name = "";
