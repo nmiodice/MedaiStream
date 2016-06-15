@@ -1,7 +1,8 @@
 var ActionTypes           = require('../constants/ActionTypes');
 var AppDispatcher         = require('../dispatcher/AppDispatcher');
 var FileAC                = require('./FileAC');
-//var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
+var FileAndDirectoryStore = require('../stores/FileAndDirectoryStore');
+var ConnectionConstants   = require('../constants/ConnectionConstants');
 
 var DirectoryAC = {
 
@@ -13,9 +14,14 @@ var DirectoryAC = {
     },
 
     setDirectory : function(file) {
-        //if (FileAndDirectoryStore.getFilter() != "")
         FileAC.filter("");
-        this._setDirectory(file, false);
+
+        if (typeof file === 'string') {
+            var fileObj = FileAndDirectoryStore.makeFile(ConnectionConstants.OFFLINE, file, [], 0);
+            this._setDirectory(fileObj);
+        } else {
+            this._setDirectory(file, false);
+        }
     },
 
     setDirectoryRecursive : function(file) {

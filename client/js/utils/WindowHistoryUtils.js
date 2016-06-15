@@ -1,8 +1,10 @@
 
 var WindowHistoryUtils = {
     pushFileURL : function(file) {
-        var state = file.path;
-        window.history.pushState(state, "", state);
+        var newState = file.path;
+        var oldState = window.history.state;
+        if (oldState != newState)
+            window.history.pushState(newState, "", newState);
     },
 
     replaceFileURL : function(file) {

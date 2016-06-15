@@ -77,42 +77,15 @@ var FileListContainer = React.createClass({
     },
 
     _setWindowHistoryCallback : function() {
-        WindowHistoryUtils.pushFileURL(FileAndDirectoryStore.getFileData());
+        window.addEventListener("popstate", function(e) {
+            var currURL = e.state == null ? "/" : e.state;
+            var currFilePath = FileAndDirectoryStore.getFileData().path;
 
-        window.addEventListener("popstate", function() {
-
-            //var currURLPath = this._normalizeFilePath(WindowHistoryUtils.getCurrentURL());
-            //var currFile = FileAndDirectoryStore.getFileData();
-            //var currFilePath = this._normalizeFilePath(currFile.path);
-            //var parentFile = FileAndDirectoryStore.getSecondInStack();
-            //var parentPath = parentFile == null ? null : this._normalizeFilePath(parentFile.path);
-            //
-            //// hash changed, but loaded same directory
-            //if (currFilePath == currURLPath) {
-            //    console.log('hash changed, but same directory');
-            //    WindowHistoryUtils.replaceFileURL(currFile);
-            //    return;
-            //}
-            //
-            //// hash changed b/c of browser back button press
-            //if (parentPath != null && parentPath == currURLPath) {
-            //    console.log('hash changed due to browser back button clicked');
-            //    DirectoryAC.moveUpDirectory();
-            //    WindowHistoryUtils.popFileURL();
-            //}
-
-            alert('pop!');
-
+            if (currURL != currFilePath) {
+                DirectoryAC.setDirectory(currURL);
+            }
 
         }.bind(this));
-    },
-
-    _resetWindowURL : function() {
-        //var hash = window.location.hash;
-        //var fn = FileUtils.fileToDisplayString(file);
-
-        //window.location.hash = hash + '/' + fn;
-        WindowHistoryUtils.pushFileURL(FileAndDirectoryStore.getFileData());
     },
 
     _onNextFile : function(event) {
@@ -197,7 +170,7 @@ var FileListContainer = React.createClass({
             }
         }
 
-        this._resetWindowURL();
+        WindowHistoryUtils.pushFileURL(FileAndDirectoryStore.getFileData());
 
         return (
             <div className={"container body-bottom-adjust"} ref={this._onRenderAndStateChanged}>
