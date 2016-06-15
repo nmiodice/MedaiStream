@@ -11,7 +11,7 @@ var FileAC                  = require('../../actions/FileAC');
 var SelectedFileStore       = require('../../stores/SelectedFileStore');
 var SelectedFileAC          = require('../../actions/SelectedFileAC');
 var ConnectionConstants     = require('../../constants/ConnectionConstants');
-var WindowHistoryUtils      = require('../../utils/WindowHistoryUtils');
+
 
 function getStateFromStores() {
     var file = FileAndDirectoryStore.getFileData();
@@ -40,8 +40,6 @@ var FileListContainer = React.createClass({
     componentDidMount: function() {
         FileAndDirectoryStore.addChangeListener(this._onChange);
         FileAC.fetchFiles();
-
-        this._setWindowHistoryCallback();
         this.bindKeys();
     },
 
@@ -74,18 +72,6 @@ var FileListContainer = React.createClass({
         }
 
         return fp;
-    },
-
-    _setWindowHistoryCallback : function() {
-        window.addEventListener("popstate", function(e) {
-            var currURL = e.state == null ? "/" : e.state;
-            var currFilePath = FileAndDirectoryStore.getFileData().path;
-
-            if (currURL != currFilePath) {
-                DirectoryAC.setDirectory(currURL);
-            }
-
-        }.bind(this));
     },
 
     _onNextFile : function(event) {
@@ -169,8 +155,6 @@ var FileListContainer = React.createClass({
                 break;
             }
         }
-
-        WindowHistoryUtils.pushFileURL(FileAndDirectoryStore.getFileData());
 
         return (
             <div className={"container body-bottom-adjust"} ref={this._onRenderAndStateChanged}>

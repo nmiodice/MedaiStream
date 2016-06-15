@@ -1,23 +1,32 @@
+var FileAndDirectoryStore   = require('../stores/FileAndDirectoryStore');
+var DirectoryAC             = require('../actions/DirectoryAC');
+
 
 var WindowHistoryUtils = {
-    pushFileURL : function(file) {
+    configure : function() {
+        window.addEventListener("popstate", function(e) {
+            var statePath = e.state == null ? "/" : e.state;
+            var currFilePath = FileAndDirectoryStore.getFileData().path;
+
+            if (statePath != currFilePath) {
+                DirectoryAC.setDirectory(statePath);
+            }
+        }.bind(this));
+    },
+
+    setFileURL : function(file) {
         var newState = file.path;
-        var oldState = window.history.state;
-        if (oldState != newState)
+        if (window.history.state != newState)
             window.history.pushState(newState, "", newState);
-    },
-
-    replaceFileURL : function(file) {
-        var state = file.path;
-        window.history.replaceState(state, "", state);    },
-
-    popFileURL : function() {
-        window.history.back();
-    },
-
-    getCurrentURL : function() {
-        return window.history.state;
     }
 };
+
+// react to file changes w/ appropriate URL change
+FileAndDirectoryStore.addChangeListener(
+    function() {
+        WindowHistoryUtils.setFileURL(FileAndDirectoryStore.getFileData());
+    }
+);
+
 
 module.exports = WindowHistoryUtils;
