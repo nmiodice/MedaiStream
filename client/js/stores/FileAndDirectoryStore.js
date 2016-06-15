@@ -17,7 +17,7 @@ var _makeFile = function(status, path, files, isRecursive) {
     }
 };
 
-var _fileData = _makeFile(ConnectionConstants.OFFLINE, '/Dropbox', [], 0);
+var _fileData = _makeFile(ConnectionConstants.OFFLINE, '/', [], 0);
 
 var _fileCache = {};
 _fileCache[_fileData.path] = _fileData;
