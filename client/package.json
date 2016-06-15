@@ -31,7 +31,7 @@
   },
   "scripts"         : {
     "start"           : "watchify -o ./static/bundle.js -v -d js/app.js & sass --watch sass:./static/assets/",
-    "build"           : "browserify -t [ babelify --presets [ es2015 react ] ] -t [envify --NODE_ENV production] js/app.js | uglifyjs -cm > ./static/bundle.min.js",
+    "build"           : "sass sass/styles.scss static/assets/styles.css & browserify -t [ babelify --presets [ es2015 react ] ] -t [envify --NODE_ENV production] js/app.js | uglifyjs -cm > ./static/bundle.min.js",
     "test"            : "jest"
   },
   "author"          : "Nicholas M. Iodice",
