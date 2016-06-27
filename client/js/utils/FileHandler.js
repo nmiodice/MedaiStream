@@ -21,6 +21,7 @@ var FileHandler = {
             case FileTypes.IMAGE:
             case FileTypes.VIDEO:
             case FileTypes.TEXT:
+            case FileTypes.PDF:
                 MediaPreviewAC.setFile(file);
                 break;
 

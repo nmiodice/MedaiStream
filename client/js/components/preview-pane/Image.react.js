@@ -28,7 +28,7 @@ var Image = React.createClass({
 
         var onloadImage = function(imgDOM) {
             UIUtils.removeLoader();
-            imgDOM.className = "preview";
+            imgDOM.className = "preview preview-image";
             divDOM.appendChild(imgDOM);
         };
 
@@ -56,7 +56,7 @@ var Image = React.createClass({
 
     render: function() {
         return (
-            <div ref={(divDOM) => this._onComponentRendered(divDOM)}>
+            <div className="preview-image" ref={(divDOM) => this._onComponentRendered(divDOM)}>
             </div>
         );
     }

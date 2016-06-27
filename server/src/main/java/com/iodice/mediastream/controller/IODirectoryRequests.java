@@ -62,6 +62,8 @@ public class IODirectoryRequests extends IORequestBase {
                     fileEntity.type = FileType.FILE_VIDEO;
                 } else if (mimeType.contains("zip")) {
                     fileEntity.type = FileType.FILE_COMPRESSED;
+                } else if (mimeType.contains("pdf")) {
+                    fileEntity.type = FileType.FILE_PDF;
                 }
             }
         }

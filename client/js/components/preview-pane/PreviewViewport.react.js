@@ -7,6 +7,7 @@ var FileTypes                = require('../../constants/FileConstants').types;
 var Image                    = require('./Image.react');
 var Video                    = require('./Video.react');
 var PlainText                = require('./PlainText.react');
+var PDF                      = require('./PDF.react');
 
 function getStateFromStores() {
     return  {
@@ -65,6 +66,10 @@ var PreviewViewport = React.createClass({
 
             case FileTypes.TEXT:
                 innerComponent = <PlainText file={this.state.activeFile}/>;
+                break;
+
+            case FileTypes.PDF:
+                innerComponent = <PDF file={this.state.activeFile}/>;
                 break;
 
             default:

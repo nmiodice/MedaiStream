@@ -26,7 +26,7 @@ var PlainText = React.createClass({
     render: function() {
 
         return (
-            <div id="text-container" className="preview plain-text">
+            <div id="text-container" className="preview preview-plain-text">
             </div>
         );
     }

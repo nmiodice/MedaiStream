@@ -1,8 +1,12 @@
 # mac files
 .DS_Store
 
-# javascript files
+# javascript and css build files
 bundle.js
+bundle.min.js
+
+styles.css
+styles.css.map
 
 # dot files
 .idea/

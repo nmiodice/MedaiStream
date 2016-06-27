@@ -196,18 +196,7 @@ a {
   overflow: hidden;
 }
 
-.plain-text {
-  @include nav-bar-adjust;
-  white-space: pre-wrap;
-  border-radius: 4px;
-  padding: 8px;
-  background: $color-light;
-  height: 80%;
-  width: 80%;
-}
-
 .preview {
-  @include nav-bar-adjust;
   bottom: 0;
   left: 0;
   right: 0;
@@ -219,8 +208,26 @@ a {
   position: fixed;
 }
 
+.preview-image {
+  padding-top: $nav-height;
+}
+
+.preview-pdf {
+  height: 80%;
+  width: 80%;
+}
+
+.preview-plain-text {
+  white-space: pre-wrap;
+  border-radius: 4px;
+  padding: 8px;
+  background: $color-light;
+  height: 80%;
+  width: 80%;
+}
+
+
 .preview-viewport {
-  @include nav-bar-adjust;
   @include full-screen;
   background: $color-overlay;
 }

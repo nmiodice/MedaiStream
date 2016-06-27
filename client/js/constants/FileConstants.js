@@ -6,6 +6,7 @@ var constants = {
         COMPRESSED : 3,
         VIDEO      : 4,
         TEXT       : 5,
+		PDF        : 6,
 		UNKNOWN    : 100
 	},
 
