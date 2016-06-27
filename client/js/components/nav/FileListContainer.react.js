@@ -62,18 +62,6 @@ var FileListContainer = React.createClass({
         Mousetrap.unbind(searchKeys);
     },
 
-    _normalizeFilePath : function(fp) {
-        while (fp.endsWith("/") && fp.length > 1) {
-            fp = fp.substr(0, fp.length - 1);
-        }
-
-        while (fp.startsWith("/") && fp.length > 1) {
-            fp = fp.substr(1, fp.length);
-        }
-
-        return fp;
-    },
-
     _onNextFile : function(event) {
         if (event) {
             event.preventDefault();

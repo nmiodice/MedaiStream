@@ -70,7 +70,13 @@ var FileAndDirectoryStore = assign({}, EventEmitter.prototype, {
                 if (newPath == '')
                     newPath = '/';
 
-                if (newPath in _fileCache) {
+                // a good cached value is one that is in the cache and has at some point
+                // been loaded from the server. under some circumstances, paths may not
+                // ever load fully from the server, and the cached value is incomplete
+                var isCached = newPath in _fileCache;
+                isCached = isCached && _fileCache[newPath].status == ConnectionConstants.ONLINE;
+
+                if (isCached) {
                     _fileData = _fileCache[newPath];
                 } else {
                     _fileData = _makeFile(ConnectionConstants.NEEDS_LOAD, newPath, [], 0);

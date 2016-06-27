@@ -3,20 +3,33 @@ package com.iodice.mediastream.controller;
 import com.iodice.mediastream.App;
 import com.iodice.mediastream.entity.FileEntity;
 import com.iodice.mediastream.types.FileType;
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @Controller
 public class IODirectoryRequests extends IORequestBase {
 
-    private static final String DIRECTORY_REQUEST_PATH = "/directory/";
+    private static final String DIR_LISTING_REQUEST_PATH = "/dirList/";
+
+    public static final String DIR_WILDCARD_REQUEST_BASE = "/dir/";
+    public static final String DIR_WILDCARD_REQUEST_PATH = DIR_WILDCARD_REQUEST_BASE + "**";
 
     private static final String FILES_RESP_KEY = "files";
     private static final String DIRECTORY_QPARAM = "directory";
     private static final String RECURSIVE_QPARAM = "recursive";
+
+    private static final Logger mLogger = Logger.getLogger(IODirectoryRequests.class.getName());
 
 
     /**
@@ -88,9 +101,9 @@ public class IODirectoryRequests extends IORequestBase {
      *      ]
      *  }
      */
-    @RequestMapping(value=DIRECTORY_REQUEST_PATH, method=RequestMethod.GET)
+    @RequestMapping(value= DIR_LISTING_REQUEST_PATH, method=RequestMethod.GET)
     @ResponseBody
-    Map<String, List<FileEntity>> directory(
+    Map<String, List<FileEntity>> dirListing(
             @RequestParam(value=DIRECTORY_QPARAM, required=true) String directory,
             @RequestParam(value=RECURSIVE_QPARAM, required=true) Boolean recursive) {
 
@@ -110,6 +123,25 @@ public class IODirectoryRequests extends IORequestBase {
         }
 
         return response;
+    }
+
+    @RequestMapping(value=DIR_WILDCARD_REQUEST_PATH, method=RequestMethod.GET)
+    void wildcardDirectoryMapping(HttpServletResponse response) {
+
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream("static/index.html");
+        if (is != null) {
+            try {
+                response.setHeader(HttpHeaders.CONTENT_TYPE, "text/html");
+                org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+                response.flushBuffer();
+                is.close();
+            } catch (IOException ioe) {
+                mLogger.error(String.format(
+                        "Error serving index.html from non-standard path: %s",
+                        ioe.getMessage()
+                ));
+            }
+        }
     }
 
 }
