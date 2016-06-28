@@ -54,10 +54,6 @@ var NavigationController = React.createClass({
         var seenPathParts = [];
 
         pathParts.forEach(function(x) {
-            if (buttons.length > 0) {
-                buttons.push(<div className="nav-location-control" key={location + '-sep'}>&gt;</div>);
-            }
-
             seenPathParts.push(x);
 
             var isLast = seenPathParts.length == pathParts.length;
@@ -69,6 +65,9 @@ var NavigationController = React.createClass({
                 DirectoryAC.setDirectory(location);
             };
 
+            if (buttons.length > 0) {
+                buttons.push(<div className="nav-location-control" key={location + '-sep'}>&gt;</div>);
+            }
             buttons.push(<div className={className} key={location} onClick={onclick}>{displayName}</div>);
 
         });
@@ -102,7 +101,7 @@ var NavigationController = React.createClass({
                         <input
                             className="float-right form-control"
                             type="text"
-                            placeholder="Filter..."
+                            placeholder="Search..."
                             value={this.state.filter}
                             onChange={this._onFilterChange}/>
                     </div>
