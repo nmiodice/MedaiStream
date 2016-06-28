@@ -14,7 +14,7 @@ function getStateFromStores() {
 }
 
 var NavigationController = React.createClass({
-    
+
     getInitialState: function() {
         return getStateFromStores();
     },
@@ -46,15 +46,47 @@ var NavigationController = React.createClass({
         FileAC.filter(text);
     },
 
+    _makePathButtons : function(path) {
+        path = path.trim();
+        var pathParts = path.split('/');
+
+        var buttons = [];
+        var seenPathParts = [];
+
+        pathParts.forEach(function(x) {
+            if (buttons.length > 0) {
+                buttons.push(<div className="nav-location-control" key={location + '-sep'}>&gt;</div>);
+            }
+
+            seenPathParts.push(x);
+
+            var isLast = seenPathParts.length == pathParts.length;
+            var location = seenPathParts.join('/');
+            var className = isLast ? "nav-location-control" : "nav-location-control-clickable";
+            var displayName = x == "" ? "Home" : x;
+
+            var onclick = isLast ? null : function() {
+                DirectoryAC.setDirectory(location);
+            };
+
+            buttons.push(<div className={className} key={location} onClick={onclick}>{displayName}</div>);
+
+        });
+
+        return buttons;
+    },
+
     render: function() {
         var fileData = this.state.file;
         var path     = fileData.path;
-        var name     = UriUtils.stripHTTP(path);
+        var displayPath = UriUtils.stripHTTP(path);
         var disabledButton = path == '/' || path == '';
-        
-        if (name == '' || name == '/') {
-            name = "";
+
+        if (displayPath == '' || displayPath == '/') {
+            displayPath = " ";
         }
+
+        var buttons = this._makePathButtons(displayPath);
 
         return (
             <div className="container default-margin-vertical">
@@ -75,7 +107,7 @@ var NavigationController = React.createClass({
                             onChange={this._onFilterChange}/>
                     </div>
                 </span>
-                <span className="light-text">{name}</span>
+                <span className="nav-location-control-container">{buttons}</span>
             </div>
         );
     }

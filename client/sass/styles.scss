@@ -5,6 +5,8 @@ $color-light         : #F4F4F4;
 $color-shadow        : #000000;
 $color-nav-border    : #DE887E;
 $color-overlay       : rgba(51, 51, 51, 0.97);
+$color-nav-clickable : #82B1F7;
+$color-nav           : #989898;
 
 $nav-height          : 60px;
 
@@ -99,16 +101,16 @@ a {
 }
 
 .body-bottom-adjust {
-	margin-bottom : $nav-height;
+  margin-bottom : $nav-height;
 }
 
 .default-margin {
-	margin : $default-margin;
+  margin : $default-margin;
 }
 
 .default-margin-vertical {
-	margin-top    : $default-margin;
-	margin-bottom : $default-margin;
+  margin-top    : $default-margin;
+  margin-bottom : $default-margin;
 }
 
 .exit-button {
@@ -131,16 +133,12 @@ a {
 }
 
 .inline {
-	display        : inline-block;
-	vertical-align : middle;
-}
-
-.light-text {
-	color : $color-light;
+  display        : inline-block;
+  vertical-align : middle;
 }
 
 .list-group-item:hover {
-    @include background-secondary;
+  @include background-secondary;
 }
 
 .loader {
@@ -154,18 +152,47 @@ a {
 }
 
 .navbar-default {
-    border-color : $color-nav-border;
+  border-color : $color-nav-border;
 }
 
 .navbar-inner {
   @include bar-item;
 }
 
+@mixin nav-location-item-base() {
+  display: inline-block;
+  font-size: larger;
+  font-weight: 100;
+  padding: 0 4px 0 4px;
+}
+
+
+.nav-location-control-container {
+  @include nav-location-item-base;
+  padding: 0 0 0 0;
+}
+
+.nav-location-control-clickable {
+  @include nav-location-item-base;
+  color: $color-nav-clickable;
+  font-weight: 400;
+}
+
+.nav-location-control-clickable:hover {
+  text-decoration: underline;
+}
+
+.nav-location-control {
+  @include nav-location-item-base;
+  color: $color-nav;
+}
+
+
 .noselect {
-	-webkit-user-select : none; /* Chrome/Safari */
-	-moz-user-select    : none; /* Firefox */
-	-ms-user-select     : none; /* IE10+ */
-	user-select         : none;
+  -webkit-user-select : none; /* Chrome/Safari */
+  -moz-user-select    : none; /* Firefox */
+  -ms-user-select     : none; /* IE10+ */
+  user-select         : none;
 }
 
 .selected-media-item {
@@ -176,11 +203,11 @@ a {
 }
 
 .shrink {
-	@include scale(0.35);
+  @include scale(0.35);
 }
 
 .small-text {
-	font-size : 75%;
+  font-size : 75%;
 }
 
 .stop-scrolling {

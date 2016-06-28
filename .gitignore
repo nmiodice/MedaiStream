@@ -4,6 +4,7 @@
 # javascript and css build files
 bundle.js
 bundle.min.js
+.bundle.js
 
 styles.css
 styles.css.map
