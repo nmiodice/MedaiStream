@@ -49,9 +49,11 @@ public class IODirectoryRequests extends IORequestBase {
             fileEntity.type = FileType.DIRECTORY;
         else {
             fileEntity.type = FileType.UNKNOWN;
+            fileEntity.mimeType = "";
             String mimeType = getMimeType(f);
 
             if (mimeType != null) {
+                fileEntity.mimeType = mimeType;
                 if (mimeType.contains("text")) {
                     fileEntity.type = FileType.FILE_TEXT;
                 } else if (mimeType.contains("audio")) {

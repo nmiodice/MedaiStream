@@ -96,4 +96,5 @@ SelectedFileStore.dispatchToken = AppDispatcher.register(function(action) {
     }
 });
 
+SelectedFileStore.setMaxListeners(0);
 module.exports = SelectedFileStore;

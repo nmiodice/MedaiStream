@@ -20,8 +20,6 @@ var PlainText = React.createClass({
         }
     },
 
-    componentWillUnmount : function() {
-    },
 
     render: function() {
 

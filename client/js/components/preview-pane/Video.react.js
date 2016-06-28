@@ -9,7 +9,10 @@ var Video = React.createClass({
     componentDidMount : function() {
         _player = VideoJS('video-container', this._getVideoOptions(), function() {
 
-            this.play();
+            var that = this;
+            this.on('canplay', function() {
+                that.play();
+            });
 
             // How about an event listener?
             this.on('ended', function() {
@@ -29,21 +32,14 @@ var Video = React.createClass({
     _getVideoOptions : function() {
         var isChrome = !!window.chrome && !!window.chrome.webstore;
         var options = {
-            techOrder : ["html5"]
+            techOrder : isChrome ? ["flash", "html5"] : ["html5", "flash"]
         };
-
-        // I.E? Safari? Works for FireFox and Chrome
-        if (isChrome) {
-            options.techOrder.unshift("flash")
-        }
 
         options.width = "640";
         options.height = "264";
         options.preload = "auto";
         options.controls = true;
-        options.controlBar = {
-            muteToggle: true
-        };
+        options.autoplay = true;
 
         return options;
     },
@@ -52,8 +48,8 @@ var Video = React.createClass({
         var uri = UriUtils.fileToURI(this.props.file);
 
         return (
-            <video id="video-container" className="preview video-js vjs-default-skin">
-                <source src={uri} type="video/mp4"/>
+            <video id="video-container" className="preview video-js vjs-default-skin vjs-big-play-centered">
+                <source src={uri} type={this.props.file.mimeType}/>
             </video>
         );
     }
@@ -61,4 +57,3 @@ var Video = React.createClass({
 });
 
 module.exports = Video;
-
