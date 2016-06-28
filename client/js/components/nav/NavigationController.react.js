@@ -66,7 +66,8 @@ var NavigationController = React.createClass({
             };
 
             if (buttons.length > 0) {
-                buttons.push(<div className="nav-location-control" key={location + '-sep'}>&gt;</div>);
+                //buttons.push(<div className="nav-location-control" key={location + '-sep'}>&gt;</div>);
+                buttons.push(<div className="nav-location-chevron glyphicon glyphicon-chevron-right btn-sm" aria-hidden="true"></div>);
             }
             buttons.push(<div className={className} key={location} onClick={onclick}>{displayName}</div>);
 

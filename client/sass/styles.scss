@@ -160,13 +160,14 @@ a {
   @include bar-item;
 }
 
+
+
 @mixin nav-location-item-base() {
   display: inline-block;
-  font-size: larger;
-  font-weight: 100;
-  padding: 0 4px 0 4px;
+  font-size: 18px;
+  font-weight: 200;
+  //padding: 0 4px 0 4px;
 }
-
 
 .nav-location-control-container {
   @include nav-location-item-base;
@@ -176,7 +177,6 @@ a {
 .nav-location-control-clickable {
   @include nav-location-item-base;
   color: $color-nav-clickable;
-  font-weight: 400;
 }
 
 .nav-location-control-clickable:hover {
@@ -187,6 +187,11 @@ a {
   @include nav-location-item-base;
   color: $color-nav;
 }
+
+.nav-location-chevron {
+  color: $color-nav;
+}
+
 
 
 .noselect {
