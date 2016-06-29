@@ -6,7 +6,7 @@ var loadImage                = require('blueimp-load-image');
 var Image = React.createClass({
 
     _onComponentRendered : function(divDOM) {
-        if (this.props.file) {
+        if (this.props.file && divDOM) {
             UIUtils.addLoader();
             this._handleImageExifLoad(divDOM);
         }
