@@ -16,11 +16,17 @@ var LinkedListUtils = {
 	},
 
 	_appendItem : function(tail, x) {
+
 		var node = {
 			prev : tail,
 			data : x,
-			next : null
+			next : null,
+			position : tail == null ? 0 : tail.position + 1,
+			metadata : tail == null ? { listSize : 0 } : tail.metadata
 		};
+
+		// increment global list size
+		node.metadata.listSize++;
 
 		if (tail != null) {
 			tail.next = node;

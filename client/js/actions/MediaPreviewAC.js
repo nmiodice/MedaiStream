@@ -36,6 +36,18 @@ var MediaPreviewAC = {
         AppDispatcher.dispatch({
             type : ActionTypes.PREVIEW_CLEAR
         });
+    },
+
+    nextFile : function() {
+        AppDispatcher.dispatch({
+            type : ActionTypes.PREVIEW_NEXT
+        });
+    },
+
+    previousFile : function() {
+        AppDispatcher.dispatch({
+            type : ActionTypes.PREVIEW_PREV
+        });
     }
 };
 

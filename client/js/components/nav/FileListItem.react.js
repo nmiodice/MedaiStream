@@ -2,7 +2,6 @@ var $                   = require('jquery');
 var FileUtils           = require('../../utils/FileUtils');
 var FileHandler         = require('../../utils/FileHandler');
 var React               = require('react');
-var FileTypes           = require('../../constants/FileConstants').types;
 var ActiveAudioStore    = require('../../stores/ActiveAudioStore');
 var SelectedFileAC      = require('../../actions/SelectedFileAC');
 var SelectedFileStore   = require('../../stores/SelectedFileStore');
@@ -81,7 +80,7 @@ var FileListItem = React.createClass({
     render: function() {
         var file = this.props.file;
         var text = FileUtils.fileToDisplayString(file);
-        var iconClass;
+        var iconClass = FileUtils.fileToIconClass(file, this._isSelectedFile());
         var className = "list-group-item noselect";
 
         if (this._isActiveFile()) {
@@ -90,38 +89,7 @@ var FileListItem = React.createClass({
             className += " selected-media-item";
         } 
 
-        switch (file.type) {
-            case FileTypes.DIRECTORY:
-                if (this._isSelectedFile())
-                    iconClass = "glyphicon glyphicon-folder-open";
-                else
-                    iconClass = "glyphicon glyphicon-folder-close";
-                break;
 
-            case FileTypes.AUDIO:
-                iconClass = "glyphicon glyphicon-play-circle";
-                break;
-
-            case FileTypes.IMAGE:
-                iconClass = "glyphicon glyphicon-picture";
-                break;
-
-            case FileTypes.VIDEO:
-                iconClass = "glyphicon glyphicon-facetime-video";
-                break;
-
-            case FileTypes.COMPRESSED:
-                iconClass = "glyphicon glyphicon-compressed";
-                break;
-
-            case FileTypes.TEXT:
-                iconClass = "glyphicon glyphicon-pencil";
-                break;
-
-            default:
-                iconClass = "glyphicon glyphicon-file";
-                break;      
-        }
 
         return (
             <li

@@ -221,6 +221,8 @@ a {
   overflow: hidden;
 }
 
+
+
 .preview {
   bottom: 0;
   left: 0;
@@ -252,12 +254,40 @@ a {
   font-family: 'DejaVu Sans Mono', monospace;
 }
 
+.preview-viewport-navigation {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+
+  margin: $default-margin;
+  color: white;
+}
+
+.preview-viewport-filename {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  margin: $default-margin;
+  color: white;
+}
+
 
 .preview-viewport {
   @include full-screen;
   background: $color-overlay;
   z-index: 1000000;
 }
+
+.no-preview-available {
+  font-size: 40em;
+  color: $color-nav;
+  height: 80%;
+  width: 80%;
+}
+
+
 
 video {
   max-width:90%;

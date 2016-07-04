@@ -16,7 +16,7 @@ var Video = React.createClass({
 
             // How about an event listener?
             this.on('ended', function() {
-                console.log('awww...over so soon?');
+                console.log('video ended');
             });
         });
 
@@ -44,13 +44,30 @@ var Video = React.createClass({
         return options;
     },
 
-    render: function() {
-        var uri = UriUtils.fileToURI(this.props.file);
+    /**
+     * Create video container manually because the VideoJS library manipulates the DOM
+     * in a way that is not compatible with React.
+     */
+    _onComponentRendered : function(divDOM) {
+        if (divDOM == null)
+            return;
 
+        var videoContainer = document.createElement('video');
+        videoContainer.id = 'video-container';
+        videoContainer.className = 'preview video-js vjs-default-skin vjs-big-play-centered';
+
+        var sourceContainer = document.createElement('source');
+        sourceContainer.src = UriUtils.fileToURI(this.props.file);
+        sourceContainer.type = this.props.file.mimeType;
+
+        videoContainer.appendChild(sourceContainer);
+        divDOM.appendChild(videoContainer);
+    },
+
+    render: function() {
         return (
-            <video id="video-container" className="preview video-js vjs-default-skin vjs-big-play-centered">
-                <source src={uri} type={this.props.file.mimeType}/>
-            </video>
+            <div className="preview-image" ref={(divDOM) => this._onComponentRendered(divDOM)}>
+            </div>
         );
     }
 
