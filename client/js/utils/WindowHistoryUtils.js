@@ -21,9 +21,13 @@ var _fileToHistoryState = function(file, activeMediaFile) {
 };
 
 var _setFileURL = function(file, activeMediaFile = null) {
-    if (window.history.state != _fileToHistoryState(file, activeMediaFile)) {
+    var newState = _fileToHistoryState(file, activeMediaFile);
+    var oldState = window.history.state;
+
+    var isNew = newState.path != oldState.path || newState.media != oldState.media;
+    if (isNew) {
         window.history.pushState(
-            _fileToHistoryState(file, activeMediaFile),
+            newState,
             "",
             _fileToHistoryDisplay(file, activeMediaFile));
     }
