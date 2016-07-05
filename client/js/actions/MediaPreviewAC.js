@@ -11,8 +11,8 @@ var MediaPreviewAC = {
 
     setFile : function(file) {
 
-        if (ActiveMediaPreviewStore.getActiveFile() != null)
-            this.clearFile();
+        //if (ActiveMediaPreviewStore.getActiveFile() != null)
+        //    this.clearFile();
 
         if (file.type == FileTypes.VIDEO) {
             if (ActiveAudioStore.getIsPlaying()) {

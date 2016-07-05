@@ -3,29 +3,68 @@ var DirectoryAC             = require('../actions/DirectoryAC');
 var ActiveMediaPreviewStore = require('../stores/ActiveMediaPreviewStore');
 var MediaPreviewAC          = require('../actions/MediaPreviewAC');
 var ServerConstants         = require('../constants/ServerConstants');
+var FileUtils               = require('./FileUtils');
 
-var _fileToDisplayString = function(file) {
-    return ServerConstants.DIRECTORY_WILDCARD_PATH + file.path;
+var PREVIEW_CONSTANT = 'preview'
+
+var _fileToHistoryDisplay = function(file, activeMediaFile) {
+    var queryParam = activeMediaFile == null ?
+        "" : "?" + PREVIEW_CONSTANT + '=' + FileUtils.fileToDisplayString(activeMediaFile);
+    return ServerConstants.DIRECTORY_WILDCARD_PATH + file.path + queryParam;
 };
 
-var _fileToStateString = function(file) {
-    return file.path;
+var _fileToHistoryState = function(file, activeMediaFile) {
+    return {
+        path: file.path,
+        media: activeMediaFile
+    };
 };
 
-var _setFileURL = function(file, force = false) {
-    if (window.history.state != _fileToStateString(file) || force)
-        window.history.pushState(_fileToStateString(file), "", _fileToDisplayString(file));
+var _setFileURL = function(file, activeMediaFile = null) {
+    if (window.history.state != _fileToHistoryState(file, activeMediaFile)) {
+        window.history.pushState(
+            _fileToHistoryState(file, activeMediaFile),
+            "",
+            _fileToHistoryDisplay(file, activeMediaFile));
+    }
 };
 
 var _replaceFileURL = function(file) {
-    window.history.replaceState(_fileToStateString(file), "", _fileToDisplayString(file));
+    window.history.replaceState(
+        _fileToHistoryState(file, null),
+        "",
+        _fileToHistoryDisplay(file, null));
 };
 
-var _displayStringToDirectory = function(ss) {
-    ss = decodeURI(ss);
+var _getDirectoryFromWindow = function() {
+    var ss = decodeURI(window.location.pathname);
     if (ss.indexOf(ServerConstants.DIRECTORY_WILDCARD_PATH) != 0)
         return null;
     return ss.replace(ServerConstants.DIRECTORY_WILDCARD_PATH, "");
+};
+
+var _getMediaFileFromWindow = function() {
+    var query = decodeURI(window.location.search).replace('?', '');
+    return query == '' ? null : query.split('=')[1];
+};
+
+var _popStateEvent = function(e) {
+    var statePath = e.state == null ? "/" : e.state.path;
+    var mediaFile = e.state == null ? null : e.state.media;
+
+    var currFile = FileAndDirectoryStore.getFileData();
+
+    if (ActiveMediaPreviewStore.getActiveFile() != null && mediaFile == null) {
+        MediaPreviewAC.clearFile();
+    }
+
+    if (statePath != currFile.path) {
+        DirectoryAC.setDirectory(statePath);
+    }
+
+    if (mediaFile != null) {
+        MediaPreviewAC.setFile(mediaFile);
+    }
 };
 
 var WindowHistoryUtils = {
@@ -37,32 +76,58 @@ var WindowHistoryUtils = {
      *  3. navigation visible --> back up a directory level
      */
     configure : function() {
-        var currPath = _displayStringToDirectory(window.location.pathname);
-        if (currPath != null)
-            DirectoryAC.setDirectory(currPath);
+        var currMediaFilePath = _getMediaFileFromWindow();
+        var currDirectoryPath = _getDirectoryFromWindow();
+
+        console.log('Configuring initial page state with directory path and active media file: ',
+            currDirectoryPath,
+            currMediaFilePath);
+
+        // on load, reset the actual directory with the proper one
+        if (currDirectoryPath != null)
+            DirectoryAC.setDirectory(currDirectoryPath);
 
         _replaceFileURL(FileAndDirectoryStore.getFileData());
 
         // called each time a back or forward button is pressed
-        window.addEventListener("popstate", function(e) {
-            var statePath = e.state == null ? "/" : e.state;
-            var currFile = FileAndDirectoryStore.getFileData();
-
-            if (ActiveMediaPreviewStore.getActiveFile() != null) {
-                MediaPreviewAC.clearFile();
-                // effectively cancel out the back press by pushing a new state
-                _setFileURL(currFile, true);
-            } else if (statePath != currFile.path) {
-                DirectoryAC.setDirectory(statePath);
-            }
-        }.bind(this));
+        window.addEventListener("popstate", _popStateEvent);
 
         // react to file changes w/ appropriate URL change
-        FileAndDirectoryStore.addChangeListener(
-            function() {
-                _setFileURL(FileAndDirectoryStore.getFileData());
+        FileAndDirectoryStore.addChangeListener(function() {
+            var currDirectoryFile = FileAndDirectoryStore.getFileData();
+
+            _setFileURL(currDirectoryFile);
+
+            // if there was a media preview active, react to it. this should ONLY
+            // happen if the user reloads the page with a media preview active. In
+            // this case, it should only happen during the initial page load
+            if (currMediaFilePath != null) {
+                currDirectoryFile.files.forEach(function(x) {
+                    if (FileUtils.fileToDisplayString(x) == currMediaFilePath) {
+                        // Run after dispatcher has finished -- very big hack!
+                        setTimeout(function() {
+                            MediaPreviewAC.setFile(x);
+                            currMediaFilePath = null;
+                        }, 0);
+                    }
+                });
             }
-        );
+        });
+
+        // react to preview coming available
+        ActiveMediaPreviewStore.addChangeListener(function() {
+            // prevents resetting the URL if the media was changed
+            // due to a `popstate` event being called
+            var setFile =
+                ActiveMediaPreviewStore.getActiveFile() == null ||
+                FileUtils.fileToDisplayString(ActiveMediaPreviewStore.getActiveFile()) != _getMediaFileFromWindow();
+
+            if (setFile) {
+                _setFileURL(
+                    FileAndDirectoryStore.getFileData(),
+                    ActiveMediaPreviewStore.getActiveFile());
+            }
+        });
     }
 };
 
