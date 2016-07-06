@@ -144,26 +144,35 @@ var FileListContainer = React.createClass({
             }
         }
 
-        return (
-            <div className={"container body-bottom-adjust"} ref={this._onRenderAndStateChanged}>
+        var noFilesHere = fileData.status == ConnectionConstants.ONLINE && fileData.files.length == 0;
+        if (noFilesHere) {
+            return (
+                <div className={"container body-bottom-adjust"}>
+                    you done fucked up
+                </div>
+            );
+        } else {
+            return (
+                <div className={"container body-bottom-adjust"} ref={this._onRenderAndStateChanged}>
 
-                <ul className="list-group file-list">
-                    {noDirectory ? null:
-                        <div
-                            className="list-group-item noselect"
-                            onClick={this._onSelectAll}>
-                            <span className={''}/>
-                            <a className="default-margin">{'Show all'}</a>
-                        </div>}
+                    <ul className="list-group file-list">
+                        {noDirectory ? null :
+                            <div
+                                className="list-group-item noselect"
+                                onClick={this._onSelectAll}>
+                                <span className={''}/>
+                                <a className="default-margin">{'Show all'}</a>
+                            </div>}
 
 
-                    {fileData.files.map(function(f) {
-                        return <FileListItem file={f} key={f.path} isParent={false}/>;
-                    })}
-                </ul>
+                        {fileData.files.map(function (f) {
+                            return <FileListItem file={f} key={f.path} isParent={false}/>;
+                        })}
+                    </ul>
 
-            </div>
-        );
+                </div>
+            );
+        }
     }
 
 });

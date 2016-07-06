@@ -8,8 +8,8 @@ var constants = {
 	SERVER_IP                : server_ip,
 	BASE                     : base,
 	FILE_REQUEST_PATH        : '/file/',
-	DIRECTORY_REQUEST_PATH   : '/dirList/',	// get JSON file listing from server
-	DIRECTORY_WILDCARD_PATH  : '/dir',		// wildcard to return index for any URL
+	DIRECTORY_REQUEST_PATH   : '/ls/',	// get JSON file listing from server
+	DIRECTORY_WILDCARD_PATH  : '/files',		// wildcard to return index for any URL
 	DIRECTORY_QPARAM         : 'directory',
 	RECURSE_QPARAM           : 'recursive'
 };

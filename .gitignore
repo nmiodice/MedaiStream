@@ -1,6 +1,10 @@
 # mac files
 .DS_Store
 
+
+# intellij files
+*.iml
+
 # javascript and css build files
 bundle.js
 bundle.min.js

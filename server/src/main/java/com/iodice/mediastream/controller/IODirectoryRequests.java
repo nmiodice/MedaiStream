@@ -20,9 +20,9 @@ import java.util.*;
 @Controller
 public class IODirectoryRequests extends IORequestBase {
 
-    private static final String DIR_LISTING_REQUEST_PATH = "/dirList/";
+    private static final String DIR_LISTING_REQUEST_PATH = "/ls/";
 
-    public static final String DIR_WILDCARD_REQUEST_BASE = "/dir/";
+    public static final String DIR_WILDCARD_REQUEST_BASE = "/files/";
     public static final String DIR_WILDCARD_REQUEST_PATH = DIR_WILDCARD_REQUEST_BASE + "**";
 
     private static final String FILES_RESP_KEY = "files";

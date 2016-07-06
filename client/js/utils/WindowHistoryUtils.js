@@ -90,7 +90,7 @@ var WindowHistoryUtils = {
             currMediaFilePath);
 
         // on load, reset the actual directory with the proper one
-        if (currDirectoryPath != FileAndDirectoryStore.getFileData().path)
+        if (currDirectoryPath != null && currDirectoryPath != FileAndDirectoryStore.getFileData().path)
             DirectoryAC.setDirectory(currDirectoryPath);
 
         _replaceFileURL(FileAndDirectoryStore.getFileData());
