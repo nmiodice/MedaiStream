@@ -11,7 +11,7 @@
 #Build and run server
 1. build client
 2. `cd server`
-3. `mvn clean install`
-4. `java -Djava.exts.dirs=lib/ -jar target/mediaserver-1.0-SNAPSHOT.jar --mediadir=<path to your media>`
+3. `mvn package`
+4. `java -jar target/mediaserver-1.0-SNAPSHOT.jar --mediadir=<path to your media>`
 
 Then open your browser to `127.0.0.1:8080`
