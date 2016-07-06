@@ -2,6 +2,7 @@ var $                 = require('jquery');
 var React             = require('react');
 var ActiveAudioStore  = require('../../stores/ActiveAudioStore');
 var ActiveAudioAC     = require('../../actions/ActiveAudioAC');
+var FileUtils         = require('../../utils/FileUtils');
 
 function getStateFromStores() {
     return  {
@@ -72,14 +73,19 @@ var AudioInfoBar = React.createClass({
         var cName = this.props.gridClass + ' audio-info-bar';
         var lTime = this.secToFormattedTime(this.state.pos);
         var rTime = this.secToFormattedTime(this.state.duration - this.state.pos);
+        var shortFileName = FileUtils.fileToDisplayString(this.state.file);
+        if (shortFileName.lastIndexOf('.') > 0)
+            shortFileName = shortFileName.substr(0, shortFileName.lastIndexOf('.'))
 
         return (
             <div className={cName}>
-                <div className="inline float-left small-text">{lTime}</div>
-                <div className="inline float-right small-text">{rTime}</div>
-                <progress 
+
+                <div className="small-text">{shortFileName}</div>
+                <div className="inline audio-time float-left small-text">{lTime}</div>
+                <div className="inline audio-time float-right small-text">{rTime}</div>
+                <progress
                     onClick={this._onProgressClick}
-                    className="audio-progress-bar" 
+                    className="inline audio-progress-bar"
                     value={this.state.percComp} 
                     max="100"/>
 
