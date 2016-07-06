@@ -44,7 +44,9 @@ var _getDirectoryFromWindow = function() {
     var ss = decodeURI(window.location.pathname);
     if (ss.indexOf(ServerConstants.DIRECTORY_WILDCARD_PATH) != 0)
         return null;
-    return ss.replace(ServerConstants.DIRECTORY_WILDCARD_PATH, "");
+    ss = ss.replace(ServerConstants.DIRECTORY_WILDCARD_PATH, "");
+    ss = ss == '' ? '/' : ss;
+    return ss;
 };
 
 var _getMediaFileFromWindow = function() {
@@ -88,7 +90,7 @@ var WindowHistoryUtils = {
             currMediaFilePath);
 
         // on load, reset the actual directory with the proper one
-        if (currDirectoryPath != null)
+        if (currDirectoryPath != FileAndDirectoryStore.getFileData().path)
             DirectoryAC.setDirectory(currDirectoryPath);
 
         _replaceFileURL(FileAndDirectoryStore.getFileData());
